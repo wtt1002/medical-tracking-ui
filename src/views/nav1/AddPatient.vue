@@ -175,17 +175,6 @@ export default {
         ? "女"
         : "未知";
     },
-    //显示新增界面
-    handleAdd: function() {
-      this.addFormVisible = true;
-      this.addForm = {
-        name: "",
-        sex: -1,
-        age: 0,
-        birth: "",
-        addr: ""
-      };
-    },
     //新增
     addSubmit: function() {
       this.$refs.addForm.validate(valid => {
