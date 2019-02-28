@@ -291,14 +291,15 @@ export default {
     },
     //显示新增界面
     handleAdd: function() {
-      this.addFormVisible = true;
-      this.addForm = {
-        name: "",
-        sex: -1,
-        age: 0,
-        birth: "",
-        addr: ""
-      };
+      this.$router.push({ path: "/addPatient" });
+      // this.addFormVisible = true;
+      // this.addForm = {
+      //   name: "",
+      //   sex: -1,
+      //   age: 0,
+      //   birth: "",
+      //   addr: ""
+      // };
     },
     //编辑
     editSubmit: function() {
