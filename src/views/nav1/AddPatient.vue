@@ -112,12 +112,7 @@
 import util from "../../common/js/util";
 //import NProgress from 'nprogress'
 import {
-  getPatientListPage,
-  removeUser,
-  batchRemoveUser,
-  editUser,
-  addUser,
-  addPatient
+  patientApi
 } from "../../api/api";
 
 export default {
@@ -145,6 +140,7 @@ export default {
       },
       //新增界面数据
       addForm: {
+        patientId:"",
         name: "",
         gender: -1,
         nation: "",
@@ -195,7 +191,7 @@ export default {
               birthdayStr: para.birth
             };
             console.log(JSON.stringify(params));
-            addPatient(params).then(res => {
+            patientApi.addPatient(params).then(res => {
               this.addLoading = false;
               //NProgress.done();
               if (res.code != "0000") {

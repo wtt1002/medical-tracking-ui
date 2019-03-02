@@ -27,7 +27,7 @@
 </template>
 
 <script>
-import { requestLogin } from "../api/api";
+import { userApi } from "../api/api";
 //import NProgress from 'nprogress'
 export default {
   data() {
@@ -64,7 +64,7 @@ export default {
             username: this.ruleForm2.account,
             password: this.ruleForm2.checkPass
           };
-          requestLogin(loginParams).then(data => {
+          userApi.requestLogin(loginParams).then(data => {
             this.logining = false;
             if (data.code != "0000") {
               this.$message({

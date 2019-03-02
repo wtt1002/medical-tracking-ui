@@ -7,7 +7,7 @@
           <el-input v-model="filters.name" placeholder="姓名"></el-input>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary" v-on:click="getUsers">查询</el-button>
+          <el-button type="primary" v-on:click="getPatients">查询</el-button>
         </el-form-item>
         <el-form-item>
           <el-button type="primary" @click="handleAdd">新增</el-button>
@@ -17,18 +17,23 @@
 
     <!--列表-->
     <el-table
-      :data="users"
+      :data="patients"
       highlight-current-row
       v-loading="listLoading"
       @selection-change="selsChange"
       style="width: 100%;"
     >
-      <el-table-column type="selection" width="55"></el-table-column>
-      <el-table-column type="index" width="60"></el-table-column>
+      <el-table-column type="selection" width="40"></el-table-column>
+      <el-table-column type="index" width="55"></el-table-column>
+      <el-table-column label="" width="80">
+        <template scope="scope">
+          <el-button type="primary" size="small" @click="patientCase(scope.$index, scope.row)">查看</el-button>
+        </template>
+      </el-table-column>
       <el-table-column prop="patient.name" label="姓名" width="100" sortable></el-table-column>
       <el-table-column prop="patient.gender" label="性别" width="100" :formatter="formatSex" sortable></el-table-column>
       <el-table-column prop="birthday" label="出生日期" width="120" sortable></el-table-column>
-      <el-table-column prop="patient.age" label="年龄" width="100" sortable></el-table-column>
+      <el-table-column prop="patient.age" label="年龄" width="90" sortable></el-table-column>
       <el-table-column prop="patient.sickAge" label="发病年龄" width="120" sortable></el-table-column>
       <!-- <el-table-column prop="inTime" label="最新入院时间" width="100" :formatter="formatSex" sortable>
 			</el-table-column>
@@ -57,7 +62,7 @@
       <el-pagination
         layout="prev, pager, next"
         @current-change="handleCurrentChange"
-        :page-size="20"
+        :page-size="10"
         :total="total"
         style="float:right;"
       ></el-pagination>
@@ -70,19 +75,92 @@
           <el-input v-model="editForm.name" auto-complete="off"></el-input>
         </el-form-item>
         <el-form-item label="性别">
-          <el-radio-group v-model="editForm.sex">
-            <el-radio class="radio" :label="1">男</el-radio>
-            <el-radio class="radio" :label="0">女</el-radio>
+          <el-radio-group v-model="editForm.gender">
+            <el-radio class="radio" label="1">男</el-radio>
+            <el-radio class="radio" label="0">女</el-radio>
           </el-radio-group>
+        </el-form-item>
+        <el-form-item label="民族">
+          <el-select v-model="editForm.nation" placeholder="请选择民族">
+            <el-option label="汉族" value="汉族"></el-option>
+            <el-option label="壮族" value="壮族"></el-option>
+            <el-option label="满族" value="满族"></el-option>
+            <el-option label="回族" value="回族"></el-option>
+            <el-option label="苗族" value="苗族"></el-option>
+            <el-option label="维吾尔族" value="维吾尔族"></el-option>
+            <el-option label="彝族" value="彝族"></el-option>
+            <el-option label="土家族" value="土家族"></el-option>
+            <el-option label="蒙古族" value="蒙古族"></el-option>
+            <el-option label="藏族" value="藏族"></el-option>
+          </el-select>
         </el-form-item>
         <el-form-item label="年龄">
           <el-input-number v-model="editForm.age" :min="0" :max="200"></el-input-number>
         </el-form-item>
+        <el-form-item label="发病年龄">
+          <el-input-number v-model="editForm.sickAge" :min="0" :max="200"></el-input-number>
+        </el-form-item>
         <el-form-item label="生日">
           <el-date-picker type="date" placeholder="选择日期" v-model="editForm.birth"></el-date-picker>
         </el-form-item>
+        <el-form-item label="省份证号" prop="numId">
+          <el-input v-model="editForm.numId" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="手机号" prop="mobilePhone">
+          <el-input v-model="editForm.mobilePhone" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="座机号">
+          <el-input v-model="editForm.telphone" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="紧急联系人">
+          <el-input v-model="editForm.emergePeople" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="紧急联系人电话">
+          <el-input v-model="editForm.emergePhone" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="与患者关系">
+          <el-select v-model="editForm.emergeRelationship" placeholder="请选择患者关系">
+            <el-option label="配偶" value="配偶"></el-option>
+            <el-option label="子女" value="子女"></el-option>
+            <el-option label="朋友" value="朋友"></el-option>
+            <el-option label="亲戚" value="亲戚"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="婚姻状况">
+          <el-select v-model="editForm.married" placeholder="请选择婚姻状况">
+            <el-option label="未婚" value="未婚"></el-option>
+            <el-option label="已婚" value="已婚"></el-option>
+            <el-option label="离异" value="离异"></el-option>
+            <el-option label="丧偶" value="丧偶"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="患者职业">
+          <el-input v-model="editForm.profession" auto-complete="off"></el-input>
+        </el-form-item>
+        <el-form-item label="职业状态">
+          <el-select v-model="editForm.profession_status" placeholder="请选择职业状态">
+            <el-option label="在职" value="在职"></el-option>
+            <el-option label="退休" value="退休"></el-option>
+            <el-option label="无业" value="无业"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="文化程度">
+          <el-select v-model="editForm.education" placeholder="请选择文化程度">
+            <el-option label="小学及以下" value="小学及以下"></el-option>
+            <el-option label="初中" value="初中"></el-option>
+            <el-option label="高中" value="高中"></el-option>
+            <el-option label="大学及以上" value="大学及以上"></el-option>
+          </el-select>
+        </el-form-item>
+        <el-form-item label="年收入">
+          <el-select v-model="editForm.income" placeholder="请选择年收入">
+            <el-option label="5万以下" value="5万以下"></el-option>
+            <el-option label="5-10万" value="5-10万"></el-option>
+            <el-option label="10万以上" value="10万以上"></el-option>
+          </el-select>
+        </el-form-item>
         <el-form-item label="地址">
-          <el-input type="textarea" v-model="editForm.addr"></el-input>
+          <el-input type="textarea" v-model="editForm.address"></el-input>
         </el-form-item>
       </el-form>
       <div slot="footer" class="dialog-footer">
@@ -91,103 +169,13 @@
       </div>
     </el-dialog>
 
-    <!--新增界面-->
-    <el-dialog title="新增" v-model="addFormVisible" :close-on-click-modal="false">
-      <el-form :model="addForm" label-width="80px" :rules="addFormRules" ref="addForm">
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-radio-group v-model="addForm.sex">
-            <el-radio class="radio" :label="1">男</el-radio>
-            <el-radio class="radio" :label="0">女</el-radio>
-          </el-radio-group>
-        </el-form-item>
-        <el-form-item label="民族">
-          <el-select v-model="addForm.nation" placeholder="请选择民族">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input-number v-model="addForm.age" :min="0" :max="200"></el-input-number>
-        </el-form-item>
-        <el-form-item label="发病年龄">
-          <el-input-number v-model="addForm.age" :min="0" :max="200"></el-input-number>
-        </el-form-item>
-        <el-form-item label="生日">
-          <el-date-picker type="date" placeholder="选择日期" v-model="addForm.birth"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="省份证号" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="座机号" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="紧急联系人" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="紧急联系人电话" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="与患者关系">
-          <el-select v-model="addForm.nation" placeholder="请选择民族">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="婚姻状况">
-          <el-select v-model="addForm.nation" placeholder="请选择民族">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="患者职业" prop="name">
-          <el-input v-model="addForm.name" auto-complete="off"></el-input>
-        </el-form-item>
-        <el-form-item label="文化程度">
-          <el-select v-model="addForm.nation" placeholder="请选择民族">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="年收入">
-          <el-select v-model="addForm.nation" placeholder="请选择民族">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="职业状态">
-          <el-select v-model="addForm.nation" placeholder="请选择民族">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input type="textarea" v-model="addForm.addr"></el-input>
-        </el-form-item>
-      </el-form>
-      <div slot="footer" class="dialog-footer">
-        <el-button @click.native="addFormVisible = false">取消</el-button>
-        <el-button type="primary" @click.native="addSubmit" :loading="addLoading">提交</el-button>
-      </div>
-    </el-dialog>
   </section>
 </template>
 
 <script>
 import util from "../../common/js/util";
 //import NProgress from 'nprogress'
-import {
-  getPatientListPage,
-  removeUser,
-  batchRemoveUser,
-  editUser,
-  addUser
-} from "../../api/api";
+import { patientApi } from "../../api/api";
 
 export default {
   data() {
@@ -195,7 +183,7 @@ export default {
       filters: {
         name: ""
       },
-      users: [],
+      patients: [],
       total: 0,
       page: 1,
       count: 10,
@@ -209,44 +197,42 @@ export default {
       },
       //编辑界面数据
       editForm: {
-        id: 0,
         name: "",
-        sex: -1,
+        gender: -1,
+        nation: "",
         age: 0,
+        sickAge: "",
         birth: "",
-        addr: ""
+        numId: "",
+        mobilePhone: "",
+        telPhone: "",
+        emergePeople: "",
+        emergePhone: "",
+        emergeRelationship: "",
+        married: "",
+        profession: "",
+        professionStatus: "",
+        education: "",
+        income: "",
+        address: ""
       },
-
-      addFormVisible: false, //新增界面是否显示
-      addLoading: false,
-      addFormRules: {
-        name: [{ required: true, message: "请输入姓名", trigger: "blur" }]
-      },
-      //新增界面数据
-      addForm: {
-        name: "",
-        sex: -1,
-        age: 0,
-        birth: "",
-        addr: ""
-      }
     };
   },
   methods: {
     //性别显示转换
     formatSex: function(row, column) {
-      return row.patient.gender == 1
+      return row.patient.gender == "1"
         ? "男"
-        : row.patient.gender == 0
+        : row.patient.gender == "0"
         ? "女"
         : "未知";
     },
     handleCurrentChange(val) {
       this.page = val;
-      this.getUsers();
+      this.getPatients();
     },
     //获取用户列表
-    getUsers() {
+    getPatients() {
       let para = {
         page: this.page,
         count: this.count,
@@ -254,11 +240,17 @@ export default {
       };
       this.listLoading = true;
       //NProgress.start();
-      getPatientListPage(para).then(res => {
-        // this.total = res.data.total;
-        this.total = 10;
-        this.users = res.data;
-        // console.log(JSON.stringify(this.users));
+      patientApi.getPatientListPage(para).then(res => {
+        if (res.code != "0000") {
+          this.$message({
+            message: "删除失败",
+            type: "warning"
+          });
+          return;
+        }
+        this.total =
+          res.data && res.data[0] && res.data[0].total ? res.data[0].total : 0;
+        this.patients = res.data;
         this.listLoading = false;
         //NProgress.done();
       });
@@ -271,15 +263,23 @@ export default {
         .then(() => {
           this.listLoading = true;
           //NProgress.start();
-          let para = { id: row.id };
-          removeUser(para).then(res => {
+          let para = row.patient.patientId;
+          patientApi.removePatient(para).then(res => {
+            if (res.code !== "0000") {
+              this.$message({
+                message: "删除失败",
+                type: "warning"
+              });
+              this.getPatients();
+              return;
+            }
             this.listLoading = false;
             //NProgress.done();
             this.$message({
               message: "删除成功",
               type: "success"
             });
-            this.getUsers();
+            this.getPatients();
           });
         })
         .catch(() => {});
@@ -287,19 +287,22 @@ export default {
     //显示编辑界面
     handleEdit: function(index, row) {
       this.editFormVisible = true;
-      this.editForm = Object.assign({}, row);
+      patientApi.getPatient(row.patient.patientId).then(res => {
+        this.editForm = { ...this.editForm, ...res.data.patient };
+        this.editForm.birth = util.formatDate.parse(
+          res.data.birthdayStr,
+          "yyyy-MM-dd"
+        );
+      });
+    },
+    //patientCase
+    patientCase:function(index, row){
+      console.log("王婷婷你是说什么？？")
+      alert(row.patient.patientId)
     },
     //显示新增界面
     handleAdd: function() {
       this.$router.push({ path: "/addPatient" });
-      // this.addFormVisible = true;
-      // this.addForm = {
-      //   name: "",
-      //   sex: -1,
-      //   age: 0,
-      //   birth: "",
-      //   addr: ""
-      // };
     },
     //编辑
     editSubmit: function() {
@@ -313,7 +316,15 @@ export default {
               !para.birth || para.birth == ""
                 ? ""
                 : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
-            editUser(para).then(res => {
+            para.gender = para.gender.toString();
+            para.age = para.age.toString();
+            para.sickAge = para.sickAge.toString();
+            para.birthday = null;
+            let params = {
+              patient: para,
+              birthdayStr: para.birth
+            };
+            patientApi.savePatient(params).then(res => {
               this.editLoading = false;
               //NProgress.done();
               this.$message({
@@ -322,67 +333,51 @@ export default {
               });
               this.$refs["editForm"].resetFields();
               this.editFormVisible = false;
-              this.getUsers();
+              this.getPatients();
             });
           });
         }
       });
     },
-    //新增
-    addSubmit: function() {
-      this.$refs.addForm.validate(valid => {
-        if (valid) {
-          this.$confirm("确认提交吗？", "提示", {}).then(() => {
-            this.addLoading = true;
-            //NProgress.start();
-            let para = Object.assign({}, this.addForm);
-            para.birth =
-              !para.birth || para.birth == ""
-                ? ""
-                : util.formatDate.format(new Date(para.birth), "yyyy-MM-dd");
-            addUser(para).then(res => {
-              this.addLoading = false;
-              //NProgress.done();
-              this.$message({
-                message: "提交成功",
-                type: "success"
-              });
-              this.$refs["addForm"].resetFields();
-              this.addFormVisible = false;
-              this.getUsers();
-            });
-          });
-        }
-      });
-    },
+
     selsChange: function(sels) {
       this.sels = sels;
     },
     //批量删除
     batchRemove: function() {
-      var ids = this.sels.map(item => item.id).toString();
+      // console.log(JSON.stringify(this.sels))
+      // var ids = this.sels.map(item => item.patient.patientId).toString();
+      // console.log(JSON.stringify(ids))
+      // ids = [4,13];
+      // console.log(JSON.stringify(ids))
+      console.log("9999999");
+      var ids = [];
+      this.sels.forEach(item => {
+        ids.push(item.patient.patientId.toString());
+      });
+      console.log(JSON.stringify(ids));
       this.$confirm("确认删除选中记录吗？", "提示", {
         type: "warning"
       })
         .then(() => {
           this.listLoading = true;
           //NProgress.start();
-          let para = { ids: ids };
-          batchRemoveUser(para).then(res => {
+          patientApi.batchRemovePatient(ids).then(res => {
+            console.log(JSON.stringify(res));
             this.listLoading = false;
             //NProgress.done();
             this.$message({
               message: "删除成功",
               type: "success"
             });
-            this.getUsers();
+            this.getPatients();
           });
         })
         .catch(() => {});
     }
   },
   mounted() {
-    this.getUsers();
+    this.getPatients();
   }
 };
 </script>
