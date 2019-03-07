@@ -37,7 +37,7 @@ export default {
         parse: function (dateString, pattern) {
             var matchs1 = pattern.match(SIGN_REGEXP);
             var matchs2 = dateString.match(/(\d)+/g);
-            if (matchs1.length == matchs2.length) {
+            if (matchs1.length && matchs2.length && matchs1.length == matchs2.length) {
                 var _date = new Date(1970, 0, 1);
                 for (var i = 0; i < matchs1.length; i++) {
                     var _int = parseInt(matchs2[i]);

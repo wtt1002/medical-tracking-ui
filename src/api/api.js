@@ -27,23 +27,32 @@ export const editUser = params => { return axios.get(`${base}/user/edit`, { para
 export const addUser = params => { return axios.get(`${base}/user/add`, { params: params }); };
 
 const userApi = {
-    requestLogin : (params) => { console.log(params); return axios.post(`/apis${base}/user/login`, params).then(res => res.data); },
+    requestLogin: (params) => { console.log(params); return axios.post(`/apis${base}/user/login`, params).then(res => res.data); },
 };
 const patientApi = {
     //分页查询患者
-    getPatientListPage : (params) => { console.log(params); return axios.post(`/apis${base}/patient/list`, params).then(res => res.data); },
+    getPatientListPage: (params) => { console.log(params); return axios.post(`/apis${base}/patient/list`, params).then(res => res.data); },
     //根据id获取病人信息
-    getPatient : (params) => { console.log(params); return axios.get(`/apis${base}/patient/edit?patientId=` + params).then(res => res.data); },
+    getPatient: (params) => { console.log(params); return axios.get(`/apis${base}/patient/edit?patientId=` + params).then(res => res.data); },
     //保存更新的患者信息
-    savePatient : (params) => { console.log(params); return axios.post(`/apis${base}/patient/save`, params).then(res => res.data); },
+    savePatient: (params) => { console.log(params); return axios.post(`/apis${base}/patient/save`, params).then(res => res.data); },
     //添加患者
-    addPatient : (params) => { console.log(params); return axios.post(`/apis${base}/patient/add`, params).then(res => res.data); },
+    addPatient: (params) => { console.log(params); return axios.post(`/apis${base}/patient/add`, params).then(res => res.data); },
     //删除单个患者
-    removePatient : (params) => { return axios.get(`/apis${base}/patient/remove?patientId=` + params).then(res => res.data); },
+    removePatient: (params) => { return axios.get(`/apis${base}/patient/remove?patientId=` + params).then(res => res.data); },
     //批量删除患者
-    batchRemovePatient : (params) => { console.log(params); return axios.post(`/apis${base}/patient/batchRemove`, params).then(res => res.data); },
+    batchRemovePatient: (params) => { console.log(params); return axios.post(`/apis${base}/patient/batchRemove`, params).then(res => res.data); },
+}
+const recordApi = {
+    //获取患者病历列表
+    getRecordsListPage: (params) => { return axios.post(`/apis${base}/medicalHistory/records`, params).then(res => res.data); },
+    //新增病历
+    addMedicalHistory: (params) => { return axios.post(`/apis${base}/medicalHistory/add`, params).then(res => res.data); },
+    //更新病历
+    getMedicalHistory: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/detail?medicalHistoryId=` + params).then(res => res.data); },
 }
 export {
     userApi,
-    patientApi
+    patientApi,
+    recordApi
 }

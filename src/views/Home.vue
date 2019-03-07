@@ -53,7 +53,8 @@
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<strong class="title">{{$route.name}}</strong>
+						<!-- <strong class="title" style="margin-top:20px; margin-bottom:20px">{{$route.name}}</strong> -->
+						<h3 style="color:#666; margin-top:-5px; margin-bottom:-5px">{{$route.name}}</h3>
 						<el-breadcrumb separator="/" class="breadcrumb-inner">
 							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
 								{{ item.name }}

@@ -297,8 +297,8 @@ export default {
     },
     //patientCase
     patientCase:function(index, row){
-      console.log("王婷婷你是说什么？？")
-      alert(row.patient.patientId)
+      sessionStorage.setItem("currentPatient",row.patient.patientId);
+      this.$router.push({ path: "/records"});
     },
     //显示新增界面
     handleAdd: function() {

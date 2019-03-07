@@ -10,6 +10,9 @@ import Page5 from './views/nav2/Page5.vue'
 import Page6 from './views/nav3/Page6.vue'
 import echarts from './views/charts/echarts.vue'
 import AddPatient from './views/nav1/AddPatient.vue'
+import Records from './views/nav1/Records.vue'
+import MedicalHistory from './views/nav1/MedicalHistory.vue'
+import HistoryPage from './components/mh-pages/HistoryPage.vue'
 
 let routes = [
     {
@@ -36,6 +39,9 @@ let routes = [
             { path: '/addPatient', component: AddPatient, name: '添加患者' },
             { path: '/form', component: Form, name: 'Form' },
             { path: '/user', component: user, name: '列表' },
+            { path: '/records', component: Records, name: '病例列表', hidden: true },
+            { path: '/mhistory', component: MedicalHistory, name: '病历详情'},
+            // { path: '/history', component:HistoryPage, name:'病历'}
 
         ]
     },
