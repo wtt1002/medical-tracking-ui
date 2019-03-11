@@ -9,7 +9,7 @@
     <el-tab-pane label="消息中心" :disabled="true">
 		<HistoryPage></HistoryPage>
     </el-tab-pane>
-    <el-tab-pane label="角色管理">角色管理</el-tab-pane>
+    <el-tab-pane label="角色管理">入院检查</el-tab-pane>
     <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
   </el-tabs>
 </template>
