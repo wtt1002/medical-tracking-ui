@@ -6,8 +6,8 @@
       </span>
 	  <HistoryPage></HistoryPage>
     </el-tab-pane>
-    <el-tab-pane label="消息中心" :disabled="true">
-		<HistoryPage></HistoryPage>
+    <el-tab-pane label="消息中心">
+		<ExamPage></ExamPage>
     </el-tab-pane>
     <el-tab-pane label="角色管理">入院检查</el-tab-pane>
     <el-tab-pane label="定时任务补偿">定时任务补偿</el-tab-pane>
@@ -16,6 +16,7 @@
 
 <script>
 import HistoryPage from "@/components/mh-pages/HistoryPage.vue";
+import ExamPage from "@/components/mh-pages/ExamPage.vue"
 export default {
   data() {
     return {
@@ -23,7 +24,8 @@ export default {
   },
 
   components: {
-    HistoryPage
+    HistoryPage,
+    ExamPage
   },
 
   methods: {
