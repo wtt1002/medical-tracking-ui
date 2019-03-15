@@ -1,74 +1,121 @@
 <template>
-  <div style="margin-left:50px">
+  <div style="margin-left:80px">
     <div class="block" style="margin-top:10px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">血常规</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-date-picker
-        v-model="value1"
+        v-model="timeUI1"
         type="date"
         placeholder="选择日期"
         size="small"
         style="margin-bottom:10px;margin-top:10px"
       ></el-date-picker>
       <el-table :data="bloodExam" border style="width: fit-content;">
-        <el-table-column prop="name" label="中文" width="180"></el-table-column>
-        <el-table-column prop="shortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="itemValue" label="值" width="180">
-          <el-input>123</el-input>
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.examValue"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">{{scope.row.examItemUnit}}</template>
+            </el-input>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="saveTime">保存</el-button>
+    </div>
+
+    <div class="block" style="margin-top:10px; margin-bottom:30px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">肝肾功能</div>
+      <!-- <span class="demonstration">检查日期</span> -->
+      <el-date-picker
+        v-model="timeUI2"
+        type="date"
+        placeholder="选择日期"
+        size="small"
+        style="margin-bottom:10px;margin-top:10px"
+      ></el-date-picker>
+      <el-table :data="liverKidneyExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.examValue"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">{{scope.row.examItemUnit}}</template>
+            </el-input>
+          </template>
         </el-table-column>
       </el-table>
       <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
     </div>
 
-
-    <div class="block" style="margin-top:20px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">肝肾功能</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="value1"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="tableData" border style="width: fit-content;">
-        <el-table-column prop="date" label="日期" width="180"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="address" label="地址" width="180"></el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
-    </div>
-    <div class="block" style="margin-top:20px; margin-bottom:30px">
+    <div class="block" style="margin-top:10px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">血脂检查</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-date-picker
-        v-model="value1"
+        v-model="timeUI3"
         type="date"
         placeholder="选择日期"
         size="small"
         style="margin-bottom:10px;margin-top:10px"
       ></el-date-picker>
-      <el-table :data="tableData" border style="width: fit-content;">
-        <el-table-column prop="date" label="日期" width="180"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="address" label="地址" width="180"></el-table-column>
+      <el-table :data="bloodLipidExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.examValue"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">{{scope.row.examItemUnit}}</template>
+            </el-input>
+          </template>
+        </el-table-column>
       </el-table>
       <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
     </div>
-    <div class="block" style="margin-top:20px; margin-bottom:20px">
+
+    <div class="block" style="margin-top:10px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">凝血检查</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-date-picker
-        v-model="value1"
+        v-model="timeUI4"
         type="date"
         placeholder="选择日期"
         size="small"
         style="margin-bottom:10px;margin-top:10px"
       ></el-date-picker>
-      <el-table :data="tableData" border style="width: fit-content;">
-        <el-table-column prop="date" label="日期" width="180"></el-table-column>
-        <el-table-column prop="name" label="姓名" width="180"></el-table-column>
-        <el-table-column prop="address" label="地址" width="180"></el-table-column>
+      <el-table :data="coagulationExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.examValue"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">{{scope.row.examItemUnit}}</template>
+            </el-input>
+          </template>
+        </el-table-column>
       </el-table>
       <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
     </div>
@@ -82,12 +129,10 @@ import { patientApi, recordApi } from "../../api/api";
 export default {
   data() {
     return {
-      bloodExam:{
-        name:"",
-        shortName:"",
-        itemValue:""
-      },
-
+      bloodExam: Object.assign([], patientData.bloodItem),
+      liverKidneyExam: Object.assign([],patientData.liverKidneyItem),
+      bloodLipidExam:Object.assign([],patientData.bloodLipidItem),
+      coagulationExam:Object.assign([],patientData.coagulationItem),
       addRules: {
         admissionNum: [
           { required: true, message: "请输入住院号", trigger: "blur" }
@@ -124,6 +169,10 @@ export default {
           address: "上海市普陀区金沙江路 1516 弄"
         }
       ],
+      timeUI1: "",
+      timeUI2: "",
+      timeUI3: "",
+      timeUI4: "",
       value1: ""
     };
   },
@@ -134,6 +183,9 @@ export default {
     handleChange(value) {
       // console.log(value);
       // alert(value);
+    },
+    handleEdit(index, row) {
+      console.log(index, row);
     },
     changeOtherFactor(value) {
       // alert(value)
@@ -236,6 +288,11 @@ export default {
             this.isOtherDrug = ["其它"];
           }
         });
+    },
+
+    saveTime: function(){
+      console.log(this.timeUI1)
+      console.log(util.formatDate.format(this.timeUI1,"yyyy-MM-dd"))
     }
   },
   mounted() {
@@ -244,10 +301,4 @@ export default {
 };
 </script>
 <style>
-table {
-  display: table;
-  border-collapse: separate;
-  border-spacing: 2px;
-  border-color: grey;
-}
 </style>
