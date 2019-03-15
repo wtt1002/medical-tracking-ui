@@ -1,6 +1,6 @@
 <template>
   <div style="margin-left:80px">
-    <div>
+    <div style="margin-top:10px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px; margin-bottom:10px">人体成分分析仪</div>
       <el-form
         :inline="true"
