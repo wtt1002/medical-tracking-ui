@@ -1,208 +1,213 @@
 <template>
   <div style="margin-left:60px">
-    <div style="color:#409EFF; font-weight:bold; font-size:16px; margin:20px; margin-top:0px">康复量表评分</div>
-    <el-form
-      :inline="true"
-      :model="form"
-      class="demo-form-inline"
-      style="min-width:200px; max-width:800px"
-      label-position="right"
-      label-width="80px"
-    >
-      <el-form-item label="SAS">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">分</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="SDS">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">分</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="NA">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">分</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="PSQI">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">分</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="IPQA">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">分</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="Fagerstorm">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">分</template>
-          </el-input>
-        </template>
-      </el-form-item>
-    </el-form>
-
-    <div style="color:#409EFF; font-weight:bold; font-size:16px; margin:20px">入院试验</div>
-    <el-form
-      :inline="true"
-      :model="form"
-      class="demo-form-inline"
-      style="min-width:200px; max-width:800px"
-      label-position="right"
-      label-width="110px"
-    >
-      <el-form-item label="左手握力">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">Kg</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="右手握力">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">Kg</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="3m往返试验">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">秒</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="4m步行试验">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">秒</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="椅子站起试验">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">秒</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="座位前伸">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">秒</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="平衡试验（左）">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">秒</template>
-          </el-input>
-        </template>
-      </el-form-item>
-      <el-form-item label="平衡试验（右）">
-        <template scope="scope">
-          <el-input
-            size="medium"
-            v-model="form.user"
-            placeholder
-            @change="handleEdit(scope.$index, scope.row)"
-            style="text-align: left"
-          >
-            <template slot="append">秒</template>
-          </el-input>
-        </template>
-      </el-form-item>
-    </el-form>
+    <div style="margin-top:10px; margin-bottom:30px">
+      <div
+        style="color:#409EFF; font-weight:bold; font-size:16px; margin:20px; margin-top:0px"
+      >康复量表评分</div>
+      <el-form
+        :inline="true"
+        :model="form"
+        class="demo-form-inline"
+        style="min-width:200px; max-width:800px"
+        label-position="right"
+        label-width="80px"
+      >
+        <el-form-item label="SAS">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">分</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="SDS">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">分</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="NA">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">分</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="PSQI">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">分</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="IPQA">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">分</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="Fagerstorm">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">分</template>
+            </el-input>
+          </template>
+        </el-form-item>
+      </el-form>
+    </div>
+    <div style="margin-top:10px; margin-bottom:30px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px; margin:20px">入院试验</div>
+      <el-form
+        :inline="true"
+        :model="form"
+        class="demo-form-inline"
+        style="min-width:200px; max-width:800px"
+        label-position="right"
+        label-width="110px"
+      >
+        <el-form-item label="左手握力">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">Kg</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="右手握力">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">Kg</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="3m往返试验">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">秒</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="4m步行试验">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">秒</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="椅子站起试验">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">秒</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="座位前伸">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">秒</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="平衡试验（左）">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">秒</template>
+            </el-input>
+          </template>
+        </el-form-item>
+        <el-form-item label="平衡试验（右）">
+          <template scope="scope">
+            <el-input
+              size="medium"
+              v-model="form.user"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">秒</template>
+            </el-input>
+          </template>
+        </el-form-item>
+      </el-form>
+    </div>
 
     <div>
       <div style="color:#409EFF; font-weight:bold; font-size:16px; margin:20px">其它测评量</div>
@@ -243,7 +248,12 @@
       </el-form>
       <el-form>
         <el-form-item>
-          <el-button type="primary" @click="saveOrUpdate" :loading="addLoading" style="margin-left:320px">立即创建</el-button>
+          <el-button
+            type="primary"
+            @click="saveOrUpdate"
+            :loading="addLoading"
+            style="margin-left:320px"
+          >立即创建</el-button>
         </el-form-item>
       </el-form>
     </div>
