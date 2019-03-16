@@ -158,6 +158,40 @@
       </div>
       <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
     </div>
+
+    <div style="margin-top:10px; margin-bottom:30px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">6分钟步行试验</div>
+      <!-- <span class="demonstration">检查日期</span> -->
+      <el-date-picker
+        v-model="timeUI2"
+        type="date"
+        placeholder="选择日期"
+        size="small"
+        style="margin-bottom:10px;margin-top:10px"
+      ></el-date-picker>
+      <el-table :data="walkExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="200"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="200"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="200">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.examValue"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">{{scope.row.examItemUnit}}</template>
+            </el-input>
+          </template>
+        </el-table-column>
+      </el-table>
+      <div style="width:600px; margin-top:10px; margin-bottom:10px">
+        <!-- <label>运动心肺功能检测结论：</label> -->
+        <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
+      </div>
+      <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
+    </div>
   </div>
 </template>
 
@@ -174,6 +208,7 @@ export default {
       coagulationExam: Object.assign([], patientData.coagulationItem),
       noninvasiveExam: Object.assign([], patientData.noninvasiveItem),
       cardiopulmonaryExam: Object.assign([], patientData.cardiopulmonaryItem),
+      walkExam:Object.assign([],patientData.walkItem),
       addRules: {
         admissionNum: [
           { required: true, message: "请输入住院号", trigger: "blur" }
