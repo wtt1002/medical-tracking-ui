@@ -1,7 +1,11 @@
 <template>
   <section>
     <!--新增界面-->
+<<<<<<< 275a8411513d3e9b8b7190491eeb0c542b44d079
     <!-- <el-dialog title="新增ssssss" v-model="addFormVisible" :close-on-click-modal="false"> -->
+=======
+    <!-- <el-dialog title="新增患者" v-model="addFormVisible" :close-on-click-modal="false"> -->
+>>>>>>> git test zhy
     <el-form
       :model="addForm"
       label-width="120px"
