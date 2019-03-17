@@ -512,6 +512,38 @@ var patientData = {
         examIndex: 1,
         itemShortName: "FEV1/FVC%",
         examItemUnit: ""
-    }]
+    }],
+    walkItem: [
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "步行",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "walk",
+            examItemUnit: "m"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "心功能",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "Borg量表",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: "分"
+        }
+    ]
 }
 export { patientData }
