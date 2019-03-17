@@ -1,100 +1,7 @@
 <template>
   <div style="margin-left:80px">
-    <div style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px; margin-bottom:10px">人体成分分析仪</div>
-      <el-form
-        :inline="true"
-        :model="form"
-        class="demo-form-inline"
-        style="min-width:200px; max-width:800px"
-        label-position="right"
-        label-width="80px"
-      >
-        <el-form-item label="身高">
-          <template scope="scope">
-            <el-input
-              size="medium"
-              v-model="form.user"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">cm</template>
-            </el-input>
-          </template>
-        </el-form-item>
-        <el-form-item label="体重">
-          <template scope="scope">
-            <el-input
-              size="medium"
-              v-model="form.user"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">Kg</template>
-            </el-input>
-          </template>
-        </el-form-item>
-
-        <el-form-item label="肌肉重量">
-          <template scope="scope">
-            <el-input
-              size="medium"
-              v-model="form.user"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">Kg</template>
-            </el-input>
-          </template>
-        </el-form-item>
-        <el-form-item label="脂肪重量">
-          <template scope="scope">
-            <el-input
-              size="medium"
-              v-model="form.user"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">Kg</template>
-            </el-input>
-          </template>
-        </el-form-item>
-
-        <el-form-item label="体脂比">
-          <template scope="scope">
-            <el-input
-              size="medium"
-              v-model="form.user"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">%</template>
-            </el-input>
-          </template>
-        </el-form-item>
-        <el-form-item label="BMI">
-          <template scope="scope">
-            <el-input
-              size="medium"
-              v-model="form.user"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">Kg/m²</template>
-            </el-input>
-          </template>
-        </el-form-item>
-      </el-form>
-    </div>
-
-    <div style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">无创心功能</div>
+    <div class="block" style="margin-top:10px; margin-bottom:30px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">血常规</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-date-picker
         v-model="timeUI1"
@@ -103,10 +10,10 @@
         size="small"
         style="margin-bottom:10px;margin-top:10px"
       ></el-date-picker>
-      <el-table :data="noninvasiveExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="200"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="200"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="200">
+      <el-table :data="bloodExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
           <template scope="scope">
             <el-input
               size="small"
@@ -120,47 +27,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <div style="width:600px; margin-top:10px; margin-bottom:10px">
-        <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
-      </div>
-      <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
-    </div>
-    <div style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">运动心肺功能检测</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI2"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="cardiopulmonaryExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="200"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="200"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="200">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <div style="width:600px; margin-top:10px; margin-bottom:10px">
-        <!-- <label>运动心肺功能检测结论：</label> -->
-        <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
-      </div>
-      <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="saveTime">保存</el-button>
     </div>
 
-    <div style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">6分钟步行试验</div>
+    <div class="block" style="margin-top:10px; margin-bottom:30px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">肝肾功能</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-date-picker
         v-model="timeUI2"
@@ -169,10 +40,10 @@
         size="small"
         style="margin-bottom:10px;margin-top:10px"
       ></el-date-picker>
-      <el-table :data="walkExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="200"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="200"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="200">
+      <el-table :data="liverKidneyExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
           <template scope="scope">
             <el-input
               size="small"
@@ -186,11 +57,67 @@
           </template>
         </el-table-column>
       </el-table>
-      <div style="width:600px; margin-top:10px; margin-bottom:10px">
-        <!-- <label>运动心肺功能检测结论：</label> -->
-        <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
-      </div>
-      <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+    </div>
+
+    <div class="block" style="margin-top:10px; margin-bottom:30px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">血脂检查</div>
+      <!-- <span class="demonstration">检查日期</span> -->
+      <el-date-picker
+        v-model="timeUI3"
+        type="date"
+        placeholder="选择日期"
+        size="small"
+        style="margin-bottom:10px;margin-top:10px"
+      ></el-date-picker>
+      <el-table :data="bloodLipidExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.examValue"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">{{scope.row.examItemUnit}}</template>
+            </el-input>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+    </div>
+
+    <div class="block" style="margin-top:10px; margin-bottom:30px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">凝血检查</div>
+      <!-- <span class="demonstration">检查日期</span> -->
+      <el-date-picker
+        v-model="timeUI4"
+        type="date"
+        placeholder="选择日期"
+        size="small"
+        style="margin-bottom:10px;margin-top:10px"
+      ></el-date-picker>
+      <el-table :data="coagulationExam" border style="width: fit-content;">
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examValue" label="值" width="180">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.examValue"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left"
+            >
+              <template slot="append">{{scope.row.examItemUnit}}</template>
+            </el-input>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
     </div>
   </div>
 </template>
@@ -203,12 +130,9 @@ export default {
   data() {
     return {
       bloodExam: Object.assign([], patientData.bloodItem),
-      liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
-      bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
-      coagulationExam: Object.assign([], patientData.coagulationItem),
-      noninvasiveExam: Object.assign([], patientData.noninvasiveItem),
-      cardiopulmonaryExam: Object.assign([], patientData.cardiopulmonaryItem),
-      walkExam:Object.assign([],patientData.walkItem),
+      liverKidneyExam: Object.assign([],patientData.liverKidneyItem),
+      bloodLipidExam:Object.assign([],patientData.bloodLipidItem),
+      coagulationExam:Object.assign([],patientData.coagulationItem),
       addRules: {
         admissionNum: [
           { required: true, message: "请输入住院号", trigger: "blur" }
@@ -223,10 +147,6 @@ export default {
         weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
       },
       options: patientData.diagnoseOptions,
-      form: {
-        user: "",
-        region: ""
-      },
       tableData: [
         {
           date: "2016-05-02",
@@ -247,43 +167,6 @@ export default {
           date: "2016-05-03",
           name: "王小虎",
           address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ],
-      tableDataa: [
-        {
-          id: "12987122",
-          name: "王小虎",
-          amount1: "234",
-          amount2: "3.2",
-          amount3: 10
-        },
-        {
-          id: "12987123",
-          name: "王小虎",
-          amount1: "165",
-          amount2: "4.43",
-          amount3: 12
-        },
-        {
-          id: "12987124",
-          name: "王小虎",
-          amount1: "324",
-          amount2: "1.9",
-          amount3: 9
-        },
-        {
-          id: "12987125",
-          name: "王小虎",
-          amount1: "621",
-          amount2: "2.2",
-          amount3: 17
-        },
-        {
-          id: "12987126",
-          name: "王小虎",
-          amount1: "539",
-          amount2: "4.1",
-          amount3: 15
         }
       ],
       timeUI1: "",
@@ -407,34 +290,9 @@ export default {
         });
     },
 
-    saveTime: function() {
-      console.log(this.timeUI1);
-      console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
-    },
-    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex % 2 === 0) {
-        if (columnIndex === 0) {
-          return [1, 2];
-        } else if (columnIndex === 1) {
-          return [0, 0];
-        }
-      }
-    },
-
-    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 0) {
-        if (rowIndex % 2 === 0) {
-          return {
-            rowspan: 2,
-            colspan: 1
-          };
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0
-          };
-        }
-      }
+    saveTime: function(){
+      console.log(this.timeUI1)
+      console.log(util.formatDate.format(this.timeUI1,"yyyy-MM-dd"))
     }
   },
   mounted() {
