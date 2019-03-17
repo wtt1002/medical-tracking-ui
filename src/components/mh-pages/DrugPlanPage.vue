@@ -1,81 +1,39 @@
 <template>
   <div style="margin-left:80px">
     <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">PCI术后检查</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI1"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="pciItem" border style="width: fit-content;">
-        <el-table-column prop="drugCh" label="中文" width="180"></el-table-column>
-        <el-table-column prop="drugEn" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
+      <div style="color:#409EFF; font-weight:bold; font-size:16px; margin-bottom:20px">出院带药</div>
+      <el-table :data="drugPlanItem[0]" border style="width: fit-content;">
+        <el-table-column prop="category" label="药物类别" width="300"></el-table-column>
+        <el-table-column prop="drugName" label="药物名称" width="400"></el-table-column>
+        <el-table-column prop="singleDose" label="单次剂量/mg" width="200"></el-table-column>
+        <el-table-column prop="timeOfDay" label="次/每日" width="200"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="120">
+          <template slot-scope="scope">
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index, tableData4)"
+              type="text"
               size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left;width:60px"
-            >  
-            </el-input>
-            <label>{{scope.row.pciItemUnit}}</label>
+            >删除</el-button>
+          </template>
+        </el-table-column>
+      </el-table>
+      <el-table :data="drugPlanItem[1]" border style="width: fit-content;">
+        <el-table-column prop="category" label="药物类别" width="300"></el-table-column>
+        <el-table-column prop="drugName" label="药物名称" width="400"></el-table-column>
+        <el-table-column prop="singleDose" label="单次剂量/mg" width="200"></el-table-column>
+        <el-table-column prop="timeOfDay" label="次/每日" width="200"></el-table-column>
+        <el-table-column fixed="right" label="操作" width="120">
+          <template slot-scope="scope">
+            <el-button
+              @click.native.prevent="deleteRow(scope.$index, drugPlanItem[0])"
+              type="text"
+              size="small"
+            >删除</el-button>
           </template>
         </el-table-column>
       </el-table>
       <el-button style="margin-top:20px; background-color:#EEE" @click="saveTime">保存</el-button>
     </div>
-    <el-form>
-      <el-form-item label="血管路入并发症：">
-        <el-checkbox-group v-model="summary.bloodDisease">
-          <el-checkbox v-for="factor in factors" :label="factor" :key="factor">{{factor}}</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-    </el-form>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">评分</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-row>
-        <el-col :span="24">
-          <div class="grid-content bg-purple-light">
-            <label>GRACE评分：</label>
-            <el-input style="text-align: left;width:70px">
-            </el-input>
-            <label>分</label>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="24">
-          <div class="grid-content bg-purple-light">
-            <label>DAPT   评分：</label>
-            <el-input style="text-align: left;width:70px">
-            </el-input>
-            <label>分</label>
-          </div>
-        </el-col>
-      </el-row>
-      <el-row>
-        <el-col :span="24">
-          <div class="grid-content bg-purple-light">
-            <label>Crucede   评分：</label>
-            <el-input style="text-align: left;width:70px">
-            </el-input>
-            <label>分</label>
-          </div>
-        </el-col>
-      </el-row>
-
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
-    </div>
-
-    
-
     
   </div>
 </template>
@@ -87,20 +45,19 @@ import { patientApi, recordApi } from "../../api/api";
 export default {
   data() {
     return {
-      pciItem: Object.assign([], patientData.pciItem),
+      drugPlanItem: Object.assign([], patientData.drugPlanItem),
       liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
       bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
-      coagulationExam: Object.assign([], patientData.coagulationItem),
-      summary: {
-        bloodDisease: ["血肿"]
-      },
-      score:{
-        graceScore:"",
-      },
-      factors: patientData.bloodOptions
+      coagulationExam: Object.assign([], patientData.coagulationItem)
     };
   },
   methods: {
+    deleteRow(index, rows) {
+      this.$confirm("确认删除吗？", "提示", {}).then(() => {
+            rows.splice(index, 1);
+          });
+      
+    },
     onSubmit() {
       console.log("submit!");
     },
@@ -226,13 +183,12 @@ export default {
 </script>
 <style>
 .el-row {
-    margin-bottom: 5px;
-    
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
+  margin-bottom: 5px;
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
 </style>

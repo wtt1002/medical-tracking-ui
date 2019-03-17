@@ -21,7 +21,9 @@
     <el-tab-pane label="出院小结">
       <ConclusionPage></ConclusionPage>
     </el-tab-pane>
-    <el-tab-pane label="用药方案">用药方案</el-tab-pane>
+    <el-tab-pane label="用药方案">
+      <DrugPlanPage></DrugPlanPage>
+    </el-tab-pane>
     <el-tab-pane label="随访记录">
       <FollowUpPage></FollowUpPage>
     </el-tab-pane>
@@ -36,6 +38,7 @@ import ConclusionPage from "@/components/mh-pages/ConclusionPage.vue";
 import FollowUpPage from "@/components/mh-pages/FollowUpPage.vue";
 import PCIPage from "@/components/mh-pages/PCIPage.vue";
 import AssessmentPage from "@/components/mh-pages/AssessmentPage.vue";
+import DrugPlanPage from "@/components/mh-pages/DrugPlanPage.vue";
 export default {
   data() {
     return {};
@@ -48,7 +51,8 @@ export default {
     ConclusionPage,
     FollowUpPage,
     PCIPage,
-    AssessmentPage
+    AssessmentPage,
+    DrugPlanPage
   },
 
   methods: {}
