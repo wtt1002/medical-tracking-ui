@@ -1,123 +1,149 @@
 <template>
-  <div style="margin-left:80px">
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">血常规</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI1"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="bloodExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveTime">保存</el-button>
+  <div style="margin-left:0px">
+    <div style="margin-bottom:30px; padding:10px 0; border-bottom:1px solid #EEE">
+      <label style="margin-left:0px; margin-right:10px">冠脉介入:</label>
+      <el-radio v-model="radio" label="1">有</el-radio>
+      <el-radio v-model="radio" label="2">无</el-radio>
+      <label style="margin-left:50px; margin-right:10px">CABG:</label>
+      <el-radio v-model="radio" label="1">有</el-radio>
+      <el-radio v-model="radio" label="2">无</el-radio>
+      <label style="margin-left:50px; margin-right:10px">溶栓:</label>
+      <el-radio v-model="radio" label="1">有</el-radio>
+      <el-radio v-model="radio" label="2">无</el-radio>
+      <div style="margin-top:5px; margin-left:50px;">
+        <el-checkbox-group v-if="radio == '1'" v-model="checkList">
+          <el-checkbox label="左主干(LM)"></el-checkbox>
+          <el-checkbox label="左前降支(LAD)"></el-checkbox>
+          <el-checkbox label="左回旋支(LCX)"></el-checkbox>
+          <el-checkbox label="右冠状动脉(RCA)"></el-checkbox>
+        </el-checkbox-group>
+      </div>
     </div>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">肝肾功能</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI2"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="liverKidneyExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+    <div>
+      <label style="margin-left:0px; margin-right:10px">介入治疗:</label>
+      <el-radio v-model="radio" label="1">择期</el-radio>
+      <el-radio v-model="radio" label="2">急诊</el-radio>
     </div>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">血脂检查</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI3"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="bloodLipidExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+    <div>
+      <label>手术时间</label>
+      <el-date-picker type="date" placeholder="选择日期" v-model="pci.operateTimeUI" size="small"></el-date-picker>
     </div>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">凝血检查</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI4"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="coagulationExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
+    <div>
+      <label>急诊PCI DB2时间：</label>
+      <el-input v-model="pci.pcidb2" style="width:50px" size="small"></el-input>
+      <label>min</label>
+    </div>
+    <div>
+      <label>造影结果：</label>
+      <el-table :data="zaoying" :span-method="arraySpanMethod" border style="width: fit-content">
+        <el-table-column prop="position" label="position" width="100"></el-table-column>
+        <el-table-column prop="LM" label="左主干(LM)" width="150">
           <template scope="scope">
             <el-input
               size="small"
-              v-model="scope.row.examValue"
+              v-model="scope.row.LM"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
+              style="text-align: left; width:60px"
+            ></el-input>%
+          </template>
+        </el-table-column>
+        <el-table-column prop="LAD" label="左前降支(LAD)" width="150">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.LAD"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left; width:60px"
+            ></el-input>%
+          </template>
+        </el-table-column>
+        <el-table-column prop="LCX" label="左回旋支(LCX)" width="150">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.LCX"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left; width:60px"
+            ></el-input>%
+          </template>
+        </el-table-column>
+        <el-table-column prop="RCA" label="右冠状动脉(RCA)" width="150">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.RCA"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left; width:60px"
+            ></el-input>%
+          </template>
+        </el-table-column>
+        <el-table-column prop="OTHER" label="其他血管" width="120">
+          <template scope="scope">
+            <el-input
+              size="small"
+              v-model="scope.row.OTHER"
+              placeholder
+              @change="handleEdit(scope.$index, scope.row)"
+              style="text-align: left; width:60px"
+            ></el-input>%
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+    </div>
+    <div>
+      <label>PCI抗血小板药：</label>
+      <el-checkbox-group v-model="checkList">
+        <el-checkbox label="左主干(LM)"></el-checkbox>
+        <el-checkbox label="左前降支(LAD)"></el-checkbox>
+        <el-checkbox label="左回旋支(LCX)"></el-checkbox>
+        <el-checkbox label="右冠状动脉(RCA)"></el-checkbox>
+      </el-checkbox-group>
+    </div>
+    <div>
+      <label>PCI抗凝药物：</label>
+      <el-checkbox-group v-model="checkList">
+        <el-checkbox label="左主干(LM)"></el-checkbox>
+        <el-checkbox label="左前降支(LAD)"></el-checkbox>
+        <el-checkbox label="左回旋支(LCX)"></el-checkbox>
+        <el-checkbox label="右冠状动脉(RCA)"></el-checkbox>
+      </el-checkbox-group>
+      <el-checkbox-group>
+        <el-checkbox label="其它">
+          <el-input placeholder="其它"></el-input>
+        </el-checkbox>
+      </el-checkbox-group>
+    </div>
+    <div>
+      <label>术中用药：</label>
+      <el-checkbox-group v-model="checkList">
+        <el-checkbox label="左主干(LM)"></el-checkbox>
+        <el-checkbox label="左前降支(LAD)"></el-checkbox>
+        <el-checkbox label="左回旋支(LCX)"></el-checkbox>
+        <el-checkbox label="右冠状动脉(RCA)"></el-checkbox>
+      </el-checkbox-group>
+    </div>
+    <div>
+      <label>辅助器械：</label>
+      <el-checkbox-group v-model="checkList">
+        <el-checkbox label="左主干(LM)"></el-checkbox>
+        <el-checkbox label="左前降支(LAD)"></el-checkbox>
+        <el-checkbox label="左回旋支(LCX)"></el-checkbox>
+        <el-checkbox label="右冠状动脉(RCA)"></el-checkbox>
+      </el-checkbox-group>
+    </div>
+    <div>
+      <el-select v-model="pci.contrastMediumType" placeholder="请选择">
+        <el-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+        ></el-option>
+      </el-select>
     </div>
   </div>
 </template>
@@ -130,53 +156,132 @@ export default {
   data() {
     return {
       bloodExam: Object.assign([], patientData.bloodItem),
-      liverKidneyExam: Object.assign([],patientData.liverKidneyItem),
-      bloodLipidExam:Object.assign([],patientData.bloodLipidItem),
-      coagulationExam:Object.assign([],patientData.coagulationItem),
-      addRules: {
-        admissionNum: [
-          { required: true, message: "请输入住院号", trigger: "blur" }
-        ],
-        intime: [
-          { required: true, message: "请选择入院时间", trigger: "blur" }
-        ],
-        outtime: [
-          { required: true, message: "请选择出院时间", trigger: "blur" }
-        ],
-        height: [{ required: true, message: "请输入身高", trigger: "blur" }],
-        weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
-      },
-      options: patientData.diagnoseOptions,
-      tableData: [
+      liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
+      bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
+      coagulationExam: Object.assign([], patientData.coagulationItem),
+      radio: "1",
+      checkList: ["选中且禁用", "复选框 A"],
+      zaoying: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
+          position: "开口",
+          LM: "",
+          LAD: "",
+          LCX: "45",
+          RCA: "",
+          OTHER: ""
         },
         {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
+          position: "近段",
+          LM: "",
+          LAD: "",
+          LCX: "66",
+          RCA: "",
+          OTHER: ""
         },
         {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
+          position: "中段",
+          LM: "",
+          LAD: "",
+          LCX: "",
+          RCA: "23",
+          OTHER: ""
         },
         {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
+          position: "远段",
+          LM: "",
+          LAD: "",
+          LCX: "",
+          RCA: "",
+          OTHER: ""
         }
       ],
-      timeUI1: "",
-      timeUI2: "",
-      timeUI3: "",
-      timeUI4: "",
-      value1: ""
+      pci: {
+        pciType: {
+          type: "",
+          info: []
+        },
+        cabg: "",
+        thrombolysis: "",
+        therapy_type: "",
+        operateTimeUI: "",
+        pcidb2: "",
+        contrastMediumType:"2"
+      },
+      options: [
+        {
+          value: "1",
+          label: "黄金糕"
+        },
+        {
+          value: "2",
+          label: "双皮奶"
+        },
+        {
+          value: "3",
+          label: "蚵仔煎"
+        },
+        {
+          value: "4",
+          label: "龙须面"
+        },
+        {
+          value: "5",
+          label: "北京烤鸭"
+        }
+      ],
+      tableData6: [
+        {
+          id: "12987122",
+          name: "王小虎",
+          amount1: "234",
+          amount2: "3.2",
+          amount3: 10
+        },
+        {
+          id: "12987123",
+          name: "王小虎",
+          amount1: "165",
+          amount2: "4.43",
+          amount3: 12
+        },
+        {
+          id: "12987124",
+          name: "王小虎",
+          amount1: "324",
+          amount2: "1.9",
+          amount3: 9
+        },
+        {
+          id: "12987125",
+          name: "王小虎",
+          amount1: "621",
+          amount2: "2.2",
+          amount3: 17
+        },
+        {
+          id: "12987126",
+          name: "王小虎",
+          amount1: "539",
+          amount2: "4.1",
+          amount3: 15
+        }
+      ]
     };
   },
   methods: {
+    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
+      console.log(row);
+      console.log(column);
+      console.log(rowIndex);
+      console.log(columnIndex);
+      if (rowIndex % 2 === 0) {
+        if (columnIndex === 0) {
+          return [1, 2];
+        } else if (columnIndex === 1) {
+          return [0, 0];
+        }
+      }
+    },
     onSubmit() {
       console.log("submit!");
     },
@@ -290,9 +395,9 @@ export default {
         });
     },
 
-    saveTime: function(){
-      console.log(this.timeUI1)
-      console.log(util.formatDate.format(this.timeUI1,"yyyy-MM-dd"))
+    saveTime: function() {
+      console.log(this.timeUI1);
+      console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
     }
   },
   mounted() {
