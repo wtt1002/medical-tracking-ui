@@ -105,7 +105,7 @@
       ></el-date-picker>
       <el-table :data="noninvasiveExam" border style="width: fit-content;">
         <el-table-column prop="examItemName" label="中文" width="200"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="200"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="150"></el-table-column>
         <el-table-column prop="examValue" label="值" width="200">
           <template scope="scope">
             <el-input
@@ -113,14 +113,14 @@
               v-model="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:60px"
             >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
             </el-input>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
-      <div style="width:600px; margin-top:10px; margin-bottom:10px">
+      <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
       <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
@@ -137,7 +137,7 @@
       ></el-date-picker>
       <el-table :data="cardiopulmonaryExam" border style="width: fit-content;">
         <el-table-column prop="examItemName" label="中文" width="200"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="200"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="150"></el-table-column>
         <el-table-column prop="examValue" label="值" width="200">
           <template scope="scope">
             <el-input
@@ -145,14 +145,14 @@
               v-model="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:60px"
             >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
             </el-input>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
-      <div style="width:600px; margin-top:10px; margin-bottom:10px">
+      <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <!-- <label>运动心肺功能检测结论：</label> -->
         <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
@@ -171,7 +171,7 @@
       ></el-date-picker>
       <el-table :data="walkExam" border style="width: fit-content;">
         <el-table-column prop="examItemName" label="中文" width="200"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="200"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="150"></el-table-column>
         <el-table-column prop="examValue" label="值" width="200">
           <template scope="scope">
             <el-input
@@ -179,14 +179,14 @@
               v-model="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:60px"
             >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
             </el-input>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
-      <div style="width:600px; margin-top:10px; margin-bottom:10px">
+      <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <!-- <label>运动心肺功能检测结论：</label> -->
         <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>

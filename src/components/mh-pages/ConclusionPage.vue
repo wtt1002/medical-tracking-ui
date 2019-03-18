@@ -91,13 +91,14 @@ export default {
       liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
       bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
       coagulationExam: Object.assign([], patientData.coagulationItem),
+      factors: Object.assign([],patientData.bloodOptions),
       summary: {
         bloodDisease: ["血肿"]
       },
       score:{
         graceScore:"",
       },
-      factors: patientData.bloodOptions
+      timeUI1:""
     };
   },
   methods: {

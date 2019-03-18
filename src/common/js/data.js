@@ -1,4 +1,203 @@
 var patientData = {
+    pciTypeItem: [
+        {
+            value: "1",
+            label: "左主干(LM)"
+        }, {
+            value: "2",
+            label: "左前降支(LAD)"
+        }, {
+            value: "3",
+            label: "左回旋支(LCX)"
+        }, {
+            value: "4",
+            label: "右冠状动脉(RCA)"
+        }],
+    contrastMediumTypeItem: [
+        {
+            value: "1",
+            label: "高渗"
+        }, {
+            value: "2",
+            label: "等渗"
+        }, {
+            value: "3",
+            label: "低渗"
+        }],
+    pciAntiplateletItem: [
+        {
+            value: "1",
+            label: "阿司匹林"
+        }, {
+            value: "2",
+            label: "替格瑞洛"
+        }, {
+            value: "3",
+            label: "氯吡格雷"
+        }],
+    pciAnticoagulantItem: [
+        {
+            value: "1",
+            label: "肝素"
+        }, {
+            value: "2",
+            label: "比伐芦定"
+        }],
+    operateDrugItem: [
+        {
+            value: "1",
+            label: "硝酸甘油"
+        }, {
+            value: "2",
+            label: "尼可地尔"
+        }, {
+            value: "3",
+            label: "Ⅱb/Ⅲa受体拮抗剂"
+        }, {
+            value: "4",
+            label: "Angio guided"
+        }, {
+            value: "5",
+            label: "IVUS guided"
+        }, {
+            value: "6",
+            label: "FFR guided"
+        }],
+    assistiveDeviceItem: [
+        {
+            value: "1",
+            label: "血栓抽吸装置"
+        }, {
+            value: "2",
+            label: "临时起搏器"
+        }, {
+            value: "3",
+            label: "IABP"
+        }, {
+            value: "4",
+            label: "旋磨"
+        }],
+    interventionProblemItem: [
+        {
+            value: "1",
+            label: "无"
+        }, {
+            value: "2",
+            label: "无复流/慢血流"
+        }, {
+            value: "3",
+            label: "冠脉穿孔"
+        }, {
+            value: "4",
+            label: "冠脉撕裂"
+        }, {
+            value: "5",
+            label: "血管内膜下出血"
+        }, {
+            value: "6",
+            label: "急性闭塞"
+        }, {
+            value: "7",
+            label: "心包填塞"
+        }, {
+            value: "8",
+            label: "器械脱落或折断"
+        }, {
+            value: "9",
+            label: "球囊不能收回"
+        }, {
+            value: "10",
+            label: "血/气栓栓塞"
+        }, {
+            value: "11",
+            label: "恶性心率失常"
+        }, {
+            value: "12",
+            label: "死亡"
+        }],
+    contrastOutPutItem: [
+        {
+            position: "开口",
+            LM: "",
+            LAD: "",
+            LCX: "45",
+            RCA: "",
+            OTHER: ""
+        }, {
+            position: "近段",
+            LM: "",
+            LAD: "",
+            LCX: "66",
+            RCA: "",
+            OTHER: ""
+        }, {
+            position: "中段",
+            LM: "",
+            LAD: "",
+            LCX: "",
+            RCA: "23",
+            OTHER: ""
+        },{
+            position: "远段",
+            LM: "",
+            LAD: "",
+            LCX: "",
+            RCA: "",
+            OTHER: ""
+        }
+    ],
+    pciDetailItem: [
+        {
+            position: "LM",
+            catheter: "",
+            wire: "",
+            preBalloon: "",
+            stent: "",
+            aftBalloon: ""
+        }, {
+            position: "LAD",
+            catheter: "",
+            wire: "",
+            preBalloon: "",
+            stent: "",
+            aftBalloon: ""
+        }, {
+            position: "LCX",
+            catheter: "",
+            wire: "",
+            preBalloon: "",
+            stent: "",
+            aftBalloon: ""
+        }, {
+            position: "RCA",
+            catheter: "",
+            wire: "",
+            preBalloon: "",
+            stent: "",
+            aftBalloon: ""
+        }
+    ],
+    pciInfoItem: [
+        {
+            value: "1",
+            label: "左桡动脉"
+        },
+        {
+            value: "2",
+            label: "右桡动脉"
+        }, {
+            value: "3",
+            label: "左股动脉"
+        }, {
+            value: "4",
+            label: "右股动脉"
+        }, {
+            value: "5",
+            label: "尺动脉"
+        }, {
+            value: "6",
+            label: "肱动脉"
+        }],
     drugPlanItem: [
         [
             {
@@ -378,206 +577,208 @@ var patientData = {
             itemShortName: "LVEF",
             examItemUnit: "%"
         }],
-    noninvasiveItem: [{
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "心率",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "HR",
-        examItemUnit: "bpm"
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "每搏输出量",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "SV",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "每搏指数",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "SVI",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "心输出量",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "CO",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "心指数",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "CI",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "心收缩指数",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "CTI",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "左心做功指数",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "LCWi",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "左心收缩时间",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "LVET",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "射血分数",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "EF",
-        examItemUnit: ""
-    }],
-    cardiopulmonaryItem: [{
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "峰值负荷",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "",
-        examItemUnit: "W"
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "峰值",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "",
-        examItemUnit: "METs"
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "峰值",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "",
-        examItemUnit: "VO2/Kg"
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "最大摄氧量",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "VO2max",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "无氧阀",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "AT",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "静息心率",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "",
-        examItemUnit: "bpm"
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "峰值心率",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "",
-        examItemUnit: "bpm"
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "靶心率",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "",
-        examItemUnit: "bpm"
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "1秒用力呼气量",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "FEV1",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "FEV1占预计值百分比",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "%",
-        examItemUnit: ""
-    },
-    {
-        examValueId: "",
-        examItemCode: "",
-        examItemName: "用力呼气量占用力肺活量比值",
-        medicalHistoryId: "",
-        examValue: "",
-        examIndex: 1,
-        itemShortName: "FEV1/FVC%",
-        examItemUnit: ""
-    }],
+    noninvasiveItem: [
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "心率",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "HR",
+            examItemUnit: "bpm"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "每搏输出量",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "SV",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "每搏指数",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "SVI",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "心输出量",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "CO",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "心指数",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "CI",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "心收缩指数",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "CTI",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "左心做功指数",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "LCWi",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "左心收缩时间",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "LVET",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "射血分数",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "EF",
+            examItemUnit: ""
+        }],
+    cardiopulmonaryItem: [
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "峰值负荷",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: "W"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "峰值",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: "METs"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "峰值",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: "VO2/Kg"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "最大摄氧量",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "VO2max",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "无氧阀",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "AT",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "静息心率",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: "bpm"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "峰值心率",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: "bpm"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "靶心率",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "",
+            examItemUnit: "bpm"
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "1秒用力呼气量",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "FEV1",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "FEV1占预计值百分比",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "%",
+            examItemUnit: ""
+        },
+        {
+            examValueId: "",
+            examItemCode: "",
+            examItemName: "用力呼气量占用力肺活量比值",
+            medicalHistoryId: "",
+            examValue: "",
+            examIndex: 1,
+            itemShortName: "FEV1/FVC%",
+            examItemUnit: ""
+        }],
     walkItem: [
         {
             examValueId: "",

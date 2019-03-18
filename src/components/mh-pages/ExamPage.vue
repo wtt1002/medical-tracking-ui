@@ -20,10 +20,11 @@
               v-model="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:60px"
             >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
+              <!-- <template slot="append">{{scope.row.examItemUnit}}</template> -->
             </el-input>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
@@ -50,10 +51,11 @@
               v-model="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:60px"
             >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
+              <!-- <template slot="append">{{scope.row.examItemUnit}}</template> -->
             </el-input>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
@@ -80,10 +82,11 @@
               v-model="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:60px"
             >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
+              <!-- <template slot="append">{{scope.row.examItemUnit}}</template> -->
             </el-input>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
@@ -110,10 +113,11 @@
               v-model="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:60px"
             >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
+              <!-- <template slot="append">{{scope.row.examItemUnit}}</template> -->
             </el-input>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
