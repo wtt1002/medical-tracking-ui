@@ -21,8 +21,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
-            >  
-            </el-input>
+            ></el-input>
             <label>{{scope.row.pciItemUnit}}</label>
           </template>
         </el-table-column>
@@ -41,44 +40,69 @@
       <div style="color:#409EFF; font-weight:bold; font-size:16px">评分</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-row>
-        <el-col :span="24">
+        <el-col :span="12">
           <div class="grid-content bg-purple-light">
             <label>GRACE评分：</label>
-            <el-input style="text-align: left;width:70px">
-            </el-input>
+            <el-input style="text-align: left;width:70px" v-model="score.graceScore"></el-input>
             <label>分</label>
           </div>
         </el-col>
       </el-row>
       <el-row>
-        <el-col :span="24">
+        <el-col :span="12">
           <div class="grid-content bg-purple-light">
-            <label>DAPT   评分：</label>
-            <el-input style="text-align: left;width:70px">
-            </el-input>
+            <label>DAPT 评分：</label>
+            <el-input style="text-align: left;width:70px" v-model="score.daptTotalScore" :readonly="true"></el-input>
             <label>分</label>
           </div>
         </el-col>
+        <el-button class="el-icon-edit" type="info" size="small" style="margin-left:-80px; margin-top:5px" circle @click="changeEdit"></el-button>
       </el-row>
       <el-row>
-        <el-col :span="24">
+        <el-col :span="12">
           <div class="grid-content bg-purple-light">
-            <label>Crucede   评分：</label>
-            <el-input style="text-align: left;width:70px">
-            </el-input>
+            <label>Crucede 评分：</label>
+            <el-input style="text-align: left;width:70px" v-model="score.crucedeScore"></el-input>
             <label>分</label>
           </div>
         </el-col>
       </el-row>
-
+      <div style="margin:10px 0" v-if="datpEdit">
+        <el-table
+          ref="multipleTable"
+          :data="daptExam"
+          tooltip-effect="dark"
+          style="width:fit-content"
+          @selection-change="handleSelectionChange"
+        >
+          <el-table-column type="selection" width="50" v-if="true"></el-table-column>
+          <el-table-column prop="reason" label="项目" width="200">
+            <template slot-scope="scope">
+              <div v-if="scope.row.value == '0'">
+                <label>患者年龄</label>
+                <el-input
+                  size="small"
+                  v-model="scope.row.reason"
+                  placeholder
+                  @blur="handleEdit(scope.$index, scope.row)"
+                  style="text-align: left;width:60px"
+                ></el-input>
+                <label>岁</label>
+              </div>
+              <div v-if="scope.row.value !== '0'">
+                <label>{{scope.row.reason}}</label>
+              </div>
+            </template>
+          </el-table-column>
+          <el-table-column prop="score" label="得分" width="100"></el-table-column>
+          <el-table-column prop="desc" label="说明" show-overflow-tooltip width="350px"></el-table-column>
+        </el-table>
+      </div>
       <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
     </div>
-
-    
-
-    
   </div>
 </template>
+      
 
 <script>
 import util from "../../common/js/util";
@@ -91,31 +115,69 @@ export default {
       liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
       bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
       coagulationExam: Object.assign([], patientData.coagulationItem),
-      factors: Object.assign([],patientData.bloodOptions),
+      factors: Object.assign([], patientData.bloodOptions),
+      daptExam:Object.assign([],patientData.daptItem),
       summary: {
-        bloodDisease: ["血肿"]
+        bloodDisease: []
       },
-      score:{
-        graceScore:"",
+      score: {
+        graceScore: 0,
+        daptScore:[],
+        daptTotalScore:0,
+        crucedeScore:0
       },
-      timeUI1:""
+      multipleSelection: [],
+      timeUI1:"",
+      datpEdit:false
     };
   },
   methods: {
+    toggleSelection(rows) {
+      if (rows) {
+        rows.forEach(row => {
+          this.$refs.multipleTable.toggleRowSelection(row);
+        });
+      } else {
+        this.$refs.multipleTable.clearSelection();
+      }
+    },
+    handleSelectionChange(val) {
+      this.multipleSelection = val;
+      this.calcDapt();
+    },
     onSubmit() {
       console.log("submit!");
     },
     handleChange(value) {
-      // console.log(value);
-      // alert(value);
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      row.score = 0;
+      if(parseInt(row.reason)){
+        var age = parseInt(row.reason);
+        if(age >= 75){
+          row.score = -2;
+        }
+        if(age >= 65){
+          row.score = -1;
+        }
+      }
+      this.calcDapt();
+    },
+    changeEdit(){
+      this.datpEdit = !this.datpEdit;
     },
     changeOtherFactor(value) {
       // alert(value)
       // this.form.riskOtherFactor = value;
       // alert(this.form.riskOtherFactorUI);
+    },
+    calcDapt(){
+      var dapt = 0;
+      this.multipleSelection.forEach(function(ele){
+        dapt += ele.score;
+      });
+      this.score.daptTotalScore = dapt;
+      // console.log(this.)
     },
     saveOrUpdate: function() {
       this.$refs.form.validate(valid => {
@@ -227,13 +289,12 @@ export default {
 </script>
 <style>
 .el-row {
-    margin-bottom: 5px;
-    
-  }
-  .el-col {
-    border-radius: 4px;
-  }
-  .bg-purple-light {
-    background: #e5e9f2;
-  }
+  margin-bottom: 5px;
+}
+.el-col {
+  border-radius: 4px;
+}
+.bg-purple-light {
+  background: #e5e9f2;
+}
 </style>
