@@ -1,4 +1,59 @@
 var patientData = {
+    daptItem: [
+        {
+            value: "0",
+            reason: "0",
+            score: 0,
+            desc: "年龄≥75得-2分，65-74得-1分，＜65得0分"
+        },
+        {
+            value: "1",
+            reason: "目前吸烟",
+            score: 1,
+            desc: "目前吸烟得1分"
+        },
+        {
+            value: "2",
+            reason: "糖尿病",
+            score: 1,
+            desc: "糖尿病得1分"
+        },
+        {
+            value: "3",
+            reason: "此次心梗",
+            score: 1,
+            desc: "此次心梗得1分"
+        },
+        {
+            value: "4",
+            reason: "既往PCI或心梗",
+            score: 1,
+            desc: "既往PCI或心梗得1分"
+        },
+        {
+            value: "5",
+            reason: "紫杉醇支架",
+            score: 1,
+            desc: "紫杉醇支架得1分"
+        },
+        {
+            value: "6",
+            reason: "支架直径＜3mm",
+            score: 1,
+            desc: "支架直径<3mm得1分"
+        },
+        {
+            value: "7",
+            reason: "慢性心衰或EF＜30%",
+            score: 2,
+            desc: "慢性心衰或EF＜30%得2分"
+        },
+        {
+            value: "8",
+            reason: "移植静脉PCI",
+            score: 2,
+            desc: "移植静脉PCI得2分"
+        }],
     pciTypeItem: [
         {
             value: "1",
@@ -137,7 +192,7 @@ var patientData = {
             LCX: "",
             RCA: "23",
             OTHER: ""
-        },{
+        }, {
             position: "远段",
             LM: "",
             LAD: "",
