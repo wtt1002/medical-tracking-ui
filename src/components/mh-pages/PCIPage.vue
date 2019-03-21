@@ -386,7 +386,7 @@ export default {
     },
   },
   mounted() {
-    this.getDetail();
+    // this.getDetail();
   }
 };
 </script>

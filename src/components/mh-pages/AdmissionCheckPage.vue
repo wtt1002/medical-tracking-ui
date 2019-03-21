@@ -438,7 +438,8 @@ export default {
     }
   },
   mounted() {
-    this.getDetail();
+    // this.getDetail();
+    console.log("Admission");
   }
 };
 </script>
