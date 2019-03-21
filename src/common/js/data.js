@@ -429,7 +429,7 @@ var patientData = {
     bloodItem: [
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "1001",
             examItemName: "白细胞",
             medicalHistoryId: "",
             examValue: "",
@@ -439,7 +439,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "1002",
             examItemName: "红细胞",
             medicalHistoryId: "",
             examValue: "",
@@ -449,7 +449,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "1003",
             examItemName: "血小板",
             medicalHistoryId: "",
             examValue: "",
@@ -459,7 +459,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "1004",
             examItemName: "血红蛋白",
             medicalHistoryId: "",
             examValue: "",
@@ -471,7 +471,7 @@ var patientData = {
     liverKidneyItem: [
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "2001",
             examItemName: "谷丙转氨酶",
             medicalHistoryId: "",
             examValue: "",
@@ -481,7 +481,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "2002",
             examItemName: "谷草转氨酶",
             medicalHistoryId: "",
             examValue: "",
@@ -491,7 +491,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "2003",
             examItemName: "葡萄糖",
             medicalHistoryId: "",
             examValue: "",
@@ -501,7 +501,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "2004",
             examItemName: "尿酸",
             medicalHistoryId: "",
             examValue: "",
@@ -511,7 +511,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "2005",
             examItemName: "肌酐",
             medicalHistoryId: "",
             examValue: "",
@@ -522,7 +522,7 @@ var patientData = {
     bloodLipidItem: [
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "3001",
             examItemName: "总胆固醇",
             medicalHistoryId: "",
             examValue: "",
@@ -532,7 +532,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "3002",
             examItemName: "甘油三酯",
             medicalHistoryId: "",
             examValue: "",
@@ -542,7 +542,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "3003",
             examItemName: "低密度脂蛋白胆固醇",
             medicalHistoryId: "",
             examValue: "",
@@ -552,7 +552,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "3004",
             examItemName: "高密度脂蛋白胆固醇",
             medicalHistoryId: "",
             examValue: "",
@@ -564,7 +564,7 @@ var patientData = {
     coagulationItem: [
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "4001",
             examItemName: "国际标准化比值",
             medicalHistoryId: "",
             examValue: "",
@@ -574,7 +574,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "4002",
             examItemName: "D-二聚体定量",
             medicalHistoryId: "",
             examValue: "",
@@ -584,7 +584,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "4003",
             examItemName: "心肌肌钙蛋白",
             medicalHistoryId: "",
             examValue: "",
@@ -594,7 +594,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "4004",
             examItemName: "N末端B型利钠肽前体",
             medicalHistoryId: "",
             examValue: "",
@@ -604,7 +604,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "4005",
             examItemName: "肌酸激酶",
             medicalHistoryId: "",
             examValue: "",
@@ -614,7 +614,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "4006",
             examItemName: "肌酸激酶同工酶",
             medicalHistoryId: "",
             examValue: "",
@@ -624,7 +624,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "4007",
             examItemName: "左心室射血分数",
             medicalHistoryId: "",
             examValue: "",

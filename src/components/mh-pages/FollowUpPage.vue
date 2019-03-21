@@ -1,125 +1,43 @@
 <template>
-  <div style="margin-left:80px">
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">血常规</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI1"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="bloodExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveTime">保存</el-button>
-    </div>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">肝肾功能</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI2"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="liverKidneyExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
-    </div>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">血脂检查</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI3"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="bloodLipidExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
-    </div>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px">凝血检查</div>
-      <!-- <span class="demonstration">检查日期</span> -->
-      <el-date-picker
-        v-model="timeUI4"
-        type="date"
-        placeholder="选择日期"
-        size="small"
-        style="margin-bottom:10px;margin-top:10px"
-      ></el-date-picker>
-      <el-table :data="coagulationExam" border style="width: fit-content;">
-        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
-        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
-        <el-table-column prop="examValue" label="值" width="180">
-          <template scope="scope">
-            <el-input
-              size="small"
-              v-model="scope.row.examValue"
-              placeholder
-              @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">{{scope.row.examItemUnit}}</template>
-            </el-input>
-          </template>
-        </el-table-column>
-      </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
-    </div>
-  </div>
+  <el-col>
+    <!--列表-->
+    <el-table
+      :data="follows"
+      highlight-current-row
+      v-loading="listLoading"
+      style="width: fit-content;"
+    >
+      <!-- <el-table-column type="selection" width="40"></el-table-column> -->
+      <el-table-column type="index" width="50"></el-table-column>
+      <el-table-column prop="birthday" label="计划随访日期" width="120"></el-table-column>
+      <el-table-column prop="birthday" label="实际随访日期" width="120"></el-table-column>
+      <el-table-column prop="patient.age" label="计划随访方式" width="120"></el-table-column>
+      <el-table-column prop="patient.age" label="实际随访方式" width="120"></el-table-column>
+      <el-table-column prop="patient.sickAge" label="主要诊断" width="120"></el-table-column>
+      <el-table-column label="随访报告" width="150">
+        <template scope="scope">
+          <el-button size="small">编辑</el-button>
+          <el-button type="danger" size="small">删除</el-button>
+        </template>
+      </el-table-column>
+      <el-table-column label="操作" width="150">
+        <template scope="scope">
+          <el-button size="small">编辑</el-button>
+          <el-button type="danger" size="small" >删除</el-button>
+        </template>
+      </el-table-column>
+    </el-table>
+    <!--工具条-->
+    <el-col class="toolbar" style="margin:0px; width:950px">
+      <el-button type="primary" >新增患者病历</el-button>
+      <el-pagination
+        layout="prev, pager, next"
+        :page-size="10"
+        :total="total"
+        style="float:right;"
+      ></el-pagination>
+    </el-col>
+  </el-col>
 </template>
 
 <script>
@@ -130,50 +48,20 @@ export default {
   data() {
     return {
       bloodExam: Object.assign([], patientData.bloodItem),
-      liverKidneyExam: Object.assign([],patientData.liverKidneyItem),
-      bloodLipidExam:Object.assign([],patientData.bloodLipidItem),
-      coagulationExam:Object.assign([],patientData.coagulationItem),
-      addRules: {
-        admissionNum: [
-          { required: true, message: "请输入住院号", trigger: "blur" }
-        ],
-        intime: [
-          { required: true, message: "请选择入院时间", trigger: "blur" }
-        ],
-        outtime: [
-          { required: true, message: "请选择出院时间", trigger: "blur" }
-        ],
-        height: [{ required: true, message: "请输入身高", trigger: "blur" }],
-        weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
-      },
-      options: patientData.diagnoseOptions,
-      tableData: [
+      liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
+      bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
+      coagulationExam: Object.assign([], patientData.coagulationItem),
+      follows: [
         {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
+          planDate: "",
+          actuDate: "",
+          planWay: "",
+          actuWay: "",
+          mainDiagnose: ""
         }
       ],
-      timeUI1: "",
-      timeUI2: "",
-      timeUI3: "",
-      timeUI4: "",
-      value1: ""
+      listLoading:false,
+      total:0
     };
   },
   methods: {
@@ -290,9 +178,9 @@ export default {
         });
     },
 
-    saveTime: function(){
-      console.log(this.timeUI1)
-      console.log(util.formatDate.format(this.timeUI1,"yyyy-MM-dd"))
+    saveTime: function() {
+      console.log(this.timeUI1);
+      console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
     }
   },
   mounted() {

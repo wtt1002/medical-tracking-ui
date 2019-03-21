@@ -439,7 +439,8 @@ export default {
     }
   },
   mounted() {
-    this.getDetail();
+    // this.getDetail();
+    console.log("Assessment")
   }
 };
 </script>
