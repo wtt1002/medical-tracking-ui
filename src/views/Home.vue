@@ -76,7 +76,7 @@
 	export default {
 		data() {
 			return {
-				sysName:'VUEADMIN',
+				sysName:'冠心病康复随访',
 				collapsed:false,
 				sysUserName: '',
 				sysUserAvatar: '',

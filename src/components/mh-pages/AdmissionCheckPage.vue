@@ -13,81 +13,80 @@
         <el-form-item label="身高">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
-            >
-              <template slot="append">cm</template>
-            </el-input>
+              style="text-align: left;width:120px"
+            ></el-input>
+            <label>cm</label>
           </template>
         </el-form-item>
         <el-form-item label="体重">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:120px"
             >
-              <template slot="append">Kg</template>
             </el-input>
+            <label>Kg</label>
           </template>
         </el-form-item>
 
         <el-form-item label="肌肉重量">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:120px"
             >
-              <template slot="append">Kg</template>
             </el-input>
+            <label>Kg</label>
           </template>
         </el-form-item>
         <el-form-item label="脂肪重量">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:120px"
             >
-              <template slot="append">Kg</template>
             </el-input>
+            <label>Kg</label>
           </template>
         </el-form-item>
 
         <el-form-item label="体脂比">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:120px"
             >
-              <template slot="append">%</template>
             </el-input>
+            <label> %</label>
           </template>
         </el-form-item>
         <el-form-item label="BMI">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:120px"
             >
-              <template slot="append">Kg/m²</template>
             </el-input>
+            <label>Kg/m²</label>
           </template>
         </el-form-item>
       </el-form>
@@ -114,8 +113,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
-            >
-            </el-input>
+            ></el-input>
             <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
@@ -146,8 +144,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
-            >
-            </el-input>
+            ></el-input>
             <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
@@ -180,8 +177,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
-            >
-            </el-input>
+            ></el-input>
             <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
@@ -208,7 +204,7 @@ export default {
       coagulationExam: Object.assign([], patientData.coagulationItem),
       noninvasiveExam: Object.assign([], patientData.noninvasiveItem),
       cardiopulmonaryExam: Object.assign([], patientData.cardiopulmonaryItem),
-      walkExam:Object.assign([],patientData.walkItem),
+      walkExam: Object.assign([], patientData.walkItem),
       addRules: {
         admissionNum: [
           { required: true, message: "请输入住院号", trigger: "blur" }

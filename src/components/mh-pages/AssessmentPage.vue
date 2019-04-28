@@ -15,79 +15,79 @@
         <el-form-item label="SAS">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left; width:180px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
         <el-form-item label="SDS">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:180px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
         <el-form-item label="NA">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:180px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
         <el-form-item label="PSQI">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:180px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
         <el-form-item label="IPQA">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:180px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
         <el-form-item label="Fagerstorm">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:180px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
       </el-form>
@@ -105,105 +105,105 @@
         <el-form-item label="左手握力">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">Kg</template>
             </el-input>
+            <label>Kg</label>
           </template>
         </el-form-item>
         <el-form-item label="右手握力">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">Kg</template>
             </el-input>
+            <label>Kg</label>
           </template>
         </el-form-item>
         <el-form-item label="3m往返试验">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">秒</template>
             </el-input>
+            <label>秒</label>
           </template>
         </el-form-item>
         <el-form-item label="4m步行试验">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">秒</template>
             </el-input>
+            <label>秒</label>
           </template>
         </el-form-item>
         <el-form-item label="椅子站起试验">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">秒</template>
             </el-input>
+            <label>秒</label>
           </template>
         </el-form-item>
         <el-form-item label="座位前伸">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">秒</template>
             </el-input>
+            <label>秒</label>
           </template>
         </el-form-item>
         <el-form-item label="平衡试验（左）">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">秒</template>
             </el-input>
+            <label>秒</label>
           </template>
         </el-form-item>
         <el-form-item label="平衡试验（右）">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">秒</template>
             </el-input>
+            <label>秒</label>
           </template>
         </el-form-item>
       </el-form>
@@ -222,27 +222,27 @@
         <el-form-item label="上臂围">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200Px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
         <el-form-item label="三头肌皮褶厚度">
           <template scope="scope">
             <el-input
-              size="medium"
+              size="small"
               v-model="form.user"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
-              style="text-align: left"
+              style="text-align: left;width:200px"
             >
-              <template slot="append">分</template>
             </el-input>
+            <label>分</label>
           </template>
         </el-form-item>
       </el-form>

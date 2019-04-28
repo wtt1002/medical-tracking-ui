@@ -17,10 +17,11 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="scope.row.examValue"
+              v-model.number="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
+              @keyup="test"
             >
               <!-- <template slot="append">{{scope.row.examItemUnit}}</template> -->
             </el-input>
@@ -28,7 +29,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveTime">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="save('1000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -48,7 +49,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="scope.row.examValue"
+              v-model.number="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
@@ -59,7 +60,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="save('2000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -79,7 +80,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="scope.row.examValue"
+              v-model.number="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
@@ -90,7 +91,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="save('3000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -110,7 +111,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="scope.row.examValue"
+              v-model.number="scope.row.examValue"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
@@ -121,7 +122,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="save('4000')">保存</el-button>
     </div>
   </div>
 </template>
@@ -133,13 +134,13 @@ import { patientApi, recordApi } from "../../api/api";
 export default {
   data() {
     return {
-      bloodExam: Object.assign([], patientData.bloodItem),
-      liverKidneyExam: Object.assign([],patientData.liverKidneyItem),
-      bloodLipidExam:Object.assign([],patientData.bloodLipidItem),
-      coagulationExam:Object.assign([],patientData.coagulationItem),
+      bloodExam: [...patientData.bloodItem],
+      liverKidneyExam: [...patientData.liverKidneyItem],
+      bloodLipidExam: [...patientData.bloodLipidItem],
+      coagulationExam: [...patientData.coagulationItem],
       addRules: {
-        admissionNum: [
-          { required: true, message: "请输入住院号", trigger: "blur" }
+        examValue: [
+          { type: "number", message: "只能输入数字", trigger: "blur" }
         ],
         intime: [
           { required: true, message: "请选择入院时间", trigger: "blur" }
@@ -151,28 +152,6 @@ export default {
         weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
       },
       options: patientData.diagnoseOptions,
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ],
       timeUI1: "",
       timeUI2: "",
       timeUI3: "",
@@ -189,12 +168,15 @@ export default {
       // alert(value);
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      // console.log(index, row);
     },
     changeOtherFactor(value) {
       // alert(value)
       // this.form.riskOtherFactor = value;
       // alert(this.form.riskOtherFactorUI);
+    },
+    test() {
+      console.log("wtt.djddd");
     },
     saveOrUpdate: function() {
       this.$refs.form.validate(valid => {
@@ -236,30 +218,57 @@ export default {
         }
       });
     },
-    save: function(params) {
-      recordApi.addMedicalHistory(params).then(res => {
-        console.log(JSON.stringify(res));
-        this.addLoading = false;
-        //NProgress.done();
-        if (res.code != "0000") {
-          this.$message({
-            message: res.Msg,
-            type: "warning"
-          });
-          return;
-        }
-        this.form.medicalHistoryId = res.data;
-        this.$message({
-          message: "提交成功",
-          type: "success"
-        });
-      });
-    },
+    save: function(index) {
+      var params;
+      var examDate;
+      switch (index) {
+        case "1000":
+          params = Object.assign([], this.bloodExam);
+          examDate = util.formatDate.format(this.timeUI1, "yyyy-MM-dd");
+          break;
+        case "2000":
+          params = Object.assign([], this.liverKidneyExam);
+          examDate = util.formatDate.format(this.timeUI2, "yyyy-MM-dd");
+          break;
+        case "3000":
+          params = Object.assign([], this.bloodLipidExam);
+          examDate = util.formatDate.format(this.timeUI3, "yyyy-MM-dd");
+          break;
+        case "4000":
+          params = Object.assign([], this.coagulationExam);
+          examDate = util.formatDate.format(this.timeUI4, "yyyy-MM-dd");
+          break;
+        default:
+          break;
+      }
 
-    getDetail: function() {
-      recordApi
-        .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
-        .then(res => {
+      for (var i = 0; i < params.length; i++) {
+        params[i].myExamTime = examDate;
+      }
+      console.log(JSON.stringify(params));
+      if (params[0].examValueId == "") {
+        recordApi.addExam(params).then(res => {
+          console.log(JSON.stringify(res));
+          this.addLoading = false;
+          //NProgress.done();
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          } 
+          this.form.medicalHistoryId = res.data;
+          this.$message({
+            message: "提交成功",
+            type: "success"
+          });
+        });
+      } else {
+        recordApi.updateExam(params).then(res => {
+          // console.log(JSON.stringify(res));
+          this.addLoading = false;
+          //NProgress.done();
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -267,40 +276,78 @@ export default {
             });
             return;
           }
-          this.form = { ...this.form, ...res.data.medicalHistory };
-          this.form.inTimeUI = util.formatDate.parse(
-            res.data.inTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.outTimeUI = util.formatDate.parse(
-            res.data.outTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.diagnoseUI = JSON.parse(
-            res.data.medicalHistory.mainDiagnose
-          );
-          var risk = JSON.parse(res.data.medicalHistory.riskFactor);
-          this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
-          this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
-          if (risk.riskOtherFactorUI != "") {
-            this.isOtherFactor = ["其它"];
-          }
-          var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
-          this.form.preDrugsUI = drugs.preDrugsUI;
-          this.form.preOtherDrugUI = drugs.preOtherDrugUI;
-          if (drugs.preOtherDrugUI != "") {
-            this.isOtherDrug = ["其它"];
-          }
+          this.form.medicalHistoryId = res.data;
+          this.$message({
+            message: "提交成功",
+            type: "success"
+          });
         });
+      }
     },
 
-    saveTime: function(){
-      console.log(this.timeUI1)
-      console.log(util.formatDate.format(this.timeUI1,"yyyy-MM-dd"))
+    getDetail: function() {
+      recordApi
+        .getExam(sessionStorage.getItem("currentMedicalHistory"))
+        .then(res => {
+          // console.log(JSON.stringify(res));
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          res.data.forEach(element => {
+            console.log("ssss");
+            switch (element.examCategoryCode) {
+              case "1000":
+                this.assembleData(element.listMyExamDto, this.bloodExam);
+                break;
+              case "2000":
+                this.assembleData(element.listMyExamDto, this.liverKidneyExam);
+                break;
+              case "3000":
+                this.assembleData(element.listMyExamDto, this.bloodLipidExam);
+                break;
+              case "4000":
+                this.assembleData(element.listMyExamDto, this.coagulationExam);
+                break;
+              default:
+                break;
+            }
+          });
+        });
+    },
+    /**
+     * 数据渲染
+     */
+    assembleData(source, target) {
+      for (var t = 0; t < target.length; t++) {
+        for (var s = 0; s < source.length; s++) {
+          if (target[t].examItemCode == source[s].examItem.examItemCode) {
+            target[t].examValueId = source[s].examValue.examValueId;
+            target[t].medicalHistoryId = source[s].examValue.medicalHistoryId;
+            target[t].examValue = source[s].examValue.examValue;
+            target[t].examIndex = source[s].examValue.examIndex;
+            break;
+          }
+        }
+      }
+    },
+
+    saveTime: function() {
+      console.log(this.timeUI1);
+      console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
     }
   },
   mounted() {
+    this.bloodExam=[...patientData.bloodItem];
+    this.liverKidneyExam=[...patientData.liverKidneyItem];
+    this.bloodLipidExam=[...patientData.bloodLipidItem];
+    this.coagulationExam=[...patientData.coagulationItem];
+    console.log(JSON.stringify(patientData.bloodItem))
     this.getDetail();
+    // console.log("我不该出来的")
   }
 };
 </script>
