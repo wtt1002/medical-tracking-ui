@@ -86,7 +86,7 @@ export default {
     return {
       form: {
         medicalHistoryId: "",
-        patientId:"",
+        patientId: "",
         admissionNum: "",
         inTimeUI: "",
         outTimeUI: "",
@@ -124,6 +124,14 @@ export default {
       },
       options: patientData.diagnoseOptions
     };
+  },
+  computed: {
+    count() {
+      return this.$store.state.count;
+    },
+    incFunc() {
+      return this.$store.actions.increment;
+    }
   },
   methods: {
     onSubmit() {
@@ -168,17 +176,14 @@ export default {
               )
             };
             console.log(JSON.stringify(params));
-
-            if (this.form.medicalHistoryId == "") {
-              this.save(params);
-            } else {
-              // this.update();
-            }
+            //保存
+            this.save(params);
           });
         }
       });
     },
     save: function(params) {
+      
       recordApi.addMedicalHistory(params).then(res => {
         console.log(JSON.stringify(res));
         this.addLoading = false;
@@ -191,45 +196,16 @@ export default {
           return;
         }
         this.form.medicalHistoryId = res.data;
-        this.$message({
-          message: "提交成功",
-          type: "success"
-        });
+        sessionStorage.setItem("currentMedicalHistory",res.data);
+        this.$router.push("/mhistory");
+        // this.$message({
+        //   message: "提交成功",
+        //   type: "success"
+        // });
       });
     },
-
-    getDetail: function() {
-      recordApi
-        .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
-        .then(res => {
-          if (res.code != "0000") {
-            this.$message({
-              message: res.Msg,
-              type: "warning"
-            });
-            return;
-          }     
-          this.form = {...this.form,...res.data.medicalHistory};
-          this.form.inTimeUI = util.formatDate.parse(res.data.inTimeStr,"yyyy-MM-dd");
-          this.form.outTimeUI = util.formatDate.parse(res.data.outTimeStr, "yyyy-MM-dd");
-          this.form.diagnoseUI = JSON.parse(res.data.medicalHistory.mainDiagnose);
-          var risk = JSON.parse(res.data.medicalHistory.riskFactor);
-          this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
-          this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
-          if(risk.riskOtherFactorUI != ""){
-            this.isOtherFactor = ["其它"];
-          }
-          var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
-          this.form.preDrugsUI=drugs.preDrugsUI;
-          this.form.preOtherDrugUI = drugs.preOtherDrugUI;
-          if(drugs.preOtherDrugUI != ""){
-            this.isOtherDrug = ["其它"]
-          }
-        });
-    }
   },
-  mounted(){
-    this.getDetail();
+  mounted() {
   }
 };
 </script>
