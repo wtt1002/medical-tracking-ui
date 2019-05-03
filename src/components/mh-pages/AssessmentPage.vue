@@ -6,7 +6,7 @@
       >康复量表评分</div>
       <el-form
         :inline="true"
-        :model="form"
+        :model="assessment"
         class="demo-form-inline"
         style="min-width:200px; max-width:800px"
         label-position="right"
@@ -16,7 +16,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.sasScore"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left; width:180px"
@@ -29,7 +29,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.sdsScore"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
@@ -42,7 +42,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.naScore"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
@@ -55,7 +55,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.psqiScore"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
@@ -68,7 +68,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.ipqaScore"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
@@ -81,7 +81,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.fagerstormScore"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
@@ -96,7 +96,7 @@
       <div style="color:#409EFF; font-weight:bold; font-size:16px; margin:20px">入院试验</div>
       <el-form
         :inline="true"
-        :model="form"
+        :model="assessment"
         class="demo-form-inline"
         style="min-width:200px; max-width:800px"
         label-position="right"
@@ -106,7 +106,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.leftGrip"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -119,7 +119,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.rightGrip"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -132,7 +132,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.threeMeterTest"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -145,7 +145,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.fourMeterTest"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -158,7 +158,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.standUpTest"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -171,7 +171,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.sitReach"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -184,7 +184,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.leftBalanceTest"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -197,7 +197,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.rightBalanceTest"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -213,7 +213,7 @@
       <div style="color:#409EFF; font-weight:bold; font-size:16px; margin:20px">其它测评量</div>
       <el-form
         :inline="true"
-        :model="form"
+        :model="assessment"
         class="demo-form-inline"
         style="min-width:200px; max-width:800px"
         label-position="right"
@@ -223,7 +223,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.upperarmCircumference"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200Px"
@@ -236,7 +236,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="assessment.tricepsSkinfoldThickness"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
@@ -267,56 +267,77 @@ import { patientApi, recordApi } from "../../api/api";
 export default {
   data() {
     return {
-      bloodExam: Object.assign([], patientData.bloodItem),
-      liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
-      bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
-      coagulationExam: Object.assign([], patientData.coagulationItem),
-      addRules: {
-        admissionNum: [
-          { required: true, message: "请输入住院号", trigger: "blur" }
-        ],
-        intime: [
-          { required: true, message: "请选择入院时间", trigger: "blur" }
-        ],
-        outtime: [
-          { required: true, message: "请选择出院时间", trigger: "blur" }
-        ],
-        height: [{ required: true, message: "请输入身高", trigger: "blur" }],
-        weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
+      // bloodExam: Object.assign([], patientData.bloodItem),
+      // liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
+      // bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
+      // coagulationExam: Object.assign([], patientData.coagulationItem),
+      // addRules: {
+      //   admissionNum: [
+      //     { required: true, message: "请输入住院号", trigger: "blur" }
+      //   ],
+      //   intime: [
+      //     { required: true, message: "请选择入院时间", trigger: "blur" }
+      //   ],
+      //   outtime: [
+      //     { required: true, message: "请选择出院时间", trigger: "blur" }
+      //   ],
+      //   height: [{ required: true, message: "请输入身高", trigger: "blur" }],
+      //   weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
+      // },
+      // options: patientData.diagnoseOptions,
+      // tableData: [
+      //   {
+      //     date: "2016-05-02",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1518 弄"
+      //   },
+      //   {
+      //     date: "2016-05-04",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1517 弄"
+      //   },
+      //   {
+      //     date: "2016-05-01",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1519 弄"
+      //   },
+      //   {
+      //     date: "2016-05-03",
+      //     name: "王小虎",
+      //     address: "上海市普陀区金沙江路 1516 弄"
+      //   }
+      // ],
+      // timeUI1: "",
+      // timeUI2: "",
+      // timeUI3: "",
+      // timeUI4: "",
+      // value1: "",
+      // form: {
+      //   user: "",
+      //   region: ""
+      // },
+      addLoading: false,
+      assessment:{
+        assessmentId:'',
+        sasScore:'',
+        sdsScore:'',
+        naScore:'',
+        psqiScore:'',
+        ipqaScore:'',
+        fagerstormScore:'',
+        leftGrip:'',
+        rightGrip:'',
+        threeMeterTest:'',
+        fourMeterTest:'',
+        standUpTest:'',
+        leftBalanceTest:'',
+        rightBalanceTest:'',
+        sitReach:'',
+        upperarmCircumference:'',
+        bmi:'',
+        tricepsSkinfoldThickness:'',
+        medicalHistoryId:''
       },
-      options: patientData.diagnoseOptions,
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ],
-      timeUI1: "",
-      timeUI2: "",
-      timeUI3: "",
-      timeUI4: "",
-      value1: "",
-      form: {
-        user: "",
-        region: ""
-      },
-      addLoading: false
     };
   },
   methods: {
@@ -336,47 +357,21 @@ export default {
       // alert(this.form.riskOtherFactorUI);
     },
     saveOrUpdate: function() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.$confirm("确认提交吗？", "提示", {}).then(() => {
-            this.addLoading = true;
-            //NProgress.start();
-            let risk = {};
-            let drug = {};
-            risk.riskBriefFactorUI = this.form.riskBriefFactorUI;
-            risk.riskOtherFactorUI = this.form.riskOtherFactorUI;
-            drug.preDrugsUI = this.form.preDrugsUI;
-            drug.preOtherDrugUI = this.form.preOtherDrugUI;
-            let mh = Object.assign({}, this.form);
-            //json转为字符串
-            mh.riskFactor = JSON.stringify(risk);
-            mh.mainDiagnose = JSON.stringify(this.form.diagnoseUI);
-            mh.preDrugs = JSON.stringify(drug);
-            mh.patientId = sessionStorage.getItem("currentPatient");
-            let params = {
-              medicalHistory: mh,
-              inTimeStr: util.formatDate.format(
-                new Date(this.form.inTimeUI),
-                "yyyy-MM-dd"
-              ),
-              outTimeStr: util.formatDate.format(
-                new Date(this.form.outTimeUI),
-                "yyyy-MM-dd"
-              )
-            };
-            console.log(JSON.stringify(params));
+      this.addLoading = true;
+       //NProgress.start();
+       let params = {...this.assessment};
+      console.log(JSON.stringify(params));
 
-            if (this.form.medicalHistoryId == "") {
-              this.save(params);
-            } else {
-              // this.update();
-            }
-          });
-        }
-      });
+      if (this.form.medicalHistoryId == "") {
+       params['medicalHistoryId'] = sessionStorage.setItem("currentMedicalHistory");
+       this.save(params);
+      } else {
+      // this.update();
+      console.log("更新。。。。。。。。")
+      }
     },
     save: function(params) {
-      recordApi.addMedicalHistory(params).then(res => {
+      recordApi.addAssessment(params).then(res => {
         console.log(JSON.stringify(res));
         this.addLoading = false;
         //NProgress.done();
@@ -387,7 +382,7 @@ export default {
           });
           return;
         }
-        this.form.medicalHistoryId = res.data;
+        this.assessment.medicalHistoryId = res.data;
         this.$message({
           message: "提交成功",
           type: "success"
@@ -397,8 +392,9 @@ export default {
 
     getDetail: function() {
       recordApi
-        .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
+        .getAssessment(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
+          console.log(JSON.stringify(res))
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -406,40 +402,13 @@ export default {
             });
             return;
           }
-          this.form = { ...this.form, ...res.data.medicalHistory };
-          this.form.inTimeUI = util.formatDate.parse(
-            res.data.inTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.outTimeUI = util.formatDate.parse(
-            res.data.outTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.diagnoseUI = JSON.parse(
-            res.data.medicalHistory.mainDiagnose
-          );
-          var risk = JSON.parse(res.data.medicalHistory.riskFactor);
-          this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
-          this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
-          if (risk.riskOtherFactorUI != "") {
-            this.isOtherFactor = ["其它"];
-          }
-          var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
-          this.form.preDrugsUI = drugs.preDrugsUI;
-          this.form.preOtherDrugUI = drugs.preOtherDrugUI;
-          if (drugs.preOtherDrugUI != "") {
-            this.isOtherDrug = ["其它"];
-          }
+          //数据填充
+          this.assessment = {...this.assessment,...res.data[0]};
         });
     },
-
-    saveTime: function() {
-      console.log(this.timeUI1);
-      console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
-    }
   },
   mounted() {
-    // this.getDetail();
+    this.getDetail();
     console.log("Assessment")
   }
 };

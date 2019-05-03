@@ -276,7 +276,9 @@ export default {
   },
 
   methods: {
-    addMedicalHistory() {},
+    addMedicalHistory: function() {
+      this.$router.push({ path: "/addHistory" });
+    },
     handleCurrentChange(val) {
       this.page = val;
       this.getRecords();
