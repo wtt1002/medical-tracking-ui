@@ -131,6 +131,7 @@
 import util from "../../common/js/util";
 import { patientData } from "../../common/js/data";
 import { patientApi, recordApi } from "../../api/api";
+var lodash = require('lodash');
 export default {
   data() {
     return {
@@ -289,7 +290,7 @@ export default {
       recordApi
         .getExam(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
-          // console.log(JSON.stringify(res));
+          console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -341,11 +342,15 @@ export default {
     }
   },
   mounted() {
-    this.bloodExam=[...patientData.bloodItem];
-    this.liverKidneyExam=[...patientData.liverKidneyItem];
-    this.bloodLipidExam=[...patientData.bloodLipidItem];
-    this.coagulationExam=[...patientData.coagulationItem];
-    console.log(JSON.stringify(patientData.bloodItem))
+    this.bloodExam=lodash.cloneDeep(patientData.bloodItem)
+    this.liverKidneyExam=lodash.cloneDeep(patientData.liverKidneyItem);
+    this.bloodLipidExam=lodash.cloneDeep(patientData.bloodLipidItem);
+    this.coagulationExam=lodash.cloneDeep(patientData.coagulationItem);
+    // this.bloodExam=[...patientData.bloodItem];
+    // this.liverKidneyExam=[...patientData.liverKidneyItem];
+    // this.bloodLipidExam=[...patientData.bloodLipidItem];
+    // this.coagulationExam=[...patientData.coagulationItem];
+    // console.log(JSON.stringify(patientData.bloodItem))
     this.getDetail();
     // console.log("我不该出来的")
   }
