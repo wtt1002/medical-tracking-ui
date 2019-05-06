@@ -20,8 +20,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left; width:180px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -33,8 +32,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -46,8 +44,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -59,8 +56,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -72,8 +68,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -85,8 +80,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:180px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -110,8 +104,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>Kg</label>
           </template>
         </el-form-item>
@@ -123,8 +116,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>Kg</label>
           </template>
         </el-form-item>
@@ -136,8 +128,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>秒</label>
           </template>
         </el-form-item>
@@ -149,8 +140,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>秒</label>
           </template>
         </el-form-item>
@@ -162,8 +152,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>秒</label>
           </template>
         </el-form-item>
@@ -175,8 +164,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>秒</label>
           </template>
         </el-form-item>
@@ -188,8 +176,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>秒</label>
           </template>
         </el-form-item>
@@ -201,8 +188,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>秒</label>
           </template>
         </el-form-item>
@@ -227,8 +213,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200Px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -240,8 +225,7 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:200px"
-            >
-            </el-input>
+            ></el-input>
             <label>分</label>
           </template>
         </el-form-item>
@@ -317,27 +301,27 @@ export default {
       //   region: ""
       // },
       addLoading: false,
-      assessment:{
-        assessmentId:'',
-        sasScore:'',
-        sdsScore:'',
-        naScore:'',
-        psqiScore:'',
-        ipqaScore:'',
-        fagerstormScore:'',
-        leftGrip:'',
-        rightGrip:'',
-        threeMeterTest:'',
-        fourMeterTest:'',
-        standUpTest:'',
-        leftBalanceTest:'',
-        rightBalanceTest:'',
-        sitReach:'',
-        upperarmCircumference:'',
-        bmi:'',
-        tricepsSkinfoldThickness:'',
-        medicalHistoryId:''
-      },
+      assessment: {
+        assessmentId: "",
+        sasScore: "",
+        sdsScore: "",
+        naScore: "",
+        psqiScore: "",
+        ipqaScore: "",
+        fagerstormScore: "",
+        leftGrip: "",
+        rightGrip: "",
+        threeMeterTest: "",
+        fourMeterTest: "",
+        standUpTest: "",
+        leftBalanceTest: "",
+        rightBalanceTest: "",
+        sitReach: "",
+        upperarmCircumference: "",
+        bmi: "",
+        tricepsSkinfoldThickness: "",
+        medicalHistoryId: ""
+      }
     };
   },
   methods: {
@@ -358,16 +342,18 @@ export default {
     },
     saveOrUpdate: function() {
       this.addLoading = true;
-       //NProgress.start();
-       let params = {...this.assessment};
+      //NProgress.start();
+      let params = { ...this.assessment };
       console.log(JSON.stringify(params));
 
-      if (this.form.medicalHistoryId == "") {
-       params['medicalHistoryId'] = sessionStorage.setItem("currentMedicalHistory");
-       this.save(params);
+      if (this.assessment.assessmentId == "") {
+        params.medicalHistoryId = sessionStorage.getItem(
+          "currentMedicalHistory"
+        );
+        this.save(params);
       } else {
-      // this.update();
-      console.log("更新。。。。。。。。")
+        this.update(params);
+        //console.log("更新。。。。。。。。")
       }
     },
     save: function(params) {
@@ -384,17 +370,33 @@ export default {
         }
         this.assessment.medicalHistoryId = res.data;
         this.$message({
-          message: "提交成功",
+          message: "保存成功",
           type: "success"
         });
       });
     },
-
+    update: function(params) {
+      recordApi.updateAssessment(params).then(res => {
+        this.addLoading = false;
+        console.log(JSON.stringify(res));
+        if (res.code != "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        this.$message({
+          message: "更新成功",
+          type: "success"
+        });
+      });
+    },
     getDetail: function() {
       recordApi
         .getAssessment(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
-          console.log(JSON.stringify(res))
+          console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -403,13 +405,13 @@ export default {
             return;
           }
           //数据填充
-          this.assessment = {...this.assessment,...res.data[0]};
+          this.assessment = { ...this.assessment, ...res.data[0] };
         });
-    },
+    }
   },
   mounted() {
     this.getDetail();
-    console.log("Assessment")
+    console.log("Assessment");
   }
 };
 </script>

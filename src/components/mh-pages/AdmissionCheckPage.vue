@@ -366,9 +366,13 @@ export default {
     },
 
     getDetail: function() {
-      recordApi
-        .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
-        .then(res => {
+      var params = {
+        medicalHistoryId:sessionStorage.getItem("currentMedicalHistory"),
+        examIndex:0
+      }
+      recordApi.getAdmissionCheck(params).then(res =>{
+        console.log("=============test===========")
+        //console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -376,33 +380,40 @@ export default {
             });
             return;
           }
-          this.form = { ...this.form, ...res.data.medicalHistory };
-          this.form.inTimeUI = util.formatDate.parse(
-            res.data.inTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.outTimeUI = util.formatDate.parse(
-            res.data.outTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.diagnoseUI = JSON.parse(
-            res.data.medicalHistory.mainDiagnose
-          );
-          var risk = JSON.parse(res.data.medicalHistory.riskFactor);
-          this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
-          this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
-          if (risk.riskOtherFactorUI != "") {
-            this.isOtherFactor = ["其它"];
-          }
-          var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
-          this.form.preDrugsUI = drugs.preDrugsUI;
-          this.form.preOtherDrugUI = drugs.preOtherDrugUI;
-          if (drugs.preOtherDrugUI != "") {
-            this.isOtherDrug = ["其它"];
-          }
-        });
+          res.data.medicalHistoryExamDtos.forEach(element => {
+            switch (element.examCategoryCode) {
+              case "6000":
+                this.assembleData(element.listMyExamDto, this.bloodExam);
+                break;
+              case "7000":
+                this.assembleData(element.listMyExamDto, this.liverKidneyExam);
+                break;
+              case "8000":
+                this.assembleData(element.listMyExamDto, this.bloodLipidExam);
+                break;
+              default:
+                break;
+            }
+          });
+      })
     },
-
+    /**
+     * 数据渲染
+     */
+    assembleData(source, target) {
+      for (var t = 0; t < target.length; t++) {
+        for (var s = 0; s < source.length; s++) {
+          console.log("我是什么？？？？")
+          if (target[t].examItemCode == source[s].examItem.examItemCode) {
+            target[t].examValueId = source[s].examValue.examValueId;
+            target[t].medicalHistoryId = source[s].examValue.medicalHistoryId;
+            target[t].examValue = source[s].examValue.examValue;
+            target[t].examIndex = source[s].examValue.examIndex;
+            break;
+          }
+        }
+      }
+    },
     saveTime: function() {
       console.log(this.timeUI1);
       console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
@@ -434,7 +445,7 @@ export default {
     }
   },
   mounted() {
-    // this.getDetail();
+    this.getDetail();
     console.log("Admission");
   }
 };

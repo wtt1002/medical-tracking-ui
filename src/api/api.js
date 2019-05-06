@@ -56,12 +56,14 @@ const recordApi = {
     updateExam: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/update`, params).then(res => res.data); },
     //更新辅助检查
     addExam: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/addone`, params).then(res => res.data); }, 
-    //获取辅助检查
+    //获取入院评估
     getAssessment: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/assessment?medicalHistoryId=` + params).then(res => res.data); },
-    //新增辅助检查
+    //新增入院评估
     addAssessment: (params) => { return axios.post(`/apis${base}/medicalHistory/assessment/addone`, params).then(res => res.data); },
-    //更新辅助检查
+    //更新入院评估
     updateAssessment: (params) => { return axios.post(`/apis${base}/medicalHistory/assessment/update`, params).then(res => res.data); },
+    //获取入院康复检查项目
+    getAdmissionCheck: (params) => { console.log(params); return axios.post(`/apis${base}/medicalHistory/admissionCheck/getChecks`, params).then(res => res.data); },
 }
 export {
     userApi,
