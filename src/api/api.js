@@ -64,6 +64,10 @@ const recordApi = {
     updateAssessment: (params) => { return axios.post(`/apis${base}/medicalHistory/assessment/update`, params).then(res => res.data); },
     //获取入院康复检查项目
     getAdmissionCheck: (params) => { console.log(params); return axios.post(`/apis${base}/medicalHistory/admissionCheck/getChecks`, params).then(res => res.data); },
+    //新增人体成分分析
+    addBodyComposition: (params) => { return axios.post(`/apis${base}/medicalHistory/bodyComposition/addone`, params).then(res => res.data); },
+    //更新人体成分分析
+    updateBodyComposition: (params) => { return axios.post(`/apis${base}/medicalHistory/bodyComposition/update`, params).then(res => res.data); },
 }
 export {
     userApi,

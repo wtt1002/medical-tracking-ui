@@ -635,7 +635,7 @@ var patientData = {
     noninvasiveItem: [
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6001",
             examItemName: "心率",
             medicalHistoryId: "",
             examValue: "",
@@ -645,7 +645,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6002",
             examItemName: "每搏输出量",
             medicalHistoryId: "",
             examValue: "",
@@ -655,7 +655,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6003",
             examItemName: "每搏指数",
             medicalHistoryId: "",
             examValue: "",
@@ -665,7 +665,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6004",
             examItemName: "心输出量",
             medicalHistoryId: "",
             examValue: "",
@@ -675,7 +675,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6005",
             examItemName: "心指数",
             medicalHistoryId: "",
             examValue: "",
@@ -685,7 +685,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6006",
             examItemName: "心收缩指数",
             medicalHistoryId: "",
             examValue: "",
@@ -695,7 +695,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6007",
             examItemName: "左心做功指数",
             medicalHistoryId: "",
             examValue: "",
@@ -705,7 +705,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6008",
             examItemName: "左心收缩时间",
             medicalHistoryId: "",
             examValue: "",
@@ -715,7 +715,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "6009",
             examItemName: "射血分数",
             medicalHistoryId: "",
             examValue: "",
@@ -726,7 +726,7 @@ var patientData = {
     cardiopulmonaryItem: [
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7001",
             examItemName: "峰值负荷",
             medicalHistoryId: "",
             examValue: "",
@@ -736,7 +736,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7002",
             examItemName: "峰值",
             medicalHistoryId: "",
             examValue: "",
@@ -746,7 +746,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7003",
             examItemName: "峰值",
             medicalHistoryId: "",
             examValue: "",
@@ -756,7 +756,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7004",
             examItemName: "最大摄氧量",
             medicalHistoryId: "",
             examValue: "",
@@ -766,7 +766,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7005",
             examItemName: "无氧阀",
             medicalHistoryId: "",
             examValue: "",
@@ -776,7 +776,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7006",
             examItemName: "静息心率",
             medicalHistoryId: "",
             examValue: "",
@@ -786,7 +786,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7007",
             examItemName: "峰值心率",
             medicalHistoryId: "",
             examValue: "",
@@ -796,7 +796,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7008",
             examItemName: "靶心率",
             medicalHistoryId: "",
             examValue: "",
@@ -806,7 +806,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7009",
             examItemName: "1秒用力呼气量",
             medicalHistoryId: "",
             examValue: "",
@@ -816,7 +816,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7010",
             examItemName: "FEV1占预计值百分比",
             medicalHistoryId: "",
             examValue: "",
@@ -826,7 +826,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "7011",
             examItemName: "用力呼气量占用力肺活量比值",
             medicalHistoryId: "",
             examValue: "",
@@ -837,7 +837,7 @@ var patientData = {
     walkItem: [
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "8001",
             examItemName: "步行",
             medicalHistoryId: "",
             examValue: "",
@@ -847,7 +847,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "8002",
             examItemName: "心功能",
             medicalHistoryId: "",
             examValue: "",
@@ -857,7 +857,7 @@ var patientData = {
         },
         {
             examValueId: "",
-            examItemCode: "",
+            examItemCode: "8003",
             examItemName: "Borg量表",
             medicalHistoryId: "",
             examValue: "",

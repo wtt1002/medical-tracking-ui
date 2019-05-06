@@ -4,7 +4,7 @@
       <div style="color:#409EFF; font-weight:bold; font-size:16px; margin-bottom:10px">人体成分分析仪</div>
       <el-form
         :inline="true"
-        :model="form"
+        :model="bodyComposition"
         class="demo-form-inline"
         style="min-width:200px; max-width:800px"
         label-position="right"
@@ -14,7 +14,7 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="bodyComposition.height"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:120px"
@@ -26,12 +26,11 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="bodyComposition.weight"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:120px"
-            >
-            </el-input>
+            ></el-input>
             <label>Kg</label>
           </template>
         </el-form-item>
@@ -40,12 +39,11 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="bodyComposition.muscleWeight"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:120px"
-            >
-            </el-input>
+            ></el-input>
             <label>Kg</label>
           </template>
         </el-form-item>
@@ -53,12 +51,11 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="bodyComposition.fatWeight"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:120px"
-            >
-            </el-input>
+            ></el-input>
             <label>Kg</label>
           </template>
         </el-form-item>
@@ -67,29 +64,28 @@
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="bodyComposition.bodyFatPercentage"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:120px"
-            >
-            </el-input>
-            <label> %</label>
+            ></el-input>
+            <label>%</label>
           </template>
         </el-form-item>
         <el-form-item label="BMI">
           <template scope="scope">
             <el-input
               size="small"
-              v-model="form.user"
+              v-model="bodyComposition.bmi"
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:120px"
-            >
-            </el-input>
+            ></el-input>
             <label>Kg/m²</label>
           </template>
         </el-form-item>
       </el-form>
+      <el-button style="background-color:#EEE" @click="saveBody">保存</el-button>
     </div>
 
     <div style="margin-top:10px; margin-bottom:30px">
@@ -119,7 +115,7 @@
         </el-table-column>
       </el-table>
       <div style="width:550px; margin-top:10px; margin-bottom:10px">
-        <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
+        <el-input v-model="noninvasiveConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
       <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
     </div>
@@ -151,7 +147,7 @@
       </el-table>
       <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <!-- <label>运动心肺功能检测结论：</label> -->
-        <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
+        <el-input v-model="cardiopulmonaryConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
       <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
     </div>
@@ -160,7 +156,7 @@
       <div style="color:#409EFF; font-weight:bold; font-size:16px">6分钟步行试验</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-date-picker
-        v-model="timeUI2"
+        v-model="timeUI3"
         type="date"
         placeholder="选择日期"
         size="small"
@@ -184,7 +180,7 @@
       </el-table>
       <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <!-- <label>运动心肺功能检测结论：</label> -->
-        <el-input placeholder="请输入结论" style="margin-top:5px"></el-input>
+        <el-input v-model="walkConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
       <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
     </div>
@@ -195,16 +191,16 @@
 import util from "../../common/js/util";
 import { patientData } from "../../common/js/data";
 import { patientApi, recordApi } from "../../api/api";
+var lodash = require("lodash");
 export default {
   data() {
     return {
-      bloodExam: Object.assign([], patientData.bloodItem),
-      liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
-      bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
-      coagulationExam: Object.assign([], patientData.coagulationItem),
-      noninvasiveExam: Object.assign([], patientData.noninvasiveItem),
-      cardiopulmonaryExam: Object.assign([], patientData.cardiopulmonaryItem),
-      walkExam: Object.assign([], patientData.walkItem),
+      noninvasiveExam: [],
+      cardiopulmonaryExam: [],
+      walkExam: [],
+      noninvasiveConclusion: "",
+      cardiopulmonaryConclusion: "",
+      walkConclusion: "",
       addRules: {
         admissionNum: [
           { required: true, message: "请输入住院号", trigger: "blur" }
@@ -219,69 +215,16 @@ export default {
         weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
       },
       options: patientData.diagnoseOptions,
-      form: {
-        user: "",
-        region: ""
+      bodyComposition: {
+        medicalHistoryId: "",
+        bodyCompositionId: "",
+        height: "",
+        weight: "",
+        muscleWeight: "",
+        fatWeight: "",
+        bodyFatPercentage: "",
+        bmi: ""
       },
-      tableData: [
-        {
-          date: "2016-05-02",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1518 弄"
-        },
-        {
-          date: "2016-05-04",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1517 弄"
-        },
-        {
-          date: "2016-05-01",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1519 弄"
-        },
-        {
-          date: "2016-05-03",
-          name: "王小虎",
-          address: "上海市普陀区金沙江路 1516 弄"
-        }
-      ],
-      tableDataa: [
-        {
-          id: "12987122",
-          name: "王小虎",
-          amount1: "234",
-          amount2: "3.2",
-          amount3: 10
-        },
-        {
-          id: "12987123",
-          name: "王小虎",
-          amount1: "165",
-          amount2: "4.43",
-          amount3: 12
-        },
-        {
-          id: "12987124",
-          name: "王小虎",
-          amount1: "324",
-          amount2: "1.9",
-          amount3: 9
-        },
-        {
-          id: "12987125",
-          name: "王小虎",
-          amount1: "621",
-          amount2: "2.2",
-          amount3: 17
-        },
-        {
-          id: "12987126",
-          name: "王小虎",
-          amount1: "539",
-          amount2: "4.1",
-          amount3: 15
-        }
-      ],
       timeUI1: "",
       timeUI2: "",
       timeUI3: "",
@@ -304,6 +247,40 @@ export default {
       // alert(value)
       // this.form.riskOtherFactor = value;
       // alert(this.form.riskOtherFactorUI);
+    },
+    saveBody: function() {
+      if (this.bodyComposition.bodyCompositionId == "") {
+        this.bodyComposition.medicalHistoryId = sessionStorage.getItem(
+          "currentMedicalHistory"
+        );
+        recordApi.addBodyComposition(this.bodyComposition).then(res => {
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          this.$message({
+            message: "保存成功",
+            type: "success"
+          });
+        });
+      } else {
+        recordApi.updateBodyComposition(this.bodyComposition).then(res => {
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          this.$message({
+            message: "更新成功",
+            type: "success"
+          });
+        });
+      }
     },
     saveOrUpdate: function() {
       this.$refs.form.validate(valid => {
@@ -367,35 +344,55 @@ export default {
 
     getDetail: function() {
       var params = {
-        medicalHistoryId:sessionStorage.getItem("currentMedicalHistory"),
-        examIndex:0
-      }
-      recordApi.getAdmissionCheck(params).then(res =>{
-        console.log("=============test===========")
-        //console.log(JSON.stringify(res));
-          if (res.code != "0000") {
-            this.$message({
-              message: res.Msg,
-              type: "warning"
-            });
-            return;
-          }
-          res.data.medicalHistoryExamDtos.forEach(element => {
-            switch (element.examCategoryCode) {
-              case "6000":
-                this.assembleData(element.listMyExamDto, this.bloodExam);
-                break;
-              case "7000":
-                this.assembleData(element.listMyExamDto, this.liverKidneyExam);
-                break;
-              case "8000":
-                this.assembleData(element.listMyExamDto, this.bloodLipidExam);
-                break;
-              default:
-                break;
-            }
+        medicalHistoryId: sessionStorage.getItem("currentMedicalHistory"),
+        examIndex: 0
+      };
+      recordApi.getAdmissionCheck(params).then(res => {
+        if (res.code != "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
           });
-      })
+          return;
+        }
+        this.bodyComposition = {
+          ...this.bodyComposition,
+          ...res.data.bodyComposition
+        };
+        res.data.medicalHistoryExamDtos.forEach(element => {
+          switch (element.examCategoryCode) {
+            case "6000":
+              this.assembleData(element.listMyExamDto, this.noninvasiveExam);
+              this.noninvasiveConclusion = element.examConclusion;
+              this.timeUI1 = util.formatDate.parse(
+                element.listMyExamDto[0].examTime,
+                "yyyy-MM-dd"
+              );
+              break;
+            case "7000":
+              this.assembleData(
+                element.listMyExamDto,
+                this.cardiopulmonaryExam
+              );
+              this.cardiopulmonaryConclusion = element.examConclusion;
+              this.timeUI2 = util.formatDate.parse(
+                element.listMyExamDto[0].examTime,
+                "yyyy-MM-dd"
+              );
+              break;
+            case "8000":
+              this.assembleData(element.listMyExamDto, this.walkExam);
+              this.walkConclusion = element.examConclusion;
+              this.timeUI3 = util.formatDate.parse(
+                element.listMyExamDto[0].examTime,
+                "yyyy-MM-dd"
+              );
+              break;
+            default:
+              break;
+          }
+        });
+      });
     },
     /**
      * 数据渲染
@@ -403,7 +400,6 @@ export default {
     assembleData(source, target) {
       for (var t = 0; t < target.length; t++) {
         for (var s = 0; s < source.length; s++) {
-          console.log("我是什么？？？？")
           if (target[t].examItemCode == source[s].examItem.examItemCode) {
             target[t].examValueId = source[s].examValue.examValueId;
             target[t].medicalHistoryId = source[s].examValue.medicalHistoryId;
@@ -417,34 +413,14 @@ export default {
     saveTime: function() {
       console.log(this.timeUI1);
       console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
-    },
-    arraySpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (rowIndex % 2 === 0) {
-        if (columnIndex === 0) {
-          return [1, 2];
-        } else if (columnIndex === 1) {
-          return [0, 0];
-        }
-      }
-    },
-
-    objectSpanMethod({ row, column, rowIndex, columnIndex }) {
-      if (columnIndex === 0) {
-        if (rowIndex % 2 === 0) {
-          return {
-            rowspan: 2,
-            colspan: 1
-          };
-        } else {
-          return {
-            rowspan: 0,
-            colspan: 0
-          };
-        }
-      }
     }
   },
   mounted() {
+    this.noninvasiveExam = lodash.cloneDeep(patientData.noninvasiveItem);
+    this.cardiopulmonaryExam = lodash.cloneDeep(
+      patientData.cardiopulmonaryItem
+    );
+    this.walkExam = lodash.cloneDeep(patientData.walkItem);
     this.getDetail();
     console.log("Admission");
   }
