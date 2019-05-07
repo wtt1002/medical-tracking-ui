@@ -170,7 +170,7 @@ var patientData = {
             value: "12",
             label: "死亡"
         }],
-    contrastOutPutItem: [
+    contrastOutputItem: [
         {
             position: "开口",
             LM: "",
