@@ -68,6 +68,12 @@ const recordApi = {
     addBodyComposition: (params) => { return axios.post(`/apis${base}/medicalHistory/bodyComposition/addone`, params).then(res => res.data); },
     //更新人体成分分析
     updateBodyComposition: (params) => { return axios.post(`/apis${base}/medicalHistory/bodyComposition/update`, params).then(res => res.data); },
+    //获取冠脉介入
+    getPci: (params) => { console.log(params); return axios.get(`/apis${base}/pci/getPci?medicalHistoryId=` + params).then(res => res.data); },   
+    //新增冠脉介入
+    addPci: (params) => { return axios.post(`/apis${base}/pci/addPci`, params).then(res => res.data); },
+    //更新人体成分分析
+    updatePci: (params) => { return axios.post(`/apis${base}/pci/updatePci`, params).then(res => res.data); },
 }
 export {
     userApi,

@@ -208,8 +208,7 @@ export default {
                 "yyyy-MM-dd"
               )
             };
-            console.log(JSON.stringify(params));
-
+            //console.log(JSON.stringify(params));
             if (this.form.medicalHistoryId == "") {
               this.save(params);
             } else {
@@ -257,17 +256,35 @@ export default {
               message: res.Msg,
               type: "warning"
             });
+
             return;
           } 
-          this.form.medicalHistoryId = res.data;
+          res.data.forEach(element => {
+            switch (element.examCategoryCode) {
+              case "1000":
+                this.assembleData(element.listMyExamDto, this.bloodExam);
+                break;
+              case "2000":
+                this.assembleData(element.listMyExamDto, this.liverKidneyExam);
+                break;
+              case "3000":
+                this.assembleData(element.listMyExamDto, this.bloodLipidExam);
+                break;
+              case "4000":
+                this.assembleData(element.listMyExamDto, this.coagulationExam);
+                break;
+              default:
+                break;
+            }
+          }),
           this.$message({
-            message: "提交成功",
+            message: "保存成功",
             type: "success"
           });
         });
       } else {
         recordApi.updateExam(params).then(res => {
-          // console.log(JSON.stringify(res));
+          console.log(JSON.stringify(res));
           this.addLoading = false;
           //NProgress.done();
           if (res.code != "0000") {
@@ -277,9 +294,8 @@ export default {
             });
             return;
           }
-          this.form.medicalHistoryId = res.data;
           this.$message({
-            message: "提交成功",
+            message: "修改成功",
             type: "success"
           });
         });
@@ -299,7 +315,6 @@ export default {
             return;
           }
           res.data.forEach(element => {
-            console.log("ssss");
             switch (element.examCategoryCode) {
               case "1000":
                 this.assembleData(element.listMyExamDto, this.bloodExam);
