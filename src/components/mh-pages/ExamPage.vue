@@ -9,6 +9,7 @@
         placeholder="选择日期"
         size="small"
         style="margin-bottom:10px;margin-top:10px"
+        :rules="addRules"
       ></el-date-picker>
       <el-table :data="bloodExam" border style="width: fit-content;">
         <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
@@ -21,7 +22,6 @@
               placeholder
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
-              @keyup="test"
             >
               <!-- <template slot="append">{{scope.row.examItemUnit}}</template> -->
             </el-input>
@@ -29,7 +29,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="save('1000')">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('1000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -60,7 +60,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="save('2000')">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('2000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -91,7 +91,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="save('3000')">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('3000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -122,7 +122,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="save('4000')">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('4000')">保存</el-button>
     </div>
   </div>
 </template>
@@ -131,7 +131,7 @@
 import util from "../../common/js/util";
 import { patientData } from "../../common/js/data";
 import { patientApi, recordApi } from "../../api/api";
-var lodash = require('lodash');
+var lodash = require("lodash");
 export default {
   data() {
     return {
@@ -143,170 +143,137 @@ export default {
         examValue: [
           { type: "number", message: "只能输入数字", trigger: "blur" }
         ],
-        intime: [
-          { required: true, message: "请选择入院时间", trigger: "blur" }
-        ],
-        outtime: [
-          { required: true, message: "请选择出院时间", trigger: "blur" }
-        ],
-        height: [{ required: true, message: "请输入身高", trigger: "blur" }],
-        weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
+        timeUI1: [{ required: true }]
       },
       options: patientData.diagnoseOptions,
-      timeUI1: "",
-      timeUI2: "",
-      timeUI3: "",
-      timeUI4: "",
+      timeUI1: new Date(),
+      timeUI2: new Date(),
+      timeUI3: new Date(),
+      timeUI4: new Date(),
       value1: ""
     };
   },
   methods: {
-    onSubmit() {
-      console.log("submit!");
-    },
-    handleChange(value) {
-      // console.log(value);
-      // alert(value);
-    },
     handleEdit(index, row) {
       // console.log(index, row);
     },
-    changeOtherFactor(value) {
-      // alert(value)
-      // this.form.riskOtherFactor = value;
-      // alert(this.form.riskOtherFactorUI);
+    /**
+     * 保存时的数据封装，加入病历id
+     */
+    prepareData(source){
+      var param = Object.assign([], source);
+      for(var i = 0; i < param.length; i++){
+        param[i].medicalHistoryId = sessionStorage.getItem("currentMedicalHistory");
+      }
+      return param;
     },
-    test() {
-      console.log("wtt.djddd");
-    },
-    saveOrUpdate: function() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.$confirm("确认提交吗？", "提示", {}).then(() => {
-            this.addLoading = true;
-            //NProgress.start();
-            let risk = {};
-            let drug = {};
-            risk.riskBriefFactorUI = this.form.riskBriefFactorUI;
-            risk.riskOtherFactorUI = this.form.riskOtherFactorUI;
-            drug.preDrugsUI = this.form.preDrugsUI;
-            drug.preOtherDrugUI = this.form.preOtherDrugUI;
-            let mh = Object.assign({}, this.form);
-            //json转为字符串
-            mh.riskFactor = JSON.stringify(risk);
-            mh.mainDiagnose = JSON.stringify(this.form.diagnoseUI);
-            mh.preDrugs = JSON.stringify(drug);
-            mh.patientId = sessionStorage.getItem("currentPatient");
-            let params = {
-              medicalHistory: mh,
-              inTimeStr: util.formatDate.format(
-                new Date(this.form.inTimeUI),
-                "yyyy-MM-dd"
-              ),
-              outTimeStr: util.formatDate.format(
-                new Date(this.form.outTimeUI),
-                "yyyy-MM-dd"
-              )
-            };
-            //console.log(JSON.stringify(params));
-            if (this.form.medicalHistoryId == "") {
-              this.save(params);
-            } else {
-              // this.update();
-            }
-          });
-        }
-      });
-    },
-    save: function(index) {
+    /**
+     * 保存或更新接口数据整合
+     */
+    saveOrUpdate: function(index) {
       var params;
       var examDate;
       switch (index) {
         case "1000":
-          params = Object.assign([], this.bloodExam);
+          params = this.prepareData(this.bloodExam);
           examDate = util.formatDate.format(this.timeUI1, "yyyy-MM-dd");
           break;
         case "2000":
-          params = Object.assign([], this.liverKidneyExam);
+          params = this.prepareData(this.liverKidneyExam);
           examDate = util.formatDate.format(this.timeUI2, "yyyy-MM-dd");
           break;
         case "3000":
-          params = Object.assign([], this.bloodLipidExam);
+          params = this.prepareData(this.bloodLipidExam);
           examDate = util.formatDate.format(this.timeUI3, "yyyy-MM-dd");
           break;
         case "4000":
-          params = Object.assign([], this.coagulationExam);
+          params = this.prepareData(this.coagulationExam);
           examDate = util.formatDate.format(this.timeUI4, "yyyy-MM-dd");
           break;
         default:
           break;
       }
-
+      if (examDate == "") {
+        examDate = util.formatDate.format(new Date(), "yyyy-MM-dd");
+      }
       for (var i = 0; i < params.length; i++) {
         params[i].myExamTime = examDate;
       }
-      console.log(JSON.stringify(params));
       if (params[0].examValueId == "") {
-        recordApi.addExam(params).then(res => {
-          console.log(JSON.stringify(res));
-          this.addLoading = false;
-          //NProgress.done();
-          if (res.code != "0000") {
-            this.$message({
-              message: res.Msg,
-              type: "warning"
-            });
+        this.save(params);
+      } else {
+        this.update(params);
+      }
+    },
+    /**
+     * 保存接口
+     */
+    save: function(params) {
+      recordApi.addExam(params).then(res => {
+        // console.log(JSON.stringify(res));
+        this.addLoading = false;
+        //NProgress.done();
+        if (res.code != "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
 
-            return;
-          } 
-          res.data.forEach(element => {
-            switch (element.examCategoryCode) {
-              case "1000":
-                this.assembleData(element.listMyExamDto, this.bloodExam);
-                break;
-              case "2000":
-                this.assembleData(element.listMyExamDto, this.liverKidneyExam);
-                break;
-              case "3000":
-                this.assembleData(element.listMyExamDto, this.bloodLipidExam);
-                break;
-              case "4000":
-                this.assembleData(element.listMyExamDto, this.coagulationExam);
-                break;
-              default:
-                break;
-            }
-          }),
+          return;
+        }
+        res.data.forEach(element => {
+          switch (element.examCategoryCode) {
+            case "1000":
+              this.assembleData(element.listMyExamDto, this.bloodExam);
+              break;
+            case "2000":
+              this.assembleData(element.listMyExamDto, this.liverKidneyExam);
+              break;
+            case "3000":
+              this.assembleData(element.listMyExamDto, this.bloodLipidExam);
+              break;
+            case "4000":
+              this.assembleData(element.listMyExamDto, this.coagulationExam);
+              break;
+            default:
+              break;
+          }
+        }),
           this.$message({
             message: "保存成功",
             type: "success"
           });
-        });
-      } else {
-        recordApi.updateExam(params).then(res => {
-          console.log(JSON.stringify(res));
-          this.addLoading = false;
-          //NProgress.done();
-          if (res.code != "0000") {
-            this.$message({
-              message: res.Msg,
-              type: "warning"
-            });
-            return;
-          }
-          this.$message({
-            message: "修改成功",
-            type: "success"
-          });
-        });
-      }
+      });
     },
-
+    /**
+     * 更新接口
+     */
+    update: function(params) {
+      recordApi.updateExam(params).then(res => {
+        // console.log(JSON.stringify(res));
+        this.addLoading = false;
+        //NProgress.done();
+        if (res.code != "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        this.$message({
+          message: "修改成功",
+          type: "success"
+        });
+      });
+    },
+    /**
+     * 数据获取接口
+     */
     getDetail: function() {
       recordApi
         .getExam(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
-          console.log(JSON.stringify(res));
+          // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -318,15 +285,31 @@ export default {
             switch (element.examCategoryCode) {
               case "1000":
                 this.assembleData(element.listMyExamDto, this.bloodExam);
+                this.timeUI1 = util.formatDate.parse(
+                  element.listMyExamDto[0].examTime,
+                  "yyyy-MM-dd"
+                );
                 break;
               case "2000":
                 this.assembleData(element.listMyExamDto, this.liverKidneyExam);
+                this.timeUI2 = util.formatDate.parse(
+                  element.listMyExamDto[0].examTime,
+                  "yyyy-MM-dd"
+                );
                 break;
               case "3000":
                 this.assembleData(element.listMyExamDto, this.bloodLipidExam);
+                this.timeUI3 = util.formatDate.parse(
+                  element.listMyExamDto[0].examTime,
+                  "yyyy-MM-dd"
+                );
                 break;
               case "4000":
                 this.assembleData(element.listMyExamDto, this.coagulationExam);
+                this.timeUI4 = util.formatDate.parse(
+                  element.listMyExamDto[0].examTime,
+                  "yyyy-MM-dd"
+                );
                 break;
               default:
                 break;
@@ -349,25 +332,16 @@ export default {
           }
         }
       }
-    },
-
-    saveTime: function() {
-      console.log(this.timeUI1);
-      console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
     }
   },
+
   mounted() {
-    this.bloodExam=lodash.cloneDeep(patientData.bloodItem)
-    this.liverKidneyExam=lodash.cloneDeep(patientData.liverKidneyItem);
-    this.bloodLipidExam=lodash.cloneDeep(patientData.bloodLipidItem);
-    this.coagulationExam=lodash.cloneDeep(patientData.coagulationItem);
-    // this.bloodExam=[...patientData.bloodItem];
-    // this.liverKidneyExam=[...patientData.liverKidneyItem];
-    // this.bloodLipidExam=[...patientData.bloodLipidItem];
-    // this.coagulationExam=[...patientData.coagulationItem];
-    // console.log(JSON.stringify(patientData.bloodItem))
+    this.bloodExam = lodash.cloneDeep(patientData.bloodItem);
+    this.liverKidneyExam = lodash.cloneDeep(patientData.liverKidneyItem);
+    this.bloodLipidExam = lodash.cloneDeep(patientData.bloodLipidItem);
+    this.coagulationExam = lodash.cloneDeep(patientData.coagulationItem);
+
     this.getDetail();
-    // console.log("我不该出来的")
   }
 };
 </script>
