@@ -11,8 +11,8 @@
         style="margin-bottom:10px;margin-top:10px"
       ></el-date-picker>
       <el-table :data="pciItem" border style="width: fit-content;">
-        <el-table-column prop="drugCh" label="中文" width="180"></el-table-column>
-        <el-table-column prop="drugEn" label="英文" width="180"></el-table-column>
+        <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
+        <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
         <el-table-column prop="examValue" label="值" width="180">
           <template scope="scope">
             <el-input
@@ -22,21 +22,24 @@
               @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
             ></el-input>
-            <label>{{scope.row.pciItemUnit}}</label>
+            <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
       <el-button style="margin-top:20px; background-color:#EEE" @click="saveTime">保存</el-button>
     </div>
-    <el-form>
-      <el-form-item label="血管路入并发症：">
-        <el-checkbox-group v-model="summary.bloodDisease">
-          <el-checkbox v-for="factor in factors" :label="factor" :key="factor">{{factor}}</el-checkbox>
-        </el-checkbox-group>
-      </el-form-item>
-    </el-form>
-
-    <div class="block" style="margin-top:10px; margin-bottom:30px">
+    <div>
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">血管入路并发症</div>
+      <el-form>
+        <el-form-item label="并发症：">
+          <el-checkbox-group v-model="summary.bloodDisease">
+            <el-checkbox v-for="factor in factors" :label="factor" :key="factor">{{factor}}</el-checkbox>
+          </el-checkbox-group>
+        </el-form-item>
+      </el-form>
+      <el-button style="margin-top:-10px;background-color:#EEE" @click="saveOrUpdatePci">保存</el-button>
+    </div>
+    <div class="block" style="margin-top:30px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">评分</div>
       <!-- <span class="demonstration">检查日期</span> -->
       <el-row>
@@ -52,11 +55,22 @@
         <el-col :span="12">
           <div class="grid-content bg-purple-light">
             <label>DAPT 评分：</label>
-            <el-input style="text-align: left;width:70px" v-model="score.daptTotalScore" :readonly="true"></el-input>
+            <el-input
+              style="text-align: left;width:70px"
+              v-model="score.daptTotalScore"
+              :readonly="true"
+            ></el-input>
             <label>分</label>
           </div>
         </el-col>
-        <el-button class="el-icon-edit" type="info" size="small" style="margin-left:-80px; margin-top:5px" circle @click="changeEdit"></el-button>
+        <el-button
+          class="el-icon-edit"
+          type="info"
+          size="small"
+          style="margin-left:-80px; margin-top:5px"
+          circle
+          @click="changeEdit"
+        ></el-button>
       </el-row>
       <el-row>
         <el-col :span="12">
@@ -108,27 +122,28 @@
 import util from "../../common/js/util";
 import { patientData } from "../../common/js/data";
 import { patientApi, recordApi } from "../../api/api";
+var lodash = require("lodash");
 export default {
   data() {
     return {
-      pciItem: Object.assign([], patientData.pciItem),
-      liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
-      bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
-      coagulationExam: Object.assign([], patientData.coagulationItem),
-      factors: Object.assign([], patientData.bloodOptions),
-      daptExam:Object.assign([],patientData.daptItem),
+      pciItem: lodash.cloneDeep(patientData.pciItem),
+      liverKidneyExam: lodash.cloneDeep(patientData.liverKidneyItem),
+      bloodLipidExam: lodash.cloneDeep(patientData.bloodLipidItem),
+      coagulationExam: lodash.cloneDeep(patientData.coagulationItem),
+      factors: lodash.cloneDeep(patientData.bloodOptions),
+      daptExam: lodash.cloneDeep(patientData.daptItem),
       summary: {
         bloodDisease: []
       },
       score: {
         graceScore: 0,
-        daptScore:[],
-        daptTotalScore:0,
-        crucedeScore:0
+        daptScore: [],
+        daptTotalScore: 0,
+        crucedeScore: 0
       },
       multipleSelection: [],
-      timeUI1:"",
-      datpEdit:false
+      timeUI1: "",
+      datpEdit: false
     };
   },
   methods: {
@@ -148,22 +163,21 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
-    handleChange(value) {
-    },
+    handleChange(value) {},
     handleEdit(index, row) {
       row.score = 0;
-      if(parseInt(row.reason)){
+      if (parseInt(row.reason)) {
         var age = parseInt(row.reason);
-        if(age >= 75){
+        if (age >= 75) {
           row.score = -2;
         }
-        if(age >= 65){
+        if (age >= 65) {
           row.score = -1;
         }
       }
       this.calcDapt();
     },
-    changeEdit(){
+    changeEdit() {
       this.datpEdit = !this.datpEdit;
     },
     changeOtherFactor(value) {
@@ -171,9 +185,9 @@ export default {
       // this.form.riskOtherFactor = value;
       // alert(this.form.riskOtherFactorUI);
     },
-    calcDapt(){
+    calcDapt() {
       var dapt = 0;
-      this.multipleSelection.forEach(function(ele){
+      this.multipleSelection.forEach(function(ele) {
         dapt += ele.score;
       });
       this.score.daptTotalScore = dapt;
@@ -280,11 +294,14 @@ export default {
     saveTime: function() {
       console.log(this.timeUI1);
       console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
-    }
+    },
+    saveOrUpdatePci:function(){
+      // var params = 
+    },
   },
   mounted() {
     // this.getDetail();
-     console.log("conclusion");
+    console.log("conclusion");
   }
 };
 </script>
