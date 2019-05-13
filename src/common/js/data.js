@@ -286,30 +286,72 @@ var patientData = {
 
         ],
     ],
+    // pciItem: [
+    //     {
+    //         drugCh: "心肌肌钙蛋白",
+    //         drugEn: "cTnT/I",
+    //         examValue: "",
+    //         pciItemUnit: "×10^9/L"
+    //     },
+    //     {
+    //         drugCh: "肌酸激酶",
+    //         drugEn: "CK",
+    //         examValue: "",
+    //         pciItemUnit: "×10^12/L"
+    //     },
+    //     {
+    //         drugCh: "肌酸激酶同工酶",
+    //         drugEn: "CK-MB",
+    //         examValue: "",
+    //         pciItemUnit: "×10^9/L"
+    //     },
+    //     {
+    //         drugCh: "肌酐",
+    //         drugEn: "Cr",
+    //         examValue: "",
+    //         pciItemUnit: "μmol/L"
+    //     }
+    // ],
     pciItem: [
         {
-            drugCh: "心肌肌钙蛋白",
-            drugEn: "cTnT/I",
+            examValueId: "",
+            examItemCode: "5001",
+            examItemName: "心肌肌钙蛋白",
+            medicalHistoryId: "",
             examValue: "",
-            pciItemUnit: "×10^9/L"
+            examIndex: 0,
+            itemShortName: "cTnT/I",
+            examItemUnit: "×10^9/L"
         },
         {
-            drugCh: "肌酸激酶",
-            drugEn: "CK",
+            examValueId: "",
+            examItemCode: "5002",
+            examItemName: "肌酸激酶",
+            medicalHistoryId: "",
             examValue: "",
-            pciItemUnit: "×10^12/L"
+            examIndex: 0,
+            itemShortName: "CK",
+            examItemUnit: "×10^12/L"
         },
         {
-            drugCh: "肌酸激酶同工酶",
-            drugEn: "CK-MB",
+            examValueId: "",
+            examItemCode: "5003",
+            examItemName: "肌酸激酶同工酶",
+            medicalHistoryId: "",
             examValue: "",
-            pciItemUnit: " ×10^9/L"
+            examIndex: 0,
+            itemShortName: "CK-MB",
+            examItemUnit: "×10^9/L"
         },
         {
-            drugCh: "肌酐",
-            drugEn: "Cr",
+            examValueId: "",
+            examItemCode: "5004",
+            examItemName: "肌酐",
+            medicalHistoryId: "",
             examValue: "",
-            pciItemUnit: "μmol/L"
+            examIndex: 0,
+            itemShortName: "Cr",
+            examItemUnit: "μmol/L"
         }
     ],
     bloodOptions: [

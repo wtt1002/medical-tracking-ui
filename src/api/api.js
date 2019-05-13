@@ -74,6 +74,11 @@ const recordApi = {
     addPci: (params) => { return axios.post(`/apis${base}/pci/addPci`, params).then(res => res.data); },
     //更新人体成分分析
     updatePci: (params) => { return axios.post(`/apis${base}/pci/updatePci`, params).then(res => res.data); },
+    //新增pci术后检查
+    addPciAfter: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/addone`, params).then(res => res.data); }, 
+    //更新pci术后检查
+    updatePciAfter: (params) => { return axios.post(`/apis${base}/pci/updatePci`, params).then(res => res.data); },
+
 }
 export {
     userApi,

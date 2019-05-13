@@ -109,11 +109,12 @@
           :key="item.value"
         >{{item.label}}</el-checkbox>
       </el-checkbox-group>
-      <el-checkbox-group style="margin-top:5px">
+      <!-- 暂时未处理其它 -->
+      <!-- <el-checkbox-group style="margin-top:5px">
         <el-checkbox label="其它">
           <el-input placeholder="其它" size="small"></el-input>
         </el-checkbox>
-      </el-checkbox-group>
+      </el-checkbox-group> -->
     </div>
     <div style="margin:15px 0">
       <label style="font-weight:bold">术中用药：</label>
@@ -235,7 +236,7 @@
         >{{item.label}}</el-checkbox>
       </el-checkbox-group>
     </div>
-    <el-button @click="saveOrUpdate">bucun</el-button>
+    <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate">保存</el-button>
   </div>
 </template>
 
@@ -340,64 +341,29 @@ export default {
             "yyyy-MM-dd"
           )
         };
+        console.log(JSON.stringify(params));
         if (this.pci.pciId == "") {
-          console.log("新增")
+          console.log("新增");
           this.save(params);
         } else {
-          console.log("更新")
+          console.log("更新");
           this.update(params);
         }
       });
     },
-    // save: function(params) {
-    //   recordApi.addMedicalHistory(params).then(res => {
-    //     console.log(JSON.stringify(res));
-    //     this.addLoading = false;
-    //     //NProgress.done();
-    //     if (res.code != "0000") {
-    //       this.$message({
-    //         message: res.Msg,
-    //         type: "warning"
-    //       });
-    //       return;
-    //     }
-    //     this.form.medicalHistoryId = res.data;
-    //     this.$message({
-    //       message: "提交成功",
-    //       type: "success"
-    //     });
-    //   });
-    // },
     save(params) {
-      console.log(JSON.stringify(params))
       recordApi.addPci(params).then(res => {
         console.log(JSON.stringify(res));
-      });
-    },
-    update(params) {
-      recordApi.updatePci(params).then(res => {
-        console.log(JSON.stringify(res));
-      });
-    },
-    getDetail: function() {
-      recordApi
-        .getPci(sessionStorage.getItem("currentMedicalHistory"))
-        .then(res => {
-          console.log(JSON.stringify(res))
-          if (res.code != "0000") {
-            this.$message({
-              message: res.Msg,
-              type: "warning"
-            });
-            return;
-          }
-          console.log(res.data.pci.pciType)
+        if (res.code != "0000") {
+          console.log(JSON.stringify(res.Msg));
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        if (res.data != null) {
           this.pci = res.data.pci;
-          // var stt = res.data.pci.pciType;
-          // // this.pci.pciType = JSON.parse(stt);
-          // console.log(typeof(res.data.pci.contrastOutput));
-          // console.log(typeof(res.data.pci));
-          // console.log(JSON.stringify(res.data.pci));
           this.pci.pciType = JSON.parse(res.data.pci.pciType);
           this.pci.contrastOutput = JSON.parse(res.data.pci.contrastOutput);
           this.pci.pciAntiplatelet = JSON.parse(res.data.pci.pciAntiplatelet);
@@ -406,8 +372,78 @@ export default {
           this.pci.assistiveDevice = JSON.parse(res.data.pci.assistiveDevice);
           this.pci.pciInfo = JSON.parse(res.data.pci.pciInfo);
           this.pci.pciDetail = JSON.parse(res.data.pci.pciDetail);
-          this.pci.interventionProblem = JSON.parse(res.data.pci.interventionProblem);
-          this.pci.operateDurationUI = util.formatDate.parse(res.data.operateDuration,"yyyy-MM-dd");
+          this.pci.interventionProblem = JSON.parse(
+            res.data.pci.interventionProblem
+          );
+          this.pci.operateDurationUI = util.formatDate.parse(
+            res.data.operateDuration,
+            "yyyy-MM-dd"
+          );
+        }
+      });
+    },
+    update(params) {
+      //pci实体中的日期类型置null
+      params.pci.operateDuration = null;
+      recordApi.updatePci(params).then(res => {
+        if (res.code != "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        if (res.data != null) {
+          this.pci = res.data.pci;
+          this.pci.pciType = JSON.parse(res.data.pci.pciType);
+          this.pci.contrastOutput = JSON.parse(res.data.pci.contrastOutput);
+          this.pci.pciAntiplatelet = JSON.parse(res.data.pci.pciAntiplatelet);
+          this.pci.pciAnticoagulant = JSON.parse(res.data.pci.pciAnticoagulant);
+          this.pci.operateDrug = JSON.parse(res.data.pci.operateDrug);
+          this.pci.assistiveDevice = JSON.parse(res.data.pci.assistiveDevice);
+          this.pci.pciInfo = JSON.parse(res.data.pci.pciInfo);
+          this.pci.pciDetail = JSON.parse(res.data.pci.pciDetail);
+          this.pci.interventionProblem = JSON.parse(
+            res.data.pci.interventionProblem
+          );
+          this.pci.operateDurationUI = util.formatDate.parse(
+            res.data.operateDuration,
+            "yyyy-MM-dd"
+          );
+        }
+      });
+    },
+    getDetail: function() {
+      recordApi
+        .getPci(sessionStorage.getItem("currentMedicalHistory"))
+        .then(res => {
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          if (res.data != null) {
+            this.pci = res.data.pci;
+            this.pci.pciType = JSON.parse(res.data.pci.pciType);
+            this.pci.contrastOutput = JSON.parse(res.data.pci.contrastOutput);
+            this.pci.pciAntiplatelet = JSON.parse(res.data.pci.pciAntiplatelet);
+            this.pci.pciAnticoagulant = JSON.parse(
+              res.data.pci.pciAnticoagulant
+            );
+            this.pci.operateDrug = JSON.parse(res.data.pci.operateDrug);
+            this.pci.assistiveDevice = JSON.parse(res.data.pci.assistiveDevice);
+            this.pci.pciInfo = JSON.parse(res.data.pci.pciInfo);
+            this.pci.pciDetail = JSON.parse(res.data.pci.pciDetail);
+            this.pci.interventionProblem = JSON.parse(
+              res.data.pci.interventionProblem
+            );
+            this.pci.operateDurationUI = util.formatDate.parse(
+              res.data.operateDuration,
+              "yyyy-MM-dd"
+            );
+          }
         });
     }
   },
