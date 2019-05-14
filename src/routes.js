@@ -14,6 +14,7 @@ import Records from './views/nav1/Records.vue'
 import MedicalHistory from './views/nav1/MedicalHistory.vue'
 import HistoryPage from './components/mh-pages/HistoryPage.vue'
 import AddHistoryPage from './components/mh-pages/AddHistoryPage.vue'
+import FollowUp from './views/nav1/FollowUp.vue'
 
 let routes = [
     {
@@ -43,6 +44,7 @@ let routes = [
             { path: '/records', component: Records, name: '病例列表', hidden: true },
             { path: '/mhistory', component: MedicalHistory, name: '病历详情'},
             { path: '/addHistory', component: AddHistoryPage, name: '病例列表', hidden: true },
+            { path: '/follow', component: FollowUp, name: '随访详情'},
             // { path: '/history', component:HistoryPage, name:'病历'}
 
         ]
