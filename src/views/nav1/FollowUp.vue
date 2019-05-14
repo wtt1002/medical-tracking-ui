@@ -4,64 +4,81 @@
       <el-form
         ref="followUp"
         :model="followUp"
-        label-width="80px"
+        label-width="10px"
         @submit.prevent="onSubmit"
-        style="margin:20px;width:60%;min-width:600px;"
+        style="margin:20px;width:600px;"
       >
-        <el-form-item label="随访患者">
-          <el-input v-model="followUp.patientName"></el-input>
+        <el-form-item label>
+          <el-col :span="8">
+            <label>随访患者</label>
+            <el-input v-model="followUp.patientName" style="width:120px"></el-input>
+          </el-col>
+          <!-- <el-col class="line" :span="4"></el-col> -->
+          <el-col :span="16">
+            <label>随访医生</label>
+            <el-input v-model="followUp.patientName" style="width:120px"></el-input>
+          </el-col>
         </el-form-item>
-        <el-form-item label="随访医生">
-          <el-input v-model="followUp.doctorName"></el-input>
-        </el-form-item>
-        <el-form-item label="活动区域">
-          <el-select v-model="followUp.region" placeholder="请选择活动区域">
-            <el-option label="区域一" value="shanghai"></el-option>
-            <el-option label="区域二" value="beijing"></el-option>
-          </el-select>
-        </el-form-item>
-        <el-form-item label="活动时间">
-          <el-col :span="11">
+        <el-form-item label>
+          <el-col :span="10">
+            <label>实际随访方式</label>
+            <el-select v-model="followUp.region" placeholder="请选择" style="width:150px">
+              <el-option label="区域一" value="shanghai"></el-option>
+              <el-option label="区域二" value="beijing"></el-option>
+            </el-select>
+          </el-col>
+          <!-- <el-col class="line" :span="4"></el-col> -->
+          <el-col :span="14">
+            <label>实际随访日期</label>
             <el-date-picker
               type="date"
               placeholder="选择日期"
               v-model="followUp.date1"
-              style="width: 100%;"
+              style="width: 150px;"
             ></el-date-picker>
           </el-col>
-          <el-col class="line" :span="2">-</el-col>
-          <el-col :span="11">
-            <el-time-picker
-              type="fixed-time"
-              placeholder="选择时间"
-              v-model="followUp.date2"
-              style="width: 100%;"
-            ></el-time-picker>
-          </el-col>
         </el-form-item>
-        <el-form-item label="即时配送">
-          <el-switch on-text off-text v-model="followUp.delivery"></el-switch>
-        </el-form-item>
-        <el-form-item label="活动性质">
-          <el-checkbox-group v-model="followUp.type">
-            <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
-            <el-checkbox label="地推活动" name="type"></el-checkbox>
-            <el-checkbox label="线下主题活动" name="type"></el-checkbox>
-            <el-checkbox label="单纯品牌曝光" name="type"></el-checkbox>
-          </el-checkbox-group>
-        </el-form-item>
-        <el-form-item label="特殊资源">
+        <el-form-item label=" ">
+          <label>出院后：</label>
           <el-radio-group v-model="followUp.resource">
-            <el-radio label="线上品牌商赞助"></el-radio>
-            <el-radio label="线下场地免费"></el-radio>
+            <el-radio label="1个月"></el-radio>
+            <el-radio label="3个月"></el-radio>
+            <el-radio label="6个月"></el-radio>
+            <el-radio label="12个月"></el-radio>
+            <el-radio label="18个月"></el-radio>
+            <el-radio label="24个月"></el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="活动形式">
-          <el-input type="textarea" v-model="followUp.desc"></el-input>
+        <el-form-item label=" ">
+          <label>目前恢复：</label>
+          <el-radio-group v-model="followUp.resource">
+            <el-radio label="很好"></el-radio>
+            <el-radio label="好"></el-radio>
+            <el-radio label="一般"></el-radio>
+            <el-radio label="差"></el-radio>
+            <el-radio label="死亡"></el-radio>
+            <el-radio label="植物人"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label=" ">
+          <label>是否到院复诊：</label>
+          <el-radio-group v-model="followUp.resource">
+            <el-radio label="本院复诊"></el-radio>
+            <el-radio label="外院复诊"></el-radio>
+            <el-radio label="无复诊"></el-radio>
+          </el-radio-group>
+        </el-form-item>
+        <el-form-item label="">
+          <el-checkbox-group v-model="followUp.type">
+            <label>最近是否出现：</label>
+            <el-checkbox label="住院" name="type"></el-checkbox>
+            <el-checkbox label="急诊观察" name="type"></el-checkbox>
+            <el-checkbox label="死亡" name="type"></el-checkbox>
+            <el-checkbox label="以上均未出现" name="type"></el-checkbox>
+          </el-checkbox-group>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">立即创建</el-button>
-          <el-button @click.native.prevent>取消</el-button>
+          <el-button type="primary">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -70,7 +87,7 @@
         <li
           id="li_stage"
           :class="['li', tabIndex === 0 ? 'current' : '']"
-          @click="changeTab(0,'HistoryPage')"
+          @click="changeTab(0,'FUDiseaseHistoryPage')"
         >
           <span>患者病历</span>
         </li>
@@ -134,7 +151,7 @@ export default {
   data() {
     return {
       tabIndex: 0,
-      trialDetailChoose: "HistoryPage",
+      trialDetailChoose: "FUDiseaseHistoryPage",
       followUp: {
         patientName: "",
         region: "",
@@ -148,8 +165,8 @@ export default {
     };
   },
   components: {
-    HistoryPage: resolve => {
-      require(["@/components/mh-pages/HistoryPage.vue"], resolve);
+    FUDiseaseHistoryPage: resolve => {
+      require(["@/components/fu-pages/FUDiseaseHistoryPage.vue"], resolve);
     },
     ExamPage: resolve => {
       require(["@/components/mh-pages/ExamPage.vue"], resolve);
