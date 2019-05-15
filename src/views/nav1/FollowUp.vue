@@ -89,49 +89,49 @@
           :class="['li', tabIndex === 0 ? 'current' : '']"
           @click="changeTab(0,'FUDiseaseHistoryPage')"
         >
-          <span>患者病历</span>
+          <span>出院病史</span>
         </li>
         <li
           id="li_class"
           :class="['li', tabIndex === 1 ? 'current' : '']"
-          @click="changeTab(1,'AssessmentPage')"
+          @click="changeTab(1,'FUCheckBodyPage')"
         >
-          <span>入院评估</span>
+          <span>查体</span>
         </li>
         <li
           id="li_photo"
           :class="['li', tabIndex === 2 ? 'current' : '']"
           @click="changeTab(2,'AdmissionCheckPage')"
         >
-          <span>入院康复检查项目</span>
+          <span>康复检查项目</span>
         </li>
         <li
           id="li_stage"
           :class="['li', tabIndex === 3 ? 'current' : '']"
           @click="changeTab(3,'ExamPage')"
         >
-          <span>辅助检查</span>
+          <span>化验检查</span>
         </li>
         <li
           id="li_class"
           :class="['li', tabIndex === 4 ? 'current' : '']"
-          @click="changeTab(4,'PCIPage')"
+          @click="changeTab(4,'FUSideEffectPage')"
         >
-          <span>冠脉介入</span>
+          <span>不良反应</span>
         </li>
         <li
           id="li_photo"
           :class="['li', tabIndex === 5 ? 'current' : '']"
-          @click="changeTab(5,'ConclusionPage')"
+          @click="changeTab(5,'FUBodyRiskFactorPage')"
         >
-          <span>出院小结</span>
+          <span>个体化危险因素控制情况</span>
         </li>
         <li
           id="li_photo"
           :class="['li', tabIndex === 6 ? 'current' : '']"
           @click="changeTab(6,'DrugPlanPage')"
         >
-          <span>用药方案</span>
+          <span>药物方案</span>
         </li>
         <li
           id="li_photo"
@@ -174,17 +174,17 @@ export default {
     AdmissionCheckPage: resolve => {
       require(["@/components/mh-pages/AdmissionCheckPage.vue"], resolve);
     },
-    ConclusionPage: resolve => {
-      require(["@/components/mh-pages/ConclusionPage.vue"], resolve);
+    FUBodyRiskFactorPage: resolve => {
+      require(["@/components/fu-pages/FUBodyRiskFactorPage.vue"], resolve);
     },
     FollowUpPage: resolve => {
       require(["@/components/mh-pages/FollowUpPage.vue"], resolve);
     },
-    PCIPage: resolve => {
-      require(["@/components/mh-pages/PCIPage.vue"], resolve);
+    FUSideEffectPage: resolve => {
+      require(["@/components/fu-pages/FUSideEffectPage.vue"], resolve);
     },
-    AssessmentPage: resolve => {
-      require(["@/components/mh-pages/AssessmentPage.vue"], resolve);
+    FUCheckBodyPage: resolve => {
+      require(["@/components/fu-pages/FUCheckBodyPage.vue"], resolve);
     },
     DrugPlanPage: resolve => {
       require(["@/components/mh-pages/DrugPlanPage.vue"], resolve);

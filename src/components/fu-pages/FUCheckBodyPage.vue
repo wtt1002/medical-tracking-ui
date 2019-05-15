@@ -7,81 +7,25 @@
     @submit.prevent="onSubmit"
     style="margin:20px;width:60%;min-width:600px;"
   >
-    <el-form-item label style="height:20px">
-      <label>1. 缺血事件：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="无"></el-radio>
-        <el-radio label="有"></el-radio>
-      </el-radio-group>
+    <el-form-item label style="height:30px">
+      <label style="margin-right:20px">血压：</label>
+      <el-input style="width:50px"></el-input> / 
+      <el-input style="width:50px"></el-input> mmHg
     </el-form-item>
-    <el-form-item label style="height:20px">
-      <label>2. 出血事件：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="无"></el-radio>
-        <el-radio label="有"></el-radio>
-        <el-input size="small" style="width:100px;margin-left:10px"></el-input>
-      </el-radio-group>
+    <el-form-item label style="height:30px">
+      <label style="margin-right:20px">心率：</label>
+      <el-input style="width:50px"></el-input> bpm
     </el-form-item>
-    <el-form-item label style="height:20px">
-      <label>3. 缺血驱动的再次血运重建术：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="无"></el-radio>
-        <el-radio label="有"></el-radio>
-      </el-radio-group>
-      <label>发生日期</label>
-      <el-date-picker></el-date-picker>
-    </el-form-item>
-    <el-form-item label style="height:20px">
-      <label>4. 心功能NYHA分级：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="I级"></el-radio>
-        <el-radio label="II级"></el-radio>
-        <el-radio label="III级"></el-radio>
-        <el-radio label="IV级"></el-radio>
-        <el-radio label="V级"></el-radio>
-        <el-radio label="VI级"></el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label style="height:20px">
-      <label>5. 乏力：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="无"></el-radio>
-        <el-radio label="有"></el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label style="height:20px">
-      <label>6. 肌肉酸痛：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="无"></el-radio>
-        <el-radio label="有"></el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label style="height:20px">
-      <label>7. 正在吸烟：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="无"></el-radio>
-        <el-radio label="有"></el-radio>
-      </el-radio-group>
-    </el-form-item>
-    <el-form-item label style="height:20px">
-      <label>8. 是否参加患者教育：</label>
-      <el-radio-group v-model="form.resource">
-        <el-radio label="无"></el-radio>
-        <el-radio label="有"></el-radio>
-      </el-radio-group>
+    <el-form-item label style="height:30px">
+      <label style="margin-right:20px">体重：</label>
+      <el-input style="width:50px"></el-input> Kg
     </el-form-item>
     <el-form-item>
       <el-col style="width:60px;min-width:60px">
-        <label>9. 其它：</label>
+        <label>其它：</label>
       </el-col>
       <el-col style="width:500px">
-        <el-input
-          type="textarea"
-          :rows="1"
-          placeholder="请输入内容"
-          v-model="form.textarea"
-          autosize
-        ></el-input>
+        <el-input type="textarea" :rows="2" placeholder="请输入其它查体信息" v-model="form.textarea" autosize></el-input>
       </el-col>
     </el-form-item>
     <el-form-item>
