@@ -254,64 +254,115 @@ var patientData = {
             label: "肱动脉"
         }],
     drugPlanItem: [
-        [
-            {
-                category: "心肌肌钙蛋白",
-                drugName: "阿司匹林",
-                singleDose: "100",
-                timeOfDay: "1"
-            },
-            {
-                drugName: "替格瑞洛",
-                singleDose: "90",
-                timeOfDay: "2"
-            },
-            {
-                category: "添加",
-            }
-
-        ],
-        [
-            {
-                category: "他汀类",
-                drugName: "阿司匹林",
-                singleDose: "100",
-                timeOfDay: "1"
-            },
-            {
-                drugName: "替格瑞洛",
-                singleDose: "90",
-                timeOfDay: "2"
-            }
-
-        ],
+        {
+            drugCategoryCode: "0001",
+            drugCategoryName: "抗血小板类",
+            drugAndUseageDtoList:
+                [{
+                    drug: {
+                        drugName: "阿司匹林"
+                    },
+                    followDrugUsage: {
+                        drugUsageId: "",
+                        drugDosage: "1",
+                        drugDosageUnit: "袋",
+                        drugTime: "3",
+                        drugDay: "1",
+                        drugPeriod: "3",
+                        drugPeriodUnit: "周",
+                        drugId: "",
+                        medicalHistoryId: "",
+                        followUpIndex: "",
+                    }
+                }, {
+                    drug: {
+                        drugName: "阿司匹林"
+                    },
+                    followDrugUsage: {
+                        drugUsageId: "",
+                        drugDosage: "1",
+                        drugDosageUnit: "粒",
+                        drugTime: "3",
+                        drugDay: "1",
+                        drugPeriod: "3",
+                        drugPeriodUnit: "周",
+                        drugId: "",
+                        medicalHistoryId: "",
+                        followUpIndex: "",
+                    }
+                }, {
+                    drug: {
+                        drugName: "阿司匹林"
+                    },
+                    followDrugUsage: {
+                        drugUsageId: "",
+                        drugDosage: "1",
+                        drugDosageUnit: "粒",
+                        drugTime: "3",
+                        drugDay: "1",
+                        drugPeriod: "3",
+                        drugPeriodUnit: "周",
+                        drugId: "",
+                        medicalHistoryId: "",
+                        followUpIndex: "",
+                    }
+                },]
+        }, {
+            drugCategoryCode: "0001",
+            drugCategoryName: "他汀类",
+            drugAndUseageDtoList:
+                [{
+                    drug: {
+                        drugName: "阿司匹林33"
+                    },
+                    followDrugUsage: {
+                        drugUsageId: "",
+                        drugDosage: "1",
+                        drugDosageUnit: "粒",
+                        drugTime: "3",
+                        drugDay: "1",
+                        drugPeriod: "3",
+                        drugPeriodUnit: "周",
+                        drugId: "",
+                        medicalHistoryId: "",
+                        followUpIndex: "",
+                    }
+                }, {
+                    drug: {
+                        drugName: "阿司匹林33"
+                    },
+                    followDrugUsage: {
+                        drugUsageId: "",
+                        drugDosage: "1",
+                        drugDosageUnit: "粒",
+                        drugTime: "3",
+                        drugDay: "1",
+                        drugPeriod: "3",
+                        drugPeriodUnit: "周",
+                        drugId: "",
+                        medicalHistoryId: "",
+                        followUpIndex: "",
+                    }
+                }, {
+                    drug: {
+                        drugName: "阿司匹林33"
+                    },
+                    followDrugUsage: {
+                        drugUsageId: "",
+                        drugDosage: "1",
+                        drugDosageUnit: "粒",
+                        drugTime: "3",
+                        drugDay: "1",
+                        drugPeriod: "3",
+                        drugPeriodUnit: "周",
+                        drugId: "",
+                        medicalHistoryId: "",
+                        followUpIndex: "",
+                    }
+                },]
+        }
     ],
-    // pciItem: [
-    //     {
-    //         drugCh: "心肌肌钙蛋白",
-    //         drugEn: "cTnT/I",
-    //         examValue: "",
-    //         pciItemUnit: "×10^9/L"
-    //     },
-    //     {
-    //         drugCh: "肌酸激酶",
-    //         drugEn: "CK",
-    //         examValue: "",
-    //         pciItemUnit: "×10^12/L"
-    //     },
-    //     {
-    //         drugCh: "肌酸激酶同工酶",
-    //         drugEn: "CK-MB",
-    //         examValue: "",
-    //         pciItemUnit: "×10^9/L"
-    //     },
-    //     {
-    //         drugCh: "肌酐",
-    //         drugEn: "Cr",
-    //         examValue: "",
-    //         pciItemUnit: "μmol/L"
-    //     }
-    // ],
+
     pciItem: [
         {
             examValueId: "",
