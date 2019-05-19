@@ -159,6 +159,7 @@ export default {
     getDetail: function() {}
   },
   mounted() {
+    console.log("查体")
     this.getDetail();
   }
 };

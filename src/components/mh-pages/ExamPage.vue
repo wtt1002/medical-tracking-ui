@@ -270,10 +270,14 @@ export default {
      * 数据获取接口
      */
     getDetail: function() {
+      var params ={
+        medicalHistoryId:sessionStorage.getItem("currentMedicalHistory"),
+        examIndex:0
+      }
       recordApi
-        .getExam(sessionStorage.getItem("currentMedicalHistory"))
+        .getExam(params)
         .then(res => {
-          // console.log(JSON.stringify(res));
+          console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,

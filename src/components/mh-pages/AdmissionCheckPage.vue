@@ -115,9 +115,9 @@
         </el-table-column>
       </el-table>
       <div style="width:550px; margin-top:10px; margin-bottom:10px">
-        <el-input v-model="noninvasiveConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
+        <el-input v-model="noninvasiveConclusion.examConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
-      <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
+      <el-button style="background-color:#EEE" @click="saveOrUpdate(1)">保存</el-button>
     </div>
     <div style="margin-top:10px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">运动心肺功能检测</div>
@@ -147,9 +147,9 @@
       </el-table>
       <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <!-- <label>运动心肺功能检测结论：</label> -->
-        <el-input v-model="cardiopulmonaryConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
+        <el-input v-model="cardiopulmonaryConclusion.examConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
-      <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
+      <el-button style="background-color:#EEE" @click="saveOrUpdate(2)">保存</el-button>
     </div>
 
     <div style="margin-top:10px; margin-bottom:30px">
@@ -180,9 +180,9 @@
       </el-table>
       <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <!-- <label>运动心肺功能检测结论：</label> -->
-        <el-input v-model="walkConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
+        <el-input v-model="walkConclusion.examConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
-      <el-button style="background-color:#EEE" @click="saveTime">保存</el-button>
+      <el-button style="background-color:#EEE" @click="saveOrUpdate(3)">保存</el-button>
     </div>
   </div>
 </template>
@@ -198,9 +198,9 @@ export default {
       noninvasiveExam: [],
       cardiopulmonaryExam: [],
       walkExam: [],
-      noninvasiveConclusion: "",
-      cardiopulmonaryConclusion: "",
-      walkConclusion: "",
+      noninvasiveConclusion: {},
+      cardiopulmonaryConclusion: {},
+      walkConclusion: {},
       addRules: {
         admissionNum: [
           { required: true, message: "请输入住院号", trigger: "blur" }
@@ -225,9 +225,9 @@ export default {
         bodyFatPercentage: "",
         bmi: ""
       },
-      timeUI1: "",
-      timeUI2: "",
-      timeUI3: "",
+      timeUI1: new Date(),
+      timeUI2: new Date(),
+      timeUI3: new Date(),
       timeUI4: "",
       value1: ""
     };
@@ -282,48 +282,57 @@ export default {
         });
       }
     },
-    saveOrUpdate: function() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.$confirm("确认提交吗？", "提示", {}).then(() => {
-            this.addLoading = true;
-            //NProgress.start();
-            let risk = {};
-            let drug = {};
-            risk.riskBriefFactorUI = this.form.riskBriefFactorUI;
-            risk.riskOtherFactorUI = this.form.riskOtherFactorUI;
-            drug.preDrugsUI = this.form.preDrugsUI;
-            drug.preOtherDrugUI = this.form.preOtherDrugUI;
-            let mh = Object.assign({}, this.form);
-            //json转为字符串
-            mh.riskFactor = JSON.stringify(risk);
-            mh.mainDiagnose = JSON.stringify(this.form.diagnoseUI);
-            mh.preDrugs = JSON.stringify(drug);
-            mh.patientId = sessionStorage.getItem("currentPatient");
-            let params = {
-              medicalHistory: mh,
-              inTimeStr: util.formatDate.format(
-                new Date(this.form.inTimeUI),
-                "yyyy-MM-dd"
-              ),
-              outTimeStr: util.formatDate.format(
-                new Date(this.form.outTimeUI),
-                "yyyy-MM-dd"
-              )
-            };
-            console.log(JSON.stringify(params));
+    saveOrUpdate: function(index) {
+      var params = {
+        addMedicalExamDtos: {},
+        inspectionConclusion: {}
+      };
+      switch (index) {
+        case 1:
+          params.addMedicalExamDtos = this.strDate(
+            this.noninvasiveExam,
+            this.timeUI1
+          );
+          this.noninvasiveConclusion.medicalHistoryId = sessionStorage.getItem("currentMedicalHistory");
+          this.noninvasiveConclusion.examCategory = "6000";
+          this.noninvasiveConclusion.examIndex = 0;
+          this.noninvasiveConclusion.examTime = null;
+          params.inspectionConclusion = this.noninvasiveConclusion;
+          break;
+        case 2:
+          params.addMedicalExamDtos = this.strDate(
+            this.cardiopulmonaryExam,
+            this.timeUI2
+          );
+          this.cardiopulmonaryConclusion.medicalHistoryId = sessionStorage.getItem("currentMedicalHistory");
+          this.cardiopulmonaryConclusion.examCategory = "7000";
+          this.cardiopulmonaryConclusion.examIndex = 0;
+          this.cardiopulmonaryConclusion.examTime = null;
+          params.inspectionConclusion = this.cardiopulmonaryConclusion;
+          break;
+        case 3:
+          params.addMedicalExamDtos = this.strDate(this.walkExam, this.timeUI3);
+          this.walkConclusion.examCategory = "8000";
+          this.walkConclusion.examIndex = 0;
+          this.walkConclusion.examTime = null;
+          this.walkConclusion.medicalHistoryId = sessionStorage.getItem("currentMedicalHistory");
+          params.inspectionConclusion = this.walkConclusion;
+          break;
+        default:
+          break;
+      }
+      // console.log(JSON.stringify(params));
+      // console.log(JSON.stringify(params));
 
-            if (this.form.medicalHistoryId == "") {
-              this.save(params);
-            } else {
-              // this.update();
-            }
-          });
-        }
-      });
+      if (params.addMedicalExamDtos[0].examValueId == "") {
+        this.save(params);
+      } else {
+        this.update(params);
+        console.log("update。。。。。");
+      }
     },
     save: function(params) {
-      recordApi.addMedicalHistory(params).then(res => {
+      recordApi.addAdmissionCheck(params).then(res => {
         console.log(JSON.stringify(res));
         this.addLoading = false;
         //NProgress.done();
@@ -334,9 +343,28 @@ export default {
           });
           return;
         }
-        this.form.medicalHistoryId = res.data;
+        res.data.myExamDtos.forEach(element =>{
+
+        })
         this.$message({
           message: "提交成功",
+          type: "success"
+        });
+      });
+    },
+    update: function(params) {
+      console.log(JSON.stringify(params));
+      recordApi.updateAdmissionCheck(params).then(res => {
+        console.log(JSON.stringify(res))
+        if (res.code != "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        this.$message({
+          message: "更新成功",
           type: "success"
         });
       });
@@ -348,6 +376,7 @@ export default {
         examIndex: 0
       };
       recordApi.getAdmissionCheck(params).then(res => {
+        console.log(JSON.stringify(res.data.medicalHistoryExamDtos[0]));
         if (res.code != "0000") {
           this.$message({
             message: res.Msg,
@@ -363,7 +392,7 @@ export default {
           switch (element.examCategoryCode) {
             case "6000":
               this.assembleData(element.listMyExamDto, this.noninvasiveExam);
-              this.noninvasiveConclusion = element.examConclusion;
+              this.noninvasiveConclusion = {...this.noninvasiveConclusion, ...element.inspectionConclusion};
               this.timeUI1 = util.formatDate.parse(
                 element.listMyExamDto[0].examTime,
                 "yyyy-MM-dd"
@@ -374,7 +403,7 @@ export default {
                 element.listMyExamDto,
                 this.cardiopulmonaryExam
               );
-              this.cardiopulmonaryConclusion = element.examConclusion;
+              this.cardiopulmonaryConclusion = {...this.cardiopulmonaryConclusion, ...element.inspectionConclusion};
               this.timeUI2 = util.formatDate.parse(
                 element.listMyExamDto[0].examTime,
                 "yyyy-MM-dd"
@@ -382,7 +411,7 @@ export default {
               break;
             case "8000":
               this.assembleData(element.listMyExamDto, this.walkExam);
-              this.walkConclusion = element.examConclusion;
+              this.walkConclusion = {...this.walkConclusion, ...element.inspectionConclusion};
               this.timeUI3 = util.formatDate.parse(
                 element.listMyExamDto[0].examTime,
                 "yyyy-MM-dd"
@@ -393,6 +422,23 @@ export default {
           }
         });
       });
+    },
+
+    strDate(array, timeUI) {
+      var str;
+      try {
+        str = util.formatDate.format(timeUI, "yyyy-MM-dd");
+      } catch (error) {
+        str = util.formatDate.format(new Date(), "yyyy-MM-dd");
+      }
+      var reData = lodash.cloneDeep(array);
+      for (var i = 0; i < reData.length; i++) {
+        reData[i].myExamTime = str;
+        reData[i].medicalHistoryId = sessionStorage.getItem(
+          "currentMedicalHistory"
+        );
+      }
+      return reData;
     },
     /**
      * 数据渲染
