@@ -255,8 +255,9 @@ export default {
 
     getDetail: function() {
       recordApi
-        .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
+        .getDischargeSummary(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
+          console.log(JSON.stringify(res))
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -264,43 +265,54 @@ export default {
             });
             return;
           }
-          this.form = { ...this.form, ...res.data.medicalHistory };
-          this.form.inTimeUI = util.formatDate.parse(
-            res.data.inTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.outTimeUI = util.formatDate.parse(
-            res.data.outTimeStr,
-            "yyyy-MM-dd"
-          );
-          this.form.diagnoseUI = JSON.parse(
-            res.data.medicalHistory.mainDiagnose
-          );
-          var risk = JSON.parse(res.data.medicalHistory.riskFactor);
-          this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
-          this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
-          if (risk.riskOtherFactorUI != "") {
-            this.isOtherFactor = ["其它"];
-          }
-          var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
-          this.form.preDrugsUI = drugs.preDrugsUI;
-          this.form.preOtherDrugUI = drugs.preOtherDrugUI;
-          if (drugs.preOtherDrugUI != "") {
-            this.isOtherDrug = ["其它"];
-          }
         });
+      // recordApi
+      //   .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
+      //   .then(res => {
+      //     if (res.code != "0000") {
+      //       this.$message({
+      //         message: res.Msg,
+      //         type: "warning"
+      //       });
+      //       return;
+      //     }
+      //     this.form = { ...this.form, ...res.data.medicalHistory };
+      //     this.form.inTimeUI = util.formatDate.parse(
+      //       res.data.inTimeStr,
+      //       "yyyy-MM-dd"
+      //     );
+      //     this.form.outTimeUI = util.formatDate.parse(
+      //       res.data.outTimeStr,
+      //       "yyyy-MM-dd"
+      //     );
+      //     this.form.diagnoseUI = JSON.parse(
+      //       res.data.medicalHistory.mainDiagnose
+      //     );
+      //     var risk = JSON.parse(res.data.medicalHistory.riskFactor);
+      //     this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
+      //     this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
+      //     if (risk.riskOtherFactorUI != "") {
+      //       this.isOtherFactor = ["其它"];
+      //     }
+      //     var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
+      //     this.form.preDrugsUI = drugs.preDrugsUI;
+      //     this.form.preOtherDrugUI = drugs.preOtherDrugUI;
+      //     if (drugs.preOtherDrugUI != "") {
+      //       this.isOtherDrug = ["其它"];
+      //     }
+      //   });
     },
 
     saveTime: function() {
       console.log(this.timeUI1);
       console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
     },
-    saveOrUpdatePci:function(){
-      // var params = 
-    },
+    saveOrUpdatePci: function() {
+      // var params =
+    }
   },
   mounted() {
-    // this.getDetail();
+    this.getDetail();
     console.log("conclusion");
   }
 };

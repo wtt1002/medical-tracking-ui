@@ -362,7 +362,136 @@ var patientData = {
                 },]
         }
     ],
-
+    drugItem: [
+        {
+          value: "1000",
+          label: "抗血小板类",
+          children: [
+            {
+              value: "1001",
+              label: "阿司匹林"
+            },
+            {
+              value: "1002",
+              label: "替格瑞洛"
+            },
+            {
+              value: "1003",
+              label: "氯吡格雷"
+            },
+            {
+              value: "1004",
+              label: "其它"
+            }
+          ]
+        },
+        {
+          value: "2000",
+          label: "他汀类",
+          children: [
+            {
+              value: "2001",
+              label: "瑞舒伐他汀"
+            },
+            {
+              value: "2002",
+              label: "阿托伐他汀"
+            },
+            {
+              value: "2003",
+              label: "辛伐他汀"
+            },
+            {
+              value: "2004",
+              label: "普伐他汀"
+            },
+            {
+              value: "2005",
+              label: "其它"
+            }
+          ]
+        },
+        {
+          value: "3000",
+          label: "β受体阻滞剂类",
+          children: [
+            {
+              value: "3001",
+              label: "琥珀酸美托洛尔缓释片"
+            },
+            {
+              value: "3002",
+              label: "酒石酸美托洛尔片"
+            },
+            {
+              value: "3003",
+              label: "富马酸比索洛尔片"
+            },
+            {
+              value: "3004",
+              label: "其它"
+            }
+          ]
+        },
+        {
+          value: "4000",
+          label: "ARB/ACEI",
+          children: [
+            {
+              value: "4001",
+              label: "其它"
+            }
+          ]
+        },
+        {
+          value: "5000",
+          label: "质子泵抑制剂",
+          children: [
+            {
+              value: "5001",
+              label: "其它"
+            }
+          ]
+        },
+        {
+          value: "6000",
+          label: "抗凝药",
+          children: [
+            {
+              value: "6001",
+              label: "华法林"
+            },
+            {
+              value: "6002",
+              label: "NOAC"
+            },
+            {
+              value: "6003",
+              label: "其它"
+            }
+          ]
+        },
+        {
+          value: "7000",
+          label: "利尿剂",
+          children: [
+            {
+              value: "7001",
+              label: "其它"
+            }
+          ]
+        },
+        {
+          value: "8000",
+          label: "其它",
+          children: [
+            {
+              value: "8001",
+              label: "其它"
+            }
+          ]
+        }
+      ],
     pciItem: [
         {
             examValueId: "",
@@ -526,7 +655,7 @@ var patientData = {
             examItemName: "白细胞",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "WBC",
             examItemUnit: " ×10^9/L"
         },
@@ -536,7 +665,7 @@ var patientData = {
             examItemName: "红细胞",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "RBC",
             examItemUnit: "×10^12/L"
         },
@@ -546,7 +675,7 @@ var patientData = {
             examItemName: "血小板",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "PLT",
             examItemUnit: " ×10^9/L"
         },
@@ -556,7 +685,7 @@ var patientData = {
             examItemName: "血红蛋白",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "HGB",
             examItemUnit: " g/L"
         }
@@ -568,7 +697,7 @@ var patientData = {
             examItemName: "谷丙转氨酶",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "ALT",
             examItemUnit: "U/L"
         },
@@ -578,7 +707,7 @@ var patientData = {
             examItemName: "谷草转氨酶",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "AST",
             examItemUnit: "U/L"
         },
@@ -588,7 +717,7 @@ var patientData = {
             examItemName: "葡萄糖",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "Glu",
             examItemUnit: "mmol/L"
         },
@@ -598,7 +727,7 @@ var patientData = {
             examItemName: "尿酸",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "UA",
             examItemUnit: "μmol/L/L"
         },
@@ -608,7 +737,7 @@ var patientData = {
             examItemName: "肌酐",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "Cr",
             examItemUnit: "μmol/L"
         }],
@@ -619,7 +748,7 @@ var patientData = {
             examItemName: "总胆固醇",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "TC",
             examItemUnit: "mmol/L"
         },
@@ -629,7 +758,7 @@ var patientData = {
             examItemName: "甘油三酯",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "TG",
             examItemUnit: "mmol/L"
         },
@@ -639,7 +768,7 @@ var patientData = {
             examItemName: "低密度脂蛋白胆固醇",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "LDL-C",
             examItemUnit: "mmol/L"
         },
@@ -649,7 +778,7 @@ var patientData = {
             examItemName: "高密度脂蛋白胆固醇",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "HDL-C",
             examItemUnit: "mmol/L"
         }
@@ -661,7 +790,7 @@ var patientData = {
             examItemName: "国际标准化比值",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "INR",
             examItemUnit: ""
         },
@@ -671,7 +800,7 @@ var patientData = {
             examItemName: "D-二聚体定量",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "D-Dimer",
             examItemUnit: "μg/L"
         },
@@ -681,7 +810,7 @@ var patientData = {
             examItemName: "心肌肌钙蛋白",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "cTnT/I",
             examItemUnit: "ng/mL"
         },
@@ -691,7 +820,7 @@ var patientData = {
             examItemName: "N末端B型利钠肽前体",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "NT-ProBNP",
             examItemUnit: "pg/mL"
         },
@@ -701,7 +830,7 @@ var patientData = {
             examItemName: "肌酸激酶",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "CK",
             examItemUnit: "U/L"
         },
@@ -711,7 +840,7 @@ var patientData = {
             examItemName: "肌酸激酶同工酶",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "CK-MB",
             examItemUnit: "U/L"
         },
@@ -721,7 +850,7 @@ var patientData = {
             examItemName: "左心室射血分数",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "LVEF",
             examItemUnit: "%"
         }],
@@ -732,7 +861,7 @@ var patientData = {
             examItemName: "心率",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "HR",
             examItemUnit: "bpm"
         },
@@ -742,7 +871,7 @@ var patientData = {
             examItemName: "每搏输出量",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "SV",
             examItemUnit: ""
         },
@@ -752,7 +881,7 @@ var patientData = {
             examItemName: "每搏指数",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "SVI",
             examItemUnit: ""
         },
@@ -762,7 +891,7 @@ var patientData = {
             examItemName: "心输出量",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "CO",
             examItemUnit: ""
         },
@@ -772,7 +901,7 @@ var patientData = {
             examItemName: "心指数",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "CI",
             examItemUnit: ""
         },
@@ -782,7 +911,7 @@ var patientData = {
             examItemName: "心收缩指数",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "CTI",
             examItemUnit: ""
         },
@@ -792,7 +921,7 @@ var patientData = {
             examItemName: "左心做功指数",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "LCWi",
             examItemUnit: ""
         },
@@ -802,7 +931,7 @@ var patientData = {
             examItemName: "左心收缩时间",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "LVET",
             examItemUnit: ""
         },
@@ -812,7 +941,7 @@ var patientData = {
             examItemName: "射血分数",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "EF",
             examItemUnit: ""
         }],
@@ -823,7 +952,7 @@ var patientData = {
             examItemName: "峰值负荷",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: "W"
         },
@@ -833,7 +962,7 @@ var patientData = {
             examItemName: "峰值",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: "METs"
         },
@@ -843,7 +972,7 @@ var patientData = {
             examItemName: "峰值",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: "VO2/Kg"
         },
@@ -853,7 +982,7 @@ var patientData = {
             examItemName: "最大摄氧量",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "VO2max",
             examItemUnit: ""
         },
@@ -863,7 +992,7 @@ var patientData = {
             examItemName: "无氧阀",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "AT",
             examItemUnit: ""
         },
@@ -873,7 +1002,7 @@ var patientData = {
             examItemName: "静息心率",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: "bpm"
         },
@@ -883,7 +1012,7 @@ var patientData = {
             examItemName: "峰值心率",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: "bpm"
         },
@@ -893,7 +1022,7 @@ var patientData = {
             examItemName: "靶心率",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: "bpm"
         },
@@ -903,7 +1032,7 @@ var patientData = {
             examItemName: "1秒用力呼气量",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "FEV1",
             examItemUnit: ""
         },
@@ -913,7 +1042,7 @@ var patientData = {
             examItemName: "FEV1占预计值百分比",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "%",
             examItemUnit: ""
         },
@@ -923,7 +1052,7 @@ var patientData = {
             examItemName: "用力呼气量占用力肺活量比值",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "FEV1/FVC%",
             examItemUnit: ""
         }],
@@ -934,7 +1063,7 @@ var patientData = {
             examItemName: "步行",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "walk",
             examItemUnit: "m"
         },
@@ -944,7 +1073,7 @@ var patientData = {
             examItemName: "心功能",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: ""
         },
@@ -954,7 +1083,7 @@ var patientData = {
             examItemName: "Borg量表",
             medicalHistoryId: "",
             examValue: "",
-            examIndex: 1,
+            examIndex: 0,
             itemShortName: "",
             examItemUnit: "分"
         }

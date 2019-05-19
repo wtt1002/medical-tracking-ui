@@ -2,8 +2,8 @@
   <div>
     <div>
       <el-form
-        ref="followUp"
-        :model="followUp"
+        ref="followUpDetail"
+        :model="followUpDetail"
         label-width="10px"
         @submit.prevent="onSubmit"
         style="margin:20px;width:600px;"
@@ -11,20 +11,27 @@
         <el-form-item label>
           <el-col :span="8">
             <label>随访患者</label>
-            <el-input v-model="followUp.patientName" style="width:120px"></el-input>
+            <el-input v-model="followUpDetail.patientName" style="width:120px"></el-input>
           </el-col>
           <!-- <el-col class="line" :span="4"></el-col> -->
           <el-col :span="16">
             <label>随访医生</label>
-            <el-input v-model="followUp.patientName" style="width:120px"></el-input>
+            <el-input v-model="followUpDetail.doctorName" style="width:120px"></el-input>
           </el-col>
         </el-form-item>
         <el-form-item label>
           <el-col :span="10">
             <label>实际随访方式</label>
-            <el-select v-model="followUp.region" placeholder="请选择" style="width:150px">
-              <el-option label="区域一" value="shanghai"></el-option>
-              <el-option label="区域二" value="beijing"></el-option>
+            <el-select
+              v-model="followUpDetail.followUp.finalWay"
+              placeholder="请选择"
+              style="width:150px"
+            >
+              <el-option label="电话" value="电话"></el-option>
+              <el-option label="短信" value="短信"></el-option>
+              <el-option label="门诊" value="门诊"></el-option>
+              <el-option label="造影" value="造影"></el-option>
+              <el-option label="其它" value="其它"></el-option>
             </el-select>
           </el-col>
           <!-- <el-col class="line" :span="4"></el-col> -->
@@ -33,52 +40,59 @@
             <el-date-picker
               type="date"
               placeholder="选择日期"
-              v-model="followUp.date1"
+              v-model="followUpDetail.finalDateUI"
               style="width: 150px;"
             ></el-date-picker>
           </el-col>
         </el-form-item>
         <el-form-item label=" ">
           <label>出院后：</label>
-          <el-radio-group v-model="followUp.resource">
-            <el-radio label="1个月"></el-radio>
-            <el-radio label="3个月"></el-radio>
-            <el-radio label="6个月"></el-radio>
-            <el-radio label="12个月"></el-radio>
-            <el-radio label="18个月"></el-radio>
-            <el-radio label="24个月"></el-radio>
+          <el-radio-group v-model="followUpDetail.followUp.followUpDuration">
+            <el-radio label="1个月" value="1个月"></el-radio>
+            <el-radio label="3个月" value="3个月"></el-radio>
+            <el-radio label="6个月" value="6个月"></el-radio>
+            <el-radio label="12个月" value="12个月"></el-radio>
+            <el-radio label="18个月" value="18个月"></el-radio>
+            <el-radio label="24个月" value="24个月"></el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label=" ">
           <label>目前恢复：</label>
-          <el-radio-group v-model="followUp.resource">
-            <el-radio label="很好"></el-radio>
-            <el-radio label="好"></el-radio>
-            <el-radio label="一般"></el-radio>
-            <el-radio label="差"></el-radio>
-            <el-radio label="死亡"></el-radio>
-            <el-radio label="植物人"></el-radio>
+          <el-radio-group v-model="followUpDetail.followUp.recoveryStatus">
+            <el-radio label="很好" value="很好"></el-radio>
+            <el-radio label="好" value="好"></el-radio>
+            <el-radio label="一般" value="一般"></el-radio>
+            <el-radio label="差" value="差"></el-radio>
+            <el-radio label="死亡" value="死亡"></el-radio>
+            <el-radio label="植物人" value="植物人"></el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label=" ">
           <label>是否到院复诊：</label>
-          <el-radio-group v-model="followUp.resource">
-            <el-radio label="本院复诊"></el-radio>
-            <el-radio label="外院复诊"></el-radio>
-            <el-radio label="无复诊"></el-radio>
+          <el-radio-group v-model="followUpDetail.followUp.furtherConsultation">
+            <el-radio label="本院复诊" value="本院复诊"></el-radio>
+            <el-radio label="外院复诊" value="外院复诊"></el-radio>
+            <el-radio label="无复诊" value="无复诊"></el-radio>
           </el-radio-group>
         </el-form-item>
-        <el-form-item label="">
-          <el-checkbox-group v-model="followUp.type">
+        <el-form-item label>
+          <!-- <el-checkbox-group v-model="followUp.recentSymptoms">
             <label>最近是否出现：</label>
             <el-checkbox label="住院" name="type"></el-checkbox>
             <el-checkbox label="急诊观察" name="type"></el-checkbox>
             <el-checkbox label="死亡" name="type"></el-checkbox>
             <el-checkbox label="以上均未出现" name="type"></el-checkbox>
-          </el-checkbox-group>
+          </el-checkbox-group>-->
+          <label>最近是否出现：</label>
+          <el-radio-group v-model="followUpDetail.followUp.recentSymptoms">
+            <el-radio label="住院" value="住院"></el-radio>
+            <el-radio label="急诊观察" value="急诊观察"></el-radio>
+            <el-radio label="死亡" value="死亡"></el-radio>
+            <el-radio label="以上均未出现" value="以上均未出现"></el-radio>
+          </el-radio-group>
         </el-form-item>
         <el-form-item>
-          <el-button type="primary">保存</el-button>
+          <el-button type="primary" @click="save" :loading="editLoading">保存</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -147,20 +161,32 @@
 </template>
 
 <script>
+import util from "../../common/js/util";
+import { recordApi } from "../../api/api";
 export default {
   data() {
     return {
       tabIndex: 0,
       trialDetailChoose: "FUDiseaseHistoryPage",
-      followUp: {
+      editLoading:false,
+      followUpDetail: {
         patientName: "",
-        region: "",
-        date1: "",
-        date2: "",
-        delivery: false,
-        type: [],
-        resource: "",
-        desc: ""
+        doctorName: "",
+        finalDateUI: new Date(),
+        realTime: "",
+        followUp: {
+          followUpId: "",
+          medicalHistoryId: "",
+          doctorId: "",
+          finalTime: null,
+          planWay: null,
+          finalWay: null,
+          followUpDuration: "",
+          recoveryStatus: "",
+          furtherConsultation: "",
+          recentSymptoms: "",
+          followUpIndex: ""
+        }
       }
     };
   },
@@ -202,7 +228,59 @@ export default {
       console.log(index, tab);
       this.tabIndex = index;
       this.trialDetailChoose = tab;
+    },
+    getDetail() {
+      var params = 1;
+      recordApi.getFollowUpDetail(params).then(res => {
+        // console.log(JSON.stringify(res));
+        if (res.code !== "0000") {
+          this.$message({
+            message: "res.msg",
+            type: "warning"
+          });
+          return;
+        }
+
+        this.patientName = res.data.patientName;
+        this.doctorName = res.data.doctorName;
+        this.followUpDetail = { ...this.followUpDetail, ...res.data };
+        try {
+          this.followUpDetail.finalDateUI = util.formatDate.parse(
+            res.data.realTime,
+            "yyyy-MM-dd"
+          );
+        } catch (error) {
+          this.finalDateUI = null;
+        }
+      });
+    },
+    save: function() {
+      this.editLoading = true;
+      this.followUpDetail.realTime = util.formatDate.format(
+        this.followUpDetail.finalDateUI,
+        "yyyy-MM-dd"
+      );
+      //将LocalDate类型数据置空
+      this.followUpDetail.followUp.planTime = null;
+      this.followUpDetail.followUp.finalTime = null;
+      recordApi.updateFollowUpDetail(this.followUpDetail).then(res => {
+        this.editLoading = false;
+        if (res.code !== "0000") {
+          this.$message({
+            message: "res.msg",
+            type: "warning"
+          });
+          return;
+        }
+        this.$message({
+          message: "更新成功",
+          type: "success"
+        });
+      });
     }
+  },
+  created() {
+    this.getDetail();
   }
 };
 </script>

@@ -51,11 +51,11 @@ const recordApi = {
     //更新病历
     getMedicalHistory: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/detail?medicalHistoryId=` + params).then(res => res.data); },
     //获取辅助检查
-    getExam: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/exam?medicalHistoryId=` + params).then(res => res.data); },
+    getExam: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/exam/get?medicalHistoryId=` + params.medicalHistoryId + "&examIndex=" + params.examIndex).then(res => res.data); },
     //更新辅助检查
     updateExam: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/update`, params).then(res => res.data); },
     //更新辅助检查
-    addExam: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/addone`, params).then(res => res.data); }, 
+    addExam: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/addone`, params).then(res => res.data); },
     //获取入院评估
     getAssessment: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/assessment?medicalHistoryId=` + params).then(res => res.data); },
     //新增入院评估
@@ -68,20 +68,78 @@ const recordApi = {
     addBodyComposition: (params) => { return axios.post(`/apis${base}/medicalHistory/bodyComposition/addone`, params).then(res => res.data); },
     //更新人体成分分析
     updateBodyComposition: (params) => { return axios.post(`/apis${base}/medicalHistory/bodyComposition/update`, params).then(res => res.data); },
+    //新增带有结论的入院康复检查项目
+    addAdmissionCheck: (params) => { return axios.post(`/apis${base}/medicalHistory/admissionCheck/addChecks`, params).then(res => res.data); },
+    //更新带有结论的入院康复检查项目
+    updateAdmissionCheck: (params) => { return axios.post(`/apis${base}/medicalHistory/admissionCheck/updateChecks`, params).then(res => res.data); },
     //获取冠脉介入
-    getPci: (params) => { console.log(params); return axios.get(`/apis${base}/pci/getPci?medicalHistoryId=` + params).then(res => res.data); },   
+    getPci: (params) => { console.log(params); return axios.get(`/apis${base}/pci/getPci?medicalHistoryId=` + params).then(res => res.data); },
     //新增冠脉介入
     addPci: (params) => { return axios.post(`/apis${base}/pci/addPci`, params).then(res => res.data); },
-    //更新人体成分分析
+    //更新pci术后检查
     updatePci: (params) => { return axios.post(`/apis${base}/pci/updatePci`, params).then(res => res.data); },
     //新增pci术后检查
-    addPciAfter: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/addone`, params).then(res => res.data); }, 
+    addPciAfter: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/addone`, params).then(res => res.data); },
     //更新pci术后检查
     updatePciAfter: (params) => { return axios.post(`/apis${base}/pci/updatePci`, params).then(res => res.data); },
+    //查询药物方案
+    getDrugUsage: (params) => { console.log(params); return axios.get(`/apis${base}/drug/usage/get?medicalHistoryId=` + params.medicalHistoryId + "&followUpIndexId=" + params.followUpIndexId).then(res => res.data); },
+    //添加药物
+    addDrugUsage: (params) => { return axios.post(`/apis${base}/drug/usage/add`, params).then(res => res.data); },
+    //编辑药物
+    updateDrugUsage: (params) => { return axios.post(`/apis${base}/drug/usage/update`, params).then(res => res.data); },
+    //删除药物
+    deleteDrugUsage: (params) => { return axios.post(`/apis${base}/drug/usage/delete`, params).then(res => res.data); },
+    //查询出院小结
+    getDischargeSummary: (params) => { console.log(params); return axios.get(`/apis${base}/dischargeSummary/get?medicalHistoryId=` + params).then(res => res.data); },
+    //新增pci术后检查
 
+    //更新pci术后检查
+
+    //新增血管入路并发症
+
+    //更新血管入路并发症
+
+    //新增评分
+
+    //更新评分
+
+    //获取随访记录列表
+    getFollowUp: (params) => { console.log(params); return axios.get(`/apis${base}/followUp/getFollowUp?medicalHistoryId=` + params.medicalHistoryId + "&page=" + params.page + "&count=" + params.count).then(res => res.data); },
+    //获取随访记录详情
+    getFollowUpDetail: (params) => { console.log(params); return axios.get(`/apis${base}/followUpDetail/query?followUpId=` + params).then(res => res.data); },
+    //更新随访记录详情
+    updateFollowUpDetail:(params) => { return axios.post(`/apis${base}/followUpDetail/update`, params).then(res => res.data); },
 }
+const followApi ={
+    //获取出院病史
+    getFollowSickHistory: (params) => { console.log(params); return axios.get(`/apis${base}/followSickHistory/query?followUpId=` + params).then(res => res.data); },
+    //新增出院病史
+
+    //更新出院病史
+
+    //获取随访查体
+
+    //新增随访查体
+
+    //更新随访查体
+
+    //获取随访不良反应
+
+    //新增随访不良反应
+
+    //更新随访不良反应
+
+    //获取随访个体化危险因素控制情况
+
+    //新增随访个体化微信因素控制情况
+
+    //更新随访个体危险因素控制情况
+}
+
 export {
     userApi,
     patientApi,
-    recordApi
+    recordApi,
+    followApi
 }
