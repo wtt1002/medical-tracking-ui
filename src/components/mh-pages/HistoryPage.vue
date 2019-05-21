@@ -71,8 +71,7 @@
       <el-input v-model="form.bmi" style="width:50px"></el-input>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">立即创建</el-button>
-      <el-button @click.native.prevent>取消</el-button>
+      <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">保存</el-button>
     </el-form-item>
   </el-form>
 </template>

@@ -72,29 +72,16 @@
     </el-col>
     <el-col :span="16">
       <el-table :data="records" style="margin:0 10px; width: 100%">
-        <!-- <el-table-column type="index" width="55"></el-table-column> -->
-        <!-- <el-table-column label width="80">
-          <el-button size="small" @click="historyDetail(scope.$index, scope.row)">详情</el-button>
-        </el-table-column> -->
         <el-table-column label width="80">
           <template scope="scope">
             <el-button type="primary" size="small" @click="historyDetail(scope.$index, scope.row)">查看</el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="inTime" label="入院时间" width="150"></el-table-column>
-        <el-table-column prop="outTime" label="出院时间" width="150"></el-table-column>
-        <el-table-column prop="operateDoc" label="介入术者" width="120"></el-table-column>
-        <el-table-column prop="mainDiagnose" label="主要诊断" width="230"></el-table-column>
-        <el-table-column prop="riskFactor" label="高危因素" width="250"></el-table-column>
-        <el-table-column label="操作">
-          <el-button size="small" type="danger" @click="delRecord">删除</el-button>
-        </el-table-column>
-        <!-- <el-table-column label="操作">
-          <template scope="scope">
-            <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
-            <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
-          </template>
-        </el-table-column>-->
+        <el-table-column prop="inTime" label="入院时间" width="180"></el-table-column>
+        <el-table-column prop="outTime" label="出院时间" width="180"></el-table-column>
+        <el-table-column prop="operateDoc" label="介入术者" width="150"></el-table-column>
+        <el-table-column prop="mainDiagnose" label="主要诊断" width="330"></el-table-column>
+        <el-table-column prop="riskFactor" label="高危因素" width="300"></el-table-column>
       </el-table>
       <!--工具条-->
       <el-col :span="24" class="toolbar" style="margin:10px">
@@ -302,7 +289,7 @@ export default {
       this.listLoading = true;
       //NProgress.start();
       recordApi.getRecordsListPage(para).then(res => {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
         if (res.code != "0000") {
           this.$message({
             message: "获取患者病历失败",
@@ -344,10 +331,6 @@ export default {
      */
     getPatientInfo() {
       this.patientId = sessionStorage.getItem("currentPatient");
-      console.log("patientId...." + this.patientId);
-      //   if (this.patientId == "") {
-      //     return;
-      //   }
       patientApi.getPatient(this.patientId).then(res => {
         if (res.code !== "0000") {
           this.$message({
@@ -358,6 +341,8 @@ export default {
         }
         this.editForm = { ...this.editForm, ...res.data.patient };
         this.editForm.birth = res.data.birthdayStr;
+        //存储当前患者
+        sessionStorage.setItem("currentPatientName",res.data.patient.name)
       });
     },
     //删除
@@ -365,29 +350,6 @@ export default {
       this.$confirm("确认删除该记录吗?", "提示", {
         type: "warning"
       });
-      // .then(() => {
-      //   this.listLoading = true;
-      //   //NProgress.start();
-      //   let para = row.patient.patientId;
-      //   patientApi.removePatient(para).then(res => {
-      //     if (res.code !== "0000") {
-      //       this.$message({
-      //         message: "删除失败",
-      //         type: "warning"
-      //       });
-      //       this.getRecords();
-      //       return;
-      //     }
-      //     this.listLoading = false;
-      //     //NProgress.done();
-      //     this.$message({
-      //       message: "删除成功",
-      //       type: "success"
-      //     });
-      //     this.getRecords();
-      //   });
-      // })
-      // .catch(() => {});
     },
     //编辑
     editSubmit: function() {
@@ -432,6 +394,8 @@ export default {
     //查看病历详情
     historyDetail: function(index, row) {
       sessionStorage.setItem("currentMedicalHistory", row.medicalHistoryId);
+      // console.log(JSON.stringify(row))
+      sessionStorage.setItem("currentMedicalOutTime",row.outTime);
       this.$router.push({ path: "/mhistory" });
     }
   },

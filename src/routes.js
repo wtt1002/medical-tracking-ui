@@ -39,12 +39,12 @@ let routes = [
             { path: '/main', component: Main, name: '主页', hidden: true },
             { path: '/table', component: Table, name: '患者列表' },
             { path: '/addPatient', component: AddPatient, name: '添加患者' },
-            { path: '/form', component: Form, name: 'Form' },
-            { path: '/user', component: user, name: '列表' },
+            { path: '/form', component: Form, name: 'Form',hidden:true },
+            { path: '/user', component: user, name: '列表',hidden:true },
             { path: '/records', component: Records, name: '病例列表', hidden: true },
-            { path: '/mhistory', component: MedicalHistory, name: '病历详情'},
+            { path: '/mhistory', component: MedicalHistory, name: '病历详情',hidden:true},
             { path: '/addHistory', component: AddHistoryPage, name: '病例列表', hidden: true },
-            { path: '/follow', component: FollowUp, name: '随访详情'},
+            { path: '/follow', component: FollowUp, name: '随访详情', hidden:true},
             // { path: '/history', component:HistoryPage, name:'病历'}
 
         ]

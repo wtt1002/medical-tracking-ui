@@ -237,7 +237,7 @@
             @click="saveOrUpdate"
             :loading="addLoading"
             style="margin-left:320px"
-          >立即创建</el-button>
+          >保存</el-button>
         </el-form-item>
       </el-form>
     </div>

@@ -106,12 +106,14 @@ const recordApi = {
 
     //获取随访记录列表
     getFollowUp: (params) => { console.log(params); return axios.get(`/apis${base}/followUp/getFollowUp?medicalHistoryId=` + params.medicalHistoryId + "&page=" + params.page + "&count=" + params.count).then(res => res.data); },
+    //新增随访记录
+    addFollowUp: (params) => { return axios.post(`/apis${base}/followUp/addFollowUp`, params).then(res => res.data); },
     //获取随访记录详情
     getFollowUpDetail: (params) => { console.log(params); return axios.get(`/apis${base}/followUpDetail/query?followUpId=` + params).then(res => res.data); },
     //更新随访记录详情
-    updateFollowUpDetail:(params) => { return axios.post(`/apis${base}/followUpDetail/update`, params).then(res => res.data); },
+    updateFollowUpDetail: (params) => { return axios.post(`/apis${base}/followUpDetail/update`, params).then(res => res.data); },
 }
-const followApi ={
+const followApi = {
     //获取出院病史
     getFollowSickHistory: (params) => { console.log(params); return axios.get(`/apis${base}/followSickHistory/query?followUpId=` + params).then(res => res.data); },
     //新增出院病史
