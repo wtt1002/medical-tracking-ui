@@ -24,7 +24,6 @@
         expand-trigger="hover"
         :options="options"
         v-model="form.diagnoseUI"
-        @change="handleChange"
         size="medium"
       ></el-cascader>
     </el-form-item>
@@ -32,7 +31,7 @@
       <el-checkbox-group v-model="form.riskBriefFactorUI">
         <el-checkbox v-for="factor in factors" :label="factor" :key="factor">{{factor}}</el-checkbox>
       </el-checkbox-group>
-      <el-checkbox-group @change="changeOtherFactor" v-model="isOtherFactor">
+      <el-checkbox-group v-model="isOtherFactor">
         <el-checkbox label="其它">
           <el-input placeholder="其它" v-model="form.riskOtherFactorUI"></el-input>
         </el-checkbox>
@@ -42,7 +41,7 @@
       <el-checkbox-group v-model="form.preDrugsUI">
         <el-checkbox v-for="drug in drugs" :label="drug" :key="drug">{{drug}}</el-checkbox>
       </el-checkbox-group>
-      <el-checkbox-group @change="changeOtherFactor" v-model="isOtherDrug">
+      <el-checkbox-group v-model="isOtherDrug">
         <el-checkbox label="其它">
           <el-input placeholder="其它" v-model="form.preOtherDrugUI"></el-input>
         </el-checkbox>
@@ -72,7 +71,7 @@
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">立即创建</el-button>
-      <el-button @click.native.prevent>取消</el-button>
+      <el-button @click.native.prevent = "quit">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -137,15 +136,6 @@ export default {
     onSubmit() {
       console.log("submit!");
     },
-    handleChange(value) {
-      // console.log(value);
-      // alert(value);
-    },
-    changeOtherFactor(value) {
-      // alert(value)
-      // this.form.riskOtherFactor = value;
-      // alert(this.form.riskOtherFactorUI);
-    },
     saveOrUpdate: function() {
       this.$refs.form.validate(valid => {
         if (valid) {
@@ -182,6 +172,9 @@ export default {
         }
       });
     },
+    /**
+     * 确定新增病历
+     */
     save: function(params) {
       
       recordApi.addMedicalHistory(params).then(res => {
@@ -204,6 +197,12 @@ export default {
         // });
       });
     },
+    /**
+     * 取消添加病历
+     */
+    quit: function(){
+      this.$router.go(-1);
+    }
   },
   mounted() {
   }
