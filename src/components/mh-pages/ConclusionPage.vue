@@ -10,7 +10,7 @@
         size="small"
         style="margin-bottom:10px;margin-top:10px"
       ></el-date-picker>
-      <el-table :data="pciItem" border style="width: fit-content;">
+      <el-table :data="pciExam" border style="width: fit-content;">
         <el-table-column prop="examItemName" label="中文" width="180"></el-table-column>
         <el-table-column prop="itemShortName" label="英文" width="180"></el-table-column>
         <el-table-column prop="examValue" label="值" width="180">
@@ -19,25 +19,27 @@
               size="small"
               v-model="scope.row.examValue"
               placeholder
-              @change="handleEdit(scope.$index, scope.row)"
               style="text-align: left;width:60px"
             ></el-input>
             <label>{{scope.row.examItemUnit}}</label>
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:20px; background-color:#EEE" @click="saveTime">保存</el-button>
+      <el-button
+        style="margin-top:20px; background-color:#EEE"
+        @click.native.prevent="saveOrUpdatePci"
+      >保存fff</el-button>
     </div>
     <div>
       <div style="color:#409EFF; font-weight:bold; font-size:16px">血管入路并发症</div>
       <el-form>
         <el-form-item label="并发症：">
-          <el-checkbox-group v-model="summary.bloodDisease">
+          <el-checkbox-group v-model="vasProblem.bloodDiseaseItem">
             <el-checkbox v-for="factor in factors" :label="factor" :key="factor">{{factor}}</el-checkbox>
           </el-checkbox-group>
         </el-form-item>
       </el-form>
-      <el-button style="margin-top:-10px;background-color:#EEE" @click="saveOrUpdatePci">保存</el-button>
+      <el-button style="margin-top:-10px;background-color:#EEE" @click="saveOrUpdateVas">保存</el-button>
     </div>
     <div class="block" style="margin-top:30px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">评分</div>
@@ -57,7 +59,7 @@
             <label>DAPT 评分：</label>
             <el-input
               style="text-align: left;width:70px"
-              v-model="score.daptTotalScore"
+              v-model="score.daptScore"
               :readonly="true"
             ></el-input>
             <label>分</label>
@@ -112,7 +114,7 @@
           <el-table-column prop="desc" label="说明" show-overflow-tooltip width="350px"></el-table-column>
         </el-table>
       </div>
-      <el-button style="margin-top:5px; background-color:#EEE">保存</el-button>
+      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdateScore">保存</el-button>
     </div>
   </div>
 </template>
@@ -126,23 +128,29 @@ var lodash = require("lodash");
 export default {
   data() {
     return {
-      pciItem: lodash.cloneDeep(patientData.pciItem),
+      pciExam: lodash.cloneDeep(patientData.pciItem),
       liverKidneyExam: lodash.cloneDeep(patientData.liverKidneyItem),
       bloodLipidExam: lodash.cloneDeep(patientData.bloodLipidItem),
       coagulationExam: lodash.cloneDeep(patientData.coagulationItem),
       factors: lodash.cloneDeep(patientData.bloodOptions),
       daptExam: lodash.cloneDeep(patientData.daptItem),
-      summary: {
-        bloodDisease: []
+      vasProblem: {
+        medicalHistoryId: "",
+        vascularAccessProblemId: "",
+        bloodDiseaseItem: [],
+        complication: "",
+        otherComplication: ""
       },
       score: {
+        scoreId: "",
+        medicalHistoryId: "",
         graceScore: 0,
-        daptScore: [],
-        daptTotalScore: 0,
-        crucedeScore: 0
+        daptScore: 0,
+        crucedeScore: 0,
+        daptDetail: ""
       },
       multipleSelection: [],
-      timeUI1: "",
+      timeUI1: new Date(),
       datpEdit: false
     };
   },
@@ -190,48 +198,122 @@ export default {
       this.multipleSelection.forEach(function(ele) {
         dapt += ele.score;
       });
-      this.score.daptTotalScore = dapt;
-      // console.log(this.)
+      this.score.daptScore = dapt;
     },
-    saveOrUpdate: function() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.$confirm("确认提交吗？", "提示", {}).then(() => {
-            this.addLoading = true;
-            //NProgress.start();
-            let risk = {};
-            let drug = {};
-            risk.riskBriefFactorUI = this.form.riskBriefFactorUI;
-            risk.riskOtherFactorUI = this.form.riskOtherFactorUI;
-            drug.preDrugsUI = this.form.preDrugsUI;
-            drug.preOtherDrugUI = this.form.preOtherDrugUI;
-            let mh = Object.assign({}, this.form);
-            //json转为字符串
-            mh.riskFactor = JSON.stringify(risk);
-            mh.mainDiagnose = JSON.stringify(this.form.diagnoseUI);
-            mh.preDrugs = JSON.stringify(drug);
-            mh.patientId = sessionStorage.getItem("currentPatient");
-            let params = {
-              medicalHistory: mh,
-              inTimeStr: util.formatDate.format(
-                new Date(this.form.inTimeUI),
-                "yyyy-MM-dd"
-              ),
-              outTimeStr: util.formatDate.format(
-                new Date(this.form.outTimeUI),
-                "yyyy-MM-dd"
-              )
-            };
-            console.log(JSON.stringify(params));
-
-            if (this.form.medicalHistoryId == "") {
-              this.save(params);
-            } else {
-              // this.update();
-            }
+    /**
+     * pci术后检查
+     */
+    saveOrUpdatePci: function() {
+      this.addLoading = true;
+      //NProgress.start();
+      var params = this.pciExam;
+      for (let index = 0; index < params.length; index++) {
+        var dateStr = util.formatDate.format(this.timeUI1, "yyyy-MM-dd");
+        params[index].myExamTime = dateStr
+          ? dateStr
+          : util.formatDate.format(new Date(), "yyyy-MM-dd");
+        params[index].medicalHistoryId = sessionStorage.getItem(
+          "currentMedicalHistory"
+        );
+      }
+      // 新增
+      if (params[0].examValueId == "") {
+        recordApi.addExam(params).then(res => {
+          // console.log(JSON.stringify(res));
+          this.addLoading = false;
+          //NProgress.done();
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          this.form.medicalHistoryId = res.data;
+          this.$message({
+            message: "添加成功",
+            type: "success"
           });
-        }
-      });
+        });
+      } else {
+        //更新
+        recordApi.updateExam(params).then(res => {
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          this.$message({
+            message: "更新成功",
+            type: "success"
+          });
+        });
+      }
+    },
+    /**
+     * 血管入路并发症
+     */
+    saveOrUpdateVas: function() {
+      this.vasProblem.medicalHistoryId = sessionStorage.getItem(
+        "currentMedicalHistory"
+      );
+      this.vasProblem.complication = JSON.stringify(
+        this.vasProblem.bloodDiseaseItem
+      );
+      //保存
+      if (this.vasProblem.vascularAccessProblemId == "") {
+        recordApi.addVasProblem(this.vasProblem).then(res => {
+          console.log(JSON.stringify(res));
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          this.vasProblem.vascularAccessProblemId =
+            res.data.vascularAccessProblemId;
+          this.$message({
+            message: "更新成功",
+            type: "success"
+          });
+        });
+      } else {
+        //更新
+        recordApi.updateVasProblem(this.vasProblem).then(res => {
+          console.log(JSON.stringify(res));
+        });
+      }
+    },
+    saveOrUpdateScore: function() {
+      this.score.daptDetail = JSON.stringify(this.multipleSelection);
+      this.score.medicalHistoryId = sessionStorage.getItem(
+        "currentMedicalHistory"
+      );
+      if (this.score.scoreId == "") {
+        recordApi.addScore(this.score).then(res => {
+          console.log(JSON.stringify(res));
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          this.score.scoreId = res.data.scoreId;
+          this.$message({
+            message: "更新成功",
+            type: "success"
+          });
+        });
+      } else {
+        console.log("更新");
+        recordApi.updateScore(this.score).then(res=>{
+          console.log(JSON.stringify(res));
+        })
+      }
     },
     save: function(params) {
       recordApi.addMedicalHistory(params).then(res => {
@@ -257,7 +339,7 @@ export default {
       recordApi
         .getDischargeSummary(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
-          console.log(JSON.stringify(res))
+          // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -265,51 +347,33 @@ export default {
             });
             return;
           }
+          //渲染pci术后检查
+          this.pciExam = res.data.dischargeExamItemDtos;
+          this.timeUI1 = util.formatDate.parse(res.data.examTime, "yyyy-MM-dd");
+          //渲染血管入路并发症
+          if (res.data.vascularAccessProblem !== null) {
+            this.vasProblem = {
+              ...this.vasProblem,
+              ...res.data.vascularAccessProblem
+            };
+            this.vasProblem.bloodDiseaseItem = JSON.parse(
+              this.vasProblem.complication
+            );
+          }
+          //渲染得分
+          this.score = {...this.score, ...res.data.score};
+          this.multipleSelection = JSON.parse(this.score.daptDetail);
+          console.log(JSON.stringify(this.multipleSelection))
         });
-      // recordApi
-      //   .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
-      //   .then(res => {
-      //     if (res.code != "0000") {
-      //       this.$message({
-      //         message: res.Msg,
-      //         type: "warning"
-      //       });
-      //       return;
-      //     }
-      //     this.form = { ...this.form, ...res.data.medicalHistory };
-      //     this.form.inTimeUI = util.formatDate.parse(
-      //       res.data.inTimeStr,
-      //       "yyyy-MM-dd"
-      //     );
-      //     this.form.outTimeUI = util.formatDate.parse(
-      //       res.data.outTimeStr,
-      //       "yyyy-MM-dd"
-      //     );
-      //     this.form.diagnoseUI = JSON.parse(
-      //       res.data.medicalHistory.mainDiagnose
-      //     );
-      //     var risk = JSON.parse(res.data.medicalHistory.riskFactor);
-      //     this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
-      //     this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
-      //     if (risk.riskOtherFactorUI != "") {
-      //       this.isOtherFactor = ["其它"];
-      //     }
-      //     var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
-      //     this.form.preDrugsUI = drugs.preDrugsUI;
-      //     this.form.preOtherDrugUI = drugs.preOtherDrugUI;
-      //     if (drugs.preOtherDrugUI != "") {
-      //       this.isOtherDrug = ["其它"];
-      //     }
-      //   });
     },
 
     saveTime: function() {
       console.log(this.timeUI1);
       console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
-    },
-    saveOrUpdatePci: function() {
-      // var params =
     }
+    // saveOrUpdatePci: function() {
+    //   // var params =
+    // }
   },
   mounted() {
     this.getDetail();
