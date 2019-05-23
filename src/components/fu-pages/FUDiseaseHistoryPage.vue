@@ -187,8 +187,8 @@ export default {
         });
       });
     },
-    getDetail: function() {
-      followApi.getFollowSickHistory(1).then(res => {
+    getDetail: function(followUpId) {
+      followApi.getFollowSickHistory(followUpId).then(res => {
         // console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
@@ -197,8 +197,11 @@ export default {
           });
           return;
         }
+        if(res.data == null){
+          return;
+        }
         this.diseaseHistory = { ...this.diseaseHistory, ...res.data };
-        if (res.data.hemorrhage) {
+        if (res.data.hemorrhage !== null) {
           this.diseaseHistory.hemorrhageUnit = {
             ...this.diseaseHistory.hemorrhageUnit,
             ...JSON.parse(res.data.hemorrhage)
@@ -223,7 +226,8 @@ export default {
     }
   },
   mounted() {
-    this.getDetail();
+    console.log(sessionStorage.getItem("currentFollowUp"))
+    this.getDetail(sessionStorage.getItem("currentFollowUp"));
   }
 };
 </script>
