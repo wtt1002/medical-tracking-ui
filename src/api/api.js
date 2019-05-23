@@ -97,13 +97,13 @@ const recordApi = {
     //更新pci术后检查
 
     //新增血管入路并发症
-
+    addVasProblem:(params) => { return axios.post(`/apis${base}/dischargeSummary/addVas`, params).then(res => res.data); },
     //更新血管入路并发症
-
+    updateVasProblem:(params) => { return axios.post(`/apis${base}/dischargeSummary/updateVas`, params).then(res => res.data); },
     //新增评分
-
+    addScore:(params) => { return axios.post(`/apis${base}/dischargeSummary/addScore`, params).then(res => res.data); },
     //更新评分
-
+    updateScore:(params) => { return axios.post(`/apis${base}/dischargeSummary/updateScore`, params).then(res => res.data); },
     //获取随访记录列表
     getFollowUp: (params) => { console.log(params); return axios.get(`/apis${base}/followUp/getFollowUp?medicalHistoryId=` + params.medicalHistoryId + "&page=" + params.page + "&count=" + params.count).then(res => res.data); },
     //新增随访记录
@@ -117,9 +117,9 @@ const followApi = {
     //获取出院病史
     getFollowSickHistory: (params) => { console.log(params); return axios.get(`/apis${base}/followSickHistory/query?followUpId=` + params).then(res => res.data); },
     //新增出院病史
-
+    addFollowSickHistory: (params) => { return axios.post(`/apis${base}/followSickHistory/add`, params).then(res => res.data); },
     //更新出院病史
-
+    updateFollowSickHistory: (params) => { return axios.post(`/apis${base}/followSickHistory/update`, params).then(res => res.data); },
     //获取随访查体
 
     //新增随访查体

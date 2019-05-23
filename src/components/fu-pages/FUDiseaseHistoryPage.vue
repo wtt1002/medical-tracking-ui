@@ -15,15 +15,19 @@
     </el-form-item>
     <el-form-item label style="height:20px">
       <label>2. 出血事件：</label>
-      <el-radio-group v-model="diseaseHistory.hemorrhage.isHemorrhage">
+      <el-radio-group v-model="diseaseHistory.hemorrhageUnit.isHemorrhage">
         <el-radio label="无" value="无"></el-radio>
         <el-radio label="有" value="有"></el-radio>
       </el-radio-group>
-      <el-input size="small" style="width:100px;margin-left:10px" v-model="diseaseHistory.hemorrhage.info"></el-input>
+      <el-input
+        size="small"
+        style="width:100px;margin-left:10px"
+        v-model="diseaseHistory.hemorrhageUnit.info"
+      ></el-input>
     </el-form-item>
     <el-form-item label style="height:20px">
       <label>3. 缺血驱动的再次血运重建术：</label>
-      <el-radio-group v-model="diseaseHistory.revascularization.isRevascularization">
+      <el-radio-group v-model="diseaseHistory.revascularizationUnit.isRevascularization">
         <el-radio label="无" value="无"></el-radio>
         <el-radio label="有" value="有"></el-radio>
       </el-radio-group>
@@ -84,7 +88,7 @@
       </el-col>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary">保存</el-button>
+      <el-button type="primary" @click="saveOrUpdate">保存</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -96,25 +100,25 @@ import { patientApi, recordApi, followApi } from "../../api/api";
 export default {
   data() {
     return {
-      revaDateUI:new Date(),
+      revaDateUI: new Date(),
       diseaseHistory: {
         followSickHistoryId: "",
         followUpId: "",
-        ischemia: "无",
-        hemorrhage: {
-          isHemorrhage:"有",
-          info:"123"
+        ischemia: "",
+        hemorrhageUnit: {
+          isHemorrhage: "",
+          info: ""
         },
-        revascularization: {
-          isRevascularization:"有",
-          revaDate:""
+        revascularizationUnit: {
+          isRevascularization: "",
+          revaDate: ""
         },
         nyhaRank: "",
         isWeak: "",
         isSoreness: "",
         isSmoke: "",
         isPatientEdu: "",
-        otherInfo: "王婷婷"
+        otherInfo: ""
       },
       isOtherFactor: [],
       isOtherDrug: [],
@@ -122,8 +126,7 @@ export default {
       factors: patientData.riskOptions,
       drugs: patientData.preDrugOptions,
       addLoading: false,
-      addRules: {
-      },
+      addRules: {},
       options: patientData.diagnoseOptions
     };
   },
@@ -132,48 +135,25 @@ export default {
       console.log("submit!");
     },
     saveOrUpdate: function() {
-      this.$refs.form.validate(valid => {
-        if (valid) {
-          this.$confirm("确认提交吗？", "提示", {}).then(() => {
-            this.addLoading = true;
-            //NProgress.start();
-            let risk = {};
-            let drug = {};
-            risk.riskBriefFactorUI = this.form.riskBriefFactorUI;
-            risk.riskOtherFactorUI = this.form.riskOtherFactorUI;
-            drug.preDrugsUI = this.form.preDrugsUI;
-            drug.preOtherDrugUI = this.form.preOtherDrugUI;
-            let mh = Object.assign({}, this.form);
-            //json转为字符串
-            mh.riskFactor = JSON.stringify(risk);
-            mh.mainDiagnose = JSON.stringify(this.form.diagnoseUI);
-            mh.preDrugs = JSON.stringify(drug);
-            mh.patientId = sessionStorage.getItem("currentPatient");
-            let params = {
-              medicalHistory: mh,
-              inTimeStr: util.formatDate.format(
-                new Date(this.form.inTimeUI),
-                "yyyy-MM-dd"
-              ),
-              outTimeStr: util.formatDate.format(
-                new Date(this.form.outTimeUI),
-                "yyyy-MM-dd"
-              )
-            };
-            console.log(JSON.stringify(params));
-
-            if (this.form.medicalHistoryId == "") {
-              this.save(params);
-            } else {
-              // this.update();
-            }
-          });
-        }
-      });
+      this.addLoading = true;
+      //NProgress.start();
+      var params = this.diseaseHistory;
+      params.hemorrhage = JSON.stringify(params.hemorrhageUnit);
+      params.revascularizationUnit.revaDate = util.formatDate.format(
+        this.revaDateUI,
+        "yyyy-MM-dd"
+      );
+      params.revascularization = JSON.stringify(params.revascularizationUnit);
+      if (this.diseaseHistory.followSickHistoryId == "") {
+        this.params.followUpId = sessionStorage.getItem("currentFollowUp");
+        this.save(params);
+      } else {
+        console.log("更新");
+        this.update(params);
+      }
     },
     save: function(params) {
-      recordApi.addMedicalHistory(params).then(res => {
-        console.log(JSON.stringify(res));
+      followApi.addFollowSickHistory(params).then(res => {
         this.addLoading = false;
         //NProgress.done();
         if (res.code != "0000") {
@@ -183,26 +163,62 @@ export default {
           });
           return;
         }
-        this.form.medicalHistoryId = res.data;
+        this.diseaseHistory.followSickHistoryId = res.data.followSickHistoryId;
         this.$message({
-          message: "提交成功",
+          message: "保存成功",
           type: "success"
         });
       });
     },
-
-    getDetail: function() {
-      followApi.getFollowSickHistory(1).then(res => {
-        // console.log(JSON.stringify(res));
-        if(res.code !== "0000"){
+    update: function(params) {
+      followApi.updateFollowSickHistory(params).then(res => {
+        this.addLoading = false;
+        //NProgress.done();
+        if (res.code != "0000") {
           this.$message({
-            message:res.Msg,
-            type:"warning"
+            message: res.Msg,
+            type: "warning"
           });
           return;
         }
-        this.diseaseHistory = {...this.diseaseHistory, ...res.data}
-        console.log(JSON.stringify(this.diseaseHistory))
+        this.$message({
+          message: "更新成功",
+          type: "success"
+        });
+      });
+    },
+    getDetail: function() {
+      followApi.getFollowSickHistory(1).then(res => {
+        // console.log(JSON.stringify(res));
+        if (res.code !== "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        this.diseaseHistory = { ...this.diseaseHistory, ...res.data };
+        if (res.data.hemorrhage) {
+          this.diseaseHistory.hemorrhageUnit = {
+            ...this.diseaseHistory.hemorrhageUnit,
+            ...JSON.parse(res.data.hemorrhage)
+          };
+        }
+
+        if (res.data.revascularization !== null) {
+          this.diseaseHistory.revascularizationUnit = {
+            ...this.diseaseHistory.revascularizationUnit,
+            ...JSON.parse(res.data.revascularization)
+          };
+        }
+
+        if (
+          util.formatDate.parse(
+            this.diseaseHistory.revascularizationUnit.revaDate,
+            "yyyy-MM-dd"
+          )
+        )
+          console.log(JSON.stringify(this.diseaseHistory));
       });
     }
   },
