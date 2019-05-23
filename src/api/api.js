@@ -117,9 +117,9 @@ const followApi = {
     //获取出院病史
     getFollowSickHistory: (params) => { console.log(params); return axios.get(`/apis${base}/followSickHistory/query?followUpId=` + params).then(res => res.data); },
     //新增出院病史
-
+    addFollowSickHistory: (params) => { return axios.post(`/apis${base}/followSickHistory/add`, params).then(res => res.data); },
     //更新出院病史
-
+    updateFollowSickHistory: (params) => { return axios.post(`/apis${base}/followSickHistory/update`, params).then(res => res.data); },
     //获取随访查体
 
     //新增随访查体
