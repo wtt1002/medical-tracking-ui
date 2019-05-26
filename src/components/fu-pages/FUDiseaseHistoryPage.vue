@@ -88,7 +88,7 @@
       </el-col>
     </el-form-item>
     <el-form-item>
-      <el-button type="primary" @click="saveOrUpdate">保存</el-button>
+      <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">保存</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -145,10 +145,9 @@ export default {
       );
       params.revascularization = JSON.stringify(params.revascularizationUnit);
       if (this.diseaseHistory.followSickHistoryId == "") {
-        this.params.followUpId = sessionStorage.getItem("currentFollowUp");
+        params.followUpId = sessionStorage.getItem("currentFollowUp");
         this.save(params);
       } else {
-        console.log("更新");
         this.update(params);
       }
     },
@@ -161,6 +160,7 @@ export default {
             message: res.Msg,
             type: "warning"
           });
+          console.log(JSON.stringify(res))
           return;
         }
         this.diseaseHistory.followSickHistoryId = res.data.followSickHistoryId;
@@ -179,6 +179,7 @@ export default {
             message: res.Msg,
             type: "warning"
           });
+          console.log(JSON.stringify(res))
           return;
         }
         this.$message({
@@ -187,18 +188,22 @@ export default {
         });
       });
     },
-    getDetail: function() {
-      followApi.getFollowSickHistory(1).then(res => {
+    getDetail: function(followUpId) {
+      followApi.getFollowSickHistory(followUpId).then(res => {
         // console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
             message: res.Msg,
             type: "warning"
           });
+          console.log(JSON.stringify(res))
+          return;
+        }
+        if(res.data == null){
           return;
         }
         this.diseaseHistory = { ...this.diseaseHistory, ...res.data };
-        if (res.data.hemorrhage) {
+        if (res.data.hemorrhage !== null) {
           this.diseaseHistory.hemorrhageUnit = {
             ...this.diseaseHistory.hemorrhageUnit,
             ...JSON.parse(res.data.hemorrhage)
@@ -223,7 +228,8 @@ export default {
     }
   },
   mounted() {
-    this.getDetail();
+    // console.log(sessionStorage.getItem("currentFollowUp"))
+    this.getDetail(sessionStorage.getItem("currentFollowUp"));
   }
 };
 </script>

@@ -121,17 +121,17 @@ const followApi = {
     //更新出院病史
     updateFollowSickHistory: (params) => { return axios.post(`/apis${base}/followSickHistory/update`, params).then(res => res.data); },
     //获取随访查体
-
+    getFollowPhysicalExam: (params) => { console.log(params); return axios.get(`/apis${base}/followPhysicalExam/getFollowPhysicalExam?followUpId=` + params).then(res => res.data); },
     //新增随访查体
-
+    addFollowPhysicalExam: (params) => { return axios.post(`/apis${base}/followPhysicalExam/addFollowPhysicalExam`, params).then(res => res.data); },
     //更新随访查体
-
+    updateFollowPhysicalExam: (params) => { return axios.post(`/apis${base}/followPhysicalExam/updateFollowPhysicalExam`, params).then(res => res.data); },
     //获取随访不良反应
-
+    getFollowSideEffects: (params) => { console.log(params); return axios.get(`/apis${base}/followSideEffects/query?followUpId=` + params).then(res => res.data); },
     //新增随访不良反应
-
+    addFollowSideEffects: (params) => { return axios.post(`/apis${base}/followSideEffects/add`, params).then(res => res.data); },
     //更新随访不良反应
-
+    updateFollowSideEffects: (params) => { return axios.post(`/apis${base}/followSideEffects/update`, params).then(res => res.data); },
     //获取随访个体化危险因素控制情况
 
     //新增随访个体化微信因素控制情况

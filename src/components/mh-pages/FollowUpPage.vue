@@ -325,7 +325,7 @@ export default {
     },
     followDetail:function (row) {
       sessionStorage.setItem("currentIndex",row.followUpDuration);
-      sessionStorage.setItem("currentFollowUp", row.followUpId);
+      sessionStorage.setItem("currentFollowUp", row.followUp.followUpId);
       this.$router.push({ path: "/follow" });
     }
   },

@@ -48,12 +48,12 @@
         <el-form-item label=" ">
           <label>出院后：</label>
           <el-radio-group v-model="followUpDetail.followUp.followUpDuration">
-            <el-radio label="1个月" value="1个月"></el-radio>
-            <el-radio label="3个月" value="3个月"></el-radio>
-            <el-radio label="6个月" value="6个月"></el-radio>
-            <el-radio label="12个月" value="12个月"></el-radio>
-            <el-radio label="18个月" value="18个月"></el-radio>
-            <el-radio label="24个月" value="24个月"></el-radio>
+            <el-radio label="1个月" value="1"></el-radio>
+            <el-radio label="3个月" value="3"></el-radio>
+            <el-radio label="6个月" value="6"></el-radio>
+            <el-radio label="12个月" value="12"></el-radio>
+            <el-radio label="18个月" value="18"></el-radio>
+            <el-radio label="24个月" value="24"></el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label=" ">
