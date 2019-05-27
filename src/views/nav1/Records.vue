@@ -1,101 +1,111 @@
 <template>
   <section>
-    <el-col :span="8" style=" background-color:#F2F6FC">
-      <el-form
-        :model="editForm"
-        label-width="120px"
-        :rules="editFormRules"
-        ref="editForm"
-        style="margin:auto; width:10%;min-width:400px;background-color:#F2F6FC"
-      >
-        <el-form-item label prop></el-form-item>
-        <el-form-item label="姓名" prop="name">
-          <el-input v-model="editForm.name" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="性别">
-          <el-input v-model="editForm.gender" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="民族">
-          <el-input v-model="editForm.nation" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="年龄">
-          <el-input v-model="editForm.age" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="发病年龄">
-          <el-input v-model="editForm.sickAge" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="生日">
-          <!-- <el-input v-model="editForm.birth" auto-complete="off"></el-input> -->
-          <el-date-picker type="date" placeholder="选择日期" v-model="editForm.birth" :disabled="true"></el-date-picker>
-        </el-form-item>
-        <el-form-item label="省份证号" prop="numId">
-          <el-input v-model="editForm.numId" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="手机号" prop="mobilePhone">
-          <el-input v-model="editForm.mobilePhone" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="座机号">
-          <el-input v-model="editForm.telPhone" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="紧急联系人">
-          <el-input v-model="editForm.emergePeople" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="紧急联系人电话">
-          <el-input v-model="editForm.emergePhone" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="与患者关系">
-          <el-input v-model="editForm.emergeRelationship" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="婚姻状况">
-          <el-input v-model="editForm.married" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="患者职业">
-          <el-input v-model="editForm.profession" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="职业状态">
-          <el-input v-model="editForm.professionStatus" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="文化程度">
-          <el-input v-model="editForm.education" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="年收入">
-          <el-input v-model="editForm.income" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item label="地址">
-          <el-input v-model="editForm.address" auto-complete="off" :readonly="true"></el-input>
-        </el-form-item>
-        <el-form-item>
-          <!-- <el-button @click.native="addFormVisible = false">取消</el-button> -->
-          <el-button type="primary" @click="editPatient">编辑</el-button>
-        </el-form-item>
-      </el-form>
-    </el-col>
-    <el-col :span="16">
-      <el-table :data="records" style="margin:0 10px; width: 100%">
-        <el-table-column label width="80">
-          <template scope="scope">
-            <el-button type="primary" size="small" @click="historyDetail(scope.$index, scope.row)">查看</el-button>
-          </template>
-        </el-table-column>
-        <el-table-column prop="inTime" label="入院时间" width="180"></el-table-column>
-        <el-table-column prop="outTime" label="出院时间" width="180"></el-table-column>
-        <el-table-column prop="operateDoc" label="介入术者" width="150"></el-table-column>
-        <el-table-column prop="mainDiagnose" label="主要诊断" width="330"></el-table-column>
-        <el-table-column prop="riskFactor" label="高危因素" width="300"></el-table-column>
-      </el-table>
-      <!--工具条-->
-      <el-col :span="24" class="toolbar" style="margin:10px">
-        <el-button type="primary" @click="addMedicalHistory">新增患者病历</el-button>
-        <el-pagination
-          layout="prev, pager, next"
-          @current-change="handleCurrentChange"
-          :page-size="10"
-          :total="total"
-          style="float:right;"
-        ></el-pagination>
+    <div style="min-width:1100px">
+      <el-col style="width:30%;background-color:#F2F6FC">
+        <el-form
+          :model="editForm"
+          label-width="120px"
+          :rules="editFormRules"
+          ref="editForm"
+          style="margin:auto; width:15%;min-width:310px;background-color:#F2F6FC"
+        >
+          <el-form-item label prop></el-form-item>
+          <el-form-item label="姓名" prop="name">
+            <el-input v-model="editForm.name" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="性别">
+            <el-input v-model="editForm.gender" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="民族">
+            <el-input v-model="editForm.nation" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="年龄">
+            <el-input v-model="editForm.age" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="发病年龄">
+            <el-input v-model="editForm.sickAge" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="生日">
+            <!-- <el-input v-model="editForm.birth" auto-complete="off"></el-input> -->
+            <el-date-picker
+              type="date"
+              placeholder="选择日期"
+              v-model="editForm.birth"
+              :disabled="true"
+            ></el-date-picker>
+          </el-form-item>
+          <el-form-item label="省份证号" prop="numId">
+            <el-input v-model="editForm.numId" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="手机号" prop="mobilePhone">
+            <el-input v-model="editForm.mobilePhone" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="座机号">
+            <el-input v-model="editForm.telPhone" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="紧急联系人">
+            <el-input v-model="editForm.emergePeople" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="紧急联系人电话">
+            <el-input v-model="editForm.emergePhone" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="与患者关系">
+            <el-input v-model="editForm.emergeRelationship" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="婚姻状况">
+            <el-input v-model="editForm.married" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="患者职业">
+            <el-input v-model="editForm.profession" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="职业状态">
+            <el-input v-model="editForm.professionStatus" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="文化程度">
+            <el-input v-model="editForm.education" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="年收入">
+            <el-input v-model="editForm.income" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item label="地址">
+            <el-input v-model="editForm.address" auto-complete="off" :readonly="true"></el-input>
+          </el-form-item>
+          <el-form-item>
+            <!-- <el-button @click.native="addFormVisible = false">取消</el-button> -->
+            <el-button type="primary" @click="editPatient">编辑</el-button>
+          </el-form-item>
+        </el-form>
       </el-col>
-    </el-col>
-
+      <el-col style="width:69%">
+        <el-table :data="records">
+          <el-table-column label align="center">
+            <template scope="scope">
+              <el-button
+                type="primary"
+                size="small"
+                @click="historyDetail(scope.$index, scope.row)"
+              >查看</el-button>
+            </template>
+          </el-table-column>
+          <el-table-column prop="inTime" label="入院时间"></el-table-column>
+          <el-table-column prop="outTime" label="出院时间"></el-table-column>
+          <el-table-column prop="operateDoc" label="介入术者"></el-table-column>
+          <el-table-column prop="mainDiagnose" label="主要诊断"></el-table-column>
+          <el-table-column prop="riskFactor" label="高危因素"></el-table-column>
+        </el-table>
+        <!--工具条-->
+        <el-col :span="24" class="toolbar" style="margin:10px 0; background-color:#EEF1F6">
+          <el-button type="primary" @click="addMedicalHistory">新增患者病历</el-button>
+          <el-pagination
+            layout="prev, pager, next"
+            @current-change="handleCurrentChange"
+            :page-size="10"
+            :total="total"
+            style="float:right;"
+          ></el-pagination>
+        </el-col>
+      </el-col>
+    </div>
     <!--编辑界面-->
     <el-dialog
       title="编辑"
@@ -240,7 +250,7 @@ export default {
       },
       //编辑界面数据
       editForm: {
-        name: "wwwwwww",
+        name: "",
         gender: -1,
         nation: "",
         age: 0,
@@ -342,7 +352,7 @@ export default {
         this.editForm = { ...this.editForm, ...res.data.patient };
         this.editForm.birth = res.data.birthdayStr;
         //存储当前患者
-        sessionStorage.setItem("currentPatientName",res.data.patient.name)
+        sessionStorage.setItem("currentPatientName", res.data.patient.name);
       });
     },
     //删除
@@ -395,7 +405,7 @@ export default {
     historyDetail: function(index, row) {
       sessionStorage.setItem("currentMedicalHistory", row.medicalHistoryId);
       // console.log(JSON.stringify(row))
-      sessionStorage.setItem("currentMedicalOutTime",row.outTime);
+      sessionStorage.setItem("currentMedicalOutTime", row.outTime);
       this.$router.push({ path: "/mhistory" });
     }
   },

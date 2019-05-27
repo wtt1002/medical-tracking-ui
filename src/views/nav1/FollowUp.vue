@@ -230,19 +230,17 @@ export default {
       this.trialDetailChoose = tab;
     },
     getDetail() {
-      var params = 1;
+      var params = sessionStorage.getItem("currentFollowUp");
       recordApi.getFollowUpDetail(params).then(res => {
-        // console.log(JSON.stringify(res));
+        console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
-            message: "res.msg",
+            message: res.msg,
             type: "warning"
           });
           return;
         }
 
-        this.patientName = res.data.patientName;
-        this.doctorName = res.data.doctorName;
         this.followUpDetail = { ...this.followUpDetail, ...res.data };
         try {
           this.followUpDetail.finalDateUI = util.formatDate.parse(
