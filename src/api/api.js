@@ -133,10 +133,11 @@ const followApi = {
     //更新随访不良反应
     updateFollowSideEffects: (params) => { return axios.post(`/apis${base}/followSideEffects/update`, params).then(res => res.data); },
     //获取随访个体化危险因素控制情况
-
+    getRiskFactors: (params) => { console.log(params); return axios.get(`/apis${base}/riskFactors/query?followUpId=` + params).then(res => res.data); },
     //新增随访个体化微信因素控制情况
-
+    addRiskFactors: (params) => { return axios.post(`/apis${base}/riskFactors/add`, params).then(res => res.data); },
     //更新随访个体危险因素控制情况
+    updateRiskFactors: (params) => { return axios.post(`/apis${base}/riskFactors/update`, params).then(res => res.data); },
 }
 
 export {
