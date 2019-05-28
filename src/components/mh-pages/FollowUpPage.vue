@@ -6,7 +6,7 @@
         :data="follows"
         highlight-current-row
         v-loading="listLoading"
-        style="width: fit-content;"
+        style="width: 1000px;"
       >
         <!-- <el-table-column type="selection" width="40"></el-table-column> -->
         <!-- <el-table-column type="index" width="100"></el-table-column> -->
@@ -15,10 +15,10 @@
             <el-button type="primary" size="small" @click="followDetail(scope.row)">查看</el-button>
           </template>
         </el-table-column>
-        <el-table-column prop="planTime" label="计划随访日期" width="180"></el-table-column>
-        <el-table-column prop="finalTime" label="实际随访日期" width="180"></el-table-column>
-        <el-table-column prop="followUp.planWay" label="计划随访方式" width="180"></el-table-column>
-        <el-table-column prop="followUp.planWay" label="实际随访方式" width="180"></el-table-column>
+        <el-table-column prop="planTime" label="计划随访日期"></el-table-column>
+        <el-table-column prop="finalTime" label="实际随访日期"></el-table-column>
+        <el-table-column prop="followUp.planWay" label="计划随访方式"></el-table-column>
+        <el-table-column prop="followUp.planWay" label="实际随访方式"></el-table-column>
         <!-- <el-table-column prop="patient.sickAge" label="主要诊断" width="120"></el-table-column> -->
         <!-- <el-table-column label="随访报告" width="150">
           <template scope="scope">
@@ -27,13 +27,13 @@
         </el-table-column>-->
         <el-table-column label="操作" width="150">
           <template scope="scope">
-            <!-- <el-button size="small" @click="editFollowUp(scope.row)">编辑</el-button> -->
-            <el-button type="danger" size="small">删除</el-button>
+            <el-button size="small" @click="editFollowUp(scope.row)">编辑</el-button>
+            <!-- <el-button type="danger" size="small">删除</el-button> -->
           </template>
         </el-table-column>
       </el-table>
       <!--工具条-->
-      <el-col class="toolbar" style="margin:0px; width:950px">
+      <el-col class="toolbar" style="margin:0px; width:100%;max-width:1000px; background-color:#EEF1F6">
         <el-button type="primary" @click="addFollowUp">新增随访记录</el-button>
         <el-pagination
           layout="prev, pager, next"
@@ -54,11 +54,11 @@
         </el-form-item>
         <el-form-item label="计划随访方式" prop="planWay">
           <el-select v-model="editForm.planWay" placeholder="请选择计划随访方式">
-            <el-option label="电话" value="电话"></el-option>
-            <el-option label="短信" value="短信"></el-option>
-            <el-option label="门诊" value="门诊"></el-option>
-            <el-option label="造影" value="造影"></el-option>
-            <el-option label="其它" value="其它"></el-option>
+            <el-option label="电话" value="电话">电话</el-option>
+            <el-option label="短信" value="短信">短信</el-option>
+            <el-option label="门诊" value="门诊">门诊</el-option>
+            <el-option label="造影" value="造影">造影</el-option>
+            <el-option label="其它" value="其它">其它</el-option>
           </el-select>
         </el-form-item>
         <el-form-item label="计划随访时间" prop="followUpDuration">
@@ -197,7 +197,7 @@ export default {
         count: 10
       };
       recordApi.getFollowUp(params).then(res => {
-        // console.log(JSON.stringify(res));
+        console.log(JSON.stringify(res));
         if (res.code != "0000") {
           this.$message({
             message: res.Msg,
@@ -231,7 +231,6 @@ export default {
           }
         });
         this.follows = res.data;
-        console.log(JSON.stringify(res));
       });
     },
     //显示编辑界面
@@ -248,7 +247,7 @@ export default {
       this.editForm.outTime = sessionStorage.getItem("currentMedicalOutTime");
       // this.editForm.outTime = sessionStorage.getItem("currentMedicalOutTime");
       this.editForm.planWay = row.followUp.planWay;
-      this.editForm.planPoint = row.followUp.followUpDuration;
+      this.editForm.followUpDuration = row.followUp.followUpDuration;
     },
     //编辑
     editSubmit: function() {
@@ -290,7 +289,7 @@ export default {
         default:
           break;
       }
-      console.log(planTimeUI)
+      // console.log(planTimeUI)
       //构造添加参数
       var params = {
         planTime: util.formatDate.format(planTimeUI, "yyyy-MM-dd"),
@@ -324,7 +323,8 @@ export default {
       });
     },
     followDetail:function (row) {
-      sessionStorage.setItem("currentIndex",row.followUpDuration);
+      // console.log(JSON.stringify(row))
+      sessionStorage.setItem("currentIndex",row.followUp.followUpIndex);
       sessionStorage.setItem("currentFollowUp", row.followUp.followUpId);
       this.$router.push({ path: "/follow" });
     }

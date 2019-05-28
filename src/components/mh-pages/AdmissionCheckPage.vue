@@ -241,7 +241,7 @@ export default {
       // alert(value);
     },
     handleEdit(index, row) {
-      console.log(index, row);
+      // console.log(index, row);
     },
     changeOtherFactor(value) {
       // alert(value)
@@ -328,12 +328,12 @@ export default {
         this.save(params);
       } else {
         this.update(params);
-        console.log("update。。。。。");
+        // console.log("update。。。。。");
       }
     },
     save: function(params) {
       recordApi.addAdmissionCheck(params).then(res => {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
         this.addLoading = false;
         //NProgress.done();
         if (res.code != "0000") {
@@ -353,9 +353,9 @@ export default {
       });
     },
     update: function(params) {
-      console.log(JSON.stringify(params));
+      // console.log(JSON.stringify(params));
       recordApi.updateAdmissionCheck(params).then(res => {
-        console.log(JSON.stringify(res))
+        // console.log(JSON.stringify(res))
         if (res.code != "0000") {
           this.$message({
             message: res.Msg,
@@ -376,7 +376,7 @@ export default {
         examIndex: 0
       };
       recordApi.getAdmissionCheck(params).then(res => {
-        console.log(JSON.stringify(res.data.medicalHistoryExamDtos[0]));
+        // console.log(JSON.stringify(res.data.medicalHistoryExamDtos[0]));
         if (res.code != "0000") {
           this.$message({
             message: res.Msg,

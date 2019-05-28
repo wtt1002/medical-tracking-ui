@@ -173,13 +173,13 @@ export default {
     update: function(params) {
       followApi.updateFollowSickHistory(params).then(res => {
         this.addLoading = false;
+        //console.log(JSON.stringify(res));
         //NProgress.done();
         if (res.code != "0000") {
           this.$message({
             message: res.Msg,
             type: "warning"
           });
-          console.log(JSON.stringify(res))
           return;
         }
         this.$message({
@@ -216,14 +216,7 @@ export default {
             ...JSON.parse(res.data.revascularization)
           };
         }
-
-        if (
-          util.formatDate.parse(
-            this.diseaseHistory.revascularizationUnit.revaDate,
-            "yyyy-MM-dd"
-          )
-        )
-          console.log(JSON.stringify(this.diseaseHistory));
+        this.revaDateUI = util.formatDate.parse(this.diseaseHistory.revascularizationUnit.revaDate,"yyyy-MM-dd");
       });
     }
   },

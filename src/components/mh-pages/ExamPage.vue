@@ -160,10 +160,13 @@ export default {
     /**
      * 保存时的数据封装，加入病历id
      */
-    prepareData(source){
+    prepareData(source) {
       var param = Object.assign([], source);
-      for(var i = 0; i < param.length; i++){
-        param[i].medicalHistoryId = sessionStorage.getItem("currentMedicalHistory");
+      for (var i = 0; i < param.length; i++) {
+        param[i].medicalHistoryId = sessionStorage.getItem(
+          "currentMedicalHistory"
+        );
+        param[i].examIndex = sessionStorage.getItem("currentIndex");
       }
       return param;
     },
@@ -200,7 +203,8 @@ export default {
         params[i].myExamTime = examDate;
       }
       if (params[0].examValueId == "") {
-        this.save(params);
+        // console.log(JSON.stringify(params));
+        this.save(params, index);
       } else {
         this.update(params);
       }
@@ -208,7 +212,7 @@ export default {
     /**
      * 保存接口
      */
-    save: function(params) {
+    save: function(params, index) {
       recordApi.addExam(params).then(res => {
         // console.log(JSON.stringify(res));
         this.addLoading = false;
@@ -221,28 +225,26 @@ export default {
 
           return;
         }
-        res.data.forEach(element => {
-          switch (element.examCategoryCode) {
-            case "1000":
-              this.assembleData(element.listMyExamDto, this.bloodExam);
-              break;
-            case "2000":
-              this.assembleData(element.listMyExamDto, this.liverKidneyExam);
-              break;
-            case "3000":
-              this.assembleData(element.listMyExamDto, this.bloodLipidExam);
-              break;
-            case "4000":
-              this.assembleData(element.listMyExamDto, this.coagulationExam);
-              break;
-            default:
-              break;
-          }
-        }),
-          this.$message({
-            message: "保存成功",
-            type: "success"
-          });
+        switch (index) {
+          case "1000":
+            this.assembleData(res.data, this.bloodExam);
+            break;
+          case "2000":
+            this.assembleData(res.data, this.liverKidneyExam);
+            break;
+          case "3000":
+            this.assembleData(res.data, this.bloodLipidExam);
+            break;
+          case "4000":
+            this.assembleData(res.data, this.coagulationExam);
+            break;
+          default:
+            break;
+        }
+        this.$message({
+          message: "新增成功",
+          type: "success"
+        });
       });
     },
     /**
@@ -261,7 +263,7 @@ export default {
           return;
         }
         this.$message({
-          message: "修改成功",
+          message: "更新成功",
           type: "success"
         });
       });
@@ -270,56 +272,58 @@ export default {
      * 数据获取接口
      */
     getDetail: function() {
-      var params ={
-        medicalHistoryId:sessionStorage.getItem("currentMedicalHistory"),
-        examIndex:0
+      var params = {
+        medicalHistoryId: sessionStorage.getItem("currentMedicalHistory"),
+        examIndex: 0
+      };
+      if (sessionStorage.getItem("currentIndex")) {
+        params.examIndex = sessionStorage.getItem("currentIndex");
       }
-      recordApi
-        .getExam(params)
-        .then(res => {
-          console.log(JSON.stringify(res));
-          if (res.code != "0000") {
-            this.$message({
-              message: res.Msg,
-              type: "warning"
-            });
-            return;
-          }
-          res.data.forEach(element => {
-            switch (element.examCategoryCode) {
-              case "1000":
-                this.assembleData(element.listMyExamDto, this.bloodExam);
-                this.timeUI1 = util.formatDate.parse(
-                  element.listMyExamDto[0].examTime,
-                  "yyyy-MM-dd"
-                );
-                break;
-              case "2000":
-                this.assembleData(element.listMyExamDto, this.liverKidneyExam);
-                this.timeUI2 = util.formatDate.parse(
-                  element.listMyExamDto[0].examTime,
-                  "yyyy-MM-dd"
-                );
-                break;
-              case "3000":
-                this.assembleData(element.listMyExamDto, this.bloodLipidExam);
-                this.timeUI3 = util.formatDate.parse(
-                  element.listMyExamDto[0].examTime,
-                  "yyyy-MM-dd"
-                );
-                break;
-              case "4000":
-                this.assembleData(element.listMyExamDto, this.coagulationExam);
-                this.timeUI4 = util.formatDate.parse(
-                  element.listMyExamDto[0].examTime,
-                  "yyyy-MM-dd"
-                );
-                break;
-              default:
-                break;
-            }
+      // console.log(JSON.stringify(params))
+      recordApi.getExam(params).then(res => {
+        // console.log(JSON.stringify(res));
+        if (res.code != "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
           });
+          return;
+        }
+        res.data.forEach(element => {
+          switch (element.examCategoryCode) {
+            case "1000":
+              this.assembleData(element.listMyExamDto, this.bloodExam);
+              this.timeUI1 = util.formatDate.parse(
+                element.listMyExamDto[0].examTime,
+                "yyyy-MM-dd"
+              );
+              break;
+            case "2000":
+              this.assembleData(element.listMyExamDto, this.liverKidneyExam);
+              this.timeUI2 = util.formatDate.parse(
+                element.listMyExamDto[0].examTime,
+                "yyyy-MM-dd"
+              );
+              break;
+            case "3000":
+              this.assembleData(element.listMyExamDto, this.bloodLipidExam);
+              this.timeUI3 = util.formatDate.parse(
+                element.listMyExamDto[0].examTime,
+                "yyyy-MM-dd"
+              );
+              break;
+            case "4000":
+              this.assembleData(element.listMyExamDto, this.coagulationExam);
+              this.timeUI4 = util.formatDate.parse(
+                element.listMyExamDto[0].examTime,
+                "yyyy-MM-dd"
+              );
+              break;
+            default:
+              break;
+          }
         });
+      });
     },
     /**
      * 数据渲染

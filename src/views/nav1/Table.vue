@@ -30,22 +30,22 @@
           <el-button type="primary" size="small" @click="patientCase(scope.$index, scope.row)">查看</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="patient.name" label="姓名" width="100" sortable></el-table-column>
-      <el-table-column prop="patient.gender" label="性别" width="100" :formatter="formatSex" sortable></el-table-column>
-      <el-table-column prop="birthday" label="出生日期" width="120" sortable></el-table-column>
-      <el-table-column prop="patient.age" label="年龄" width="90" sortable></el-table-column>
-      <el-table-column prop="patient.sickAge" label="发病年龄" width="120" sortable></el-table-column>
+      <el-table-column prop="patient.name" label="姓名" sortable></el-table-column>
+      <el-table-column prop="patient.gender" label="性别" :formatter="formatSex" sortable></el-table-column>
+      <el-table-column prop="birthday" label="出生日期" sortable></el-table-column>
+      <el-table-column prop="patient.age" label="年龄" sortable></el-table-column>
+      <el-table-column prop="patient.sickAge" label="发病年龄" sortable></el-table-column>
       <!-- <el-table-column prop="inTime" label="最新入院时间" width="100" :formatter="formatSex" sortable>
 			</el-table-column>
 			<el-table-column prop="outTime" label="最新出院时间" width="100" :formatter="formatSex" sortable>
       </el-table-column>-->
-      <el-table-column prop="mainDiagnose" label="最新诊断" width="160" sortable></el-table-column>
-      <el-table-column prop="patient.numId" label="身份证号" width="180" sortable></el-table-column>
-      <el-table-column prop="patient.mobilePhone" label="手机" width="140" sortable></el-table-column>
+      <el-table-column prop="mainDiagnose" label="最新诊断" sortable></el-table-column>
+      <el-table-column prop="patient.numId" label="身份证号" sortable></el-table-column>
+      <el-table-column prop="patient.mobilePhone" label="手机" sortable></el-table-column>
       <!-- <el-table-column prop="patient.emergePeople" label="紧急联系人" width="180" sortable>
       </el-table-column>-->
-      <el-table-column prop="patient.emergePhone" label="紧急联系人" width="140" sortable></el-table-column>
-      <el-table-column prop="patient.address" label="地址" width="180" sortable></el-table-column>
+      <el-table-column prop="patient.emergePhone" label="紧急联系人" sortable></el-table-column>
+      <el-table-column prop="patient.address" label="地址" sortable></el-table-column>
       <!-- <el-table-column prop="addr" label="地址" min-width="180" sortable>
       </el-table-column>-->
       <el-table-column label="操作" width="150">

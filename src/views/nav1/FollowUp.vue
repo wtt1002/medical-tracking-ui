@@ -11,7 +11,7 @@
         <el-form-item label>
           <el-col :span="8">
             <label>随访患者</label>
-            <el-input v-model="followUpDetail.patientName" style="width:120px"></el-input>
+            <el-input disabled v-model="followUpDetail.patientName" style="width:120px"></el-input>
           </el-col>
           <!-- <el-col class="line" :span="4"></el-col> -->
           <el-col :span="16">
@@ -27,11 +27,11 @@
               placeholder="请选择"
               style="width:150px"
             >
-              <el-option label="电话" value="电话"></el-option>
-              <el-option label="短信" value="短信"></el-option>
-              <el-option label="门诊" value="门诊"></el-option>
-              <el-option label="造影" value="造影"></el-option>
-              <el-option label="其它" value="其它"></el-option>
+              <el-option label="电话" value="电话">电话</el-option>
+              <el-option label="短信" value="短信">短信</el-option>
+              <el-option label="门诊" value="门诊">门诊</el-option>
+              <el-option label="造影" value="造影">造影</el-option>
+              <el-option label="其它" value="其它">其它</el-option>
             </el-select>
           </el-col>
           <!-- <el-col class="line" :span="4"></el-col> -->
@@ -48,31 +48,31 @@
         <el-form-item label=" ">
           <label>出院后：</label>
           <el-radio-group v-model="followUpDetail.followUp.followUpDuration">
-            <el-radio label="1个月" value="1"></el-radio>
-            <el-radio label="3个月" value="3"></el-radio>
-            <el-radio label="6个月" value="6"></el-radio>
-            <el-radio label="12个月" value="12"></el-radio>
-            <el-radio label="18个月" value="18"></el-radio>
-            <el-radio label="24个月" value="24"></el-radio>
+            <el-radio disabled label="1">1个月</el-radio>
+            <el-radio disabled label="3">3个月</el-radio>
+            <el-radio disabled label="6">6个月</el-radio>
+            <el-radio disabled label="12">12个月</el-radio>
+            <el-radio disabled label="18">18个月</el-radio>
+            <el-radio disabled label="24">24个月</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label=" ">
           <label>目前恢复：</label>
           <el-radio-group v-model="followUpDetail.followUp.recoveryStatus">
-            <el-radio label="很好" value="很好"></el-radio>
-            <el-radio label="好" value="好"></el-radio>
-            <el-radio label="一般" value="一般"></el-radio>
-            <el-radio label="差" value="差"></el-radio>
-            <el-radio label="死亡" value="死亡"></el-radio>
-            <el-radio label="植物人" value="植物人"></el-radio>
+            <el-radio label="1" value="很好">很好</el-radio>
+            <el-radio label="2" value="好">好</el-radio>
+            <el-radio label="3" value="一般">一般</el-radio>
+            <el-radio label="4" value="差">差</el-radio>
+            <el-radio label="5" value="死亡">死亡</el-radio>
+            <el-radio label="6" value="植物人">植物人</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label=" ">
           <label>是否到院复诊：</label>
           <el-radio-group v-model="followUpDetail.followUp.furtherConsultation">
-            <el-radio label="本院复诊" value="本院复诊"></el-radio>
-            <el-radio label="外院复诊" value="外院复诊"></el-radio>
-            <el-radio label="无复诊" value="无复诊"></el-radio>
+            <el-radio label="1" value="本院复诊">本院复诊</el-radio>
+            <el-radio label="2" value="外院复诊">外院复诊</el-radio>
+            <el-radio label="3" value="无复诊">无复诊</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item label>
@@ -85,10 +85,10 @@
           </el-checkbox-group>-->
           <label>最近是否出现：</label>
           <el-radio-group v-model="followUpDetail.followUp.recentSymptoms">
-            <el-radio label="住院" value="住院"></el-radio>
-            <el-radio label="急诊观察" value="急诊观察"></el-radio>
-            <el-radio label="死亡" value="死亡"></el-radio>
-            <el-radio label="以上均未出现" value="以上均未出现"></el-radio>
+            <el-radio label="1" value="住院">住院</el-radio>
+            <el-radio label="2" value="急诊观察">急诊观察</el-radio>
+            <el-radio label="3" value="死亡">死亡</el-radio>
+            <el-radio label="4" value="以上均未出现">以上均未出现</el-radio>
           </el-radio-group>
         </el-form-item>
         <el-form-item>
@@ -112,13 +112,13 @@
         >
           <span>查体</span>
         </li>
-        <li
+        <!-- <li
           id="li_photo"
           :class="['li', tabIndex === 2 ? 'current' : '']"
           @click="changeTab(2,'AdmissionCheckPage')"
         >
           <span>康复检查项目</span>
-        </li>
+        </li> -->
         <li
           id="li_stage"
           :class="['li', tabIndex === 3 ? 'current' : '']"
@@ -146,13 +146,6 @@
           @click="changeTab(6,'DrugPlanPage')"
         >
           <span>药物方案</span>
-        </li>
-        <li
-          id="li_photo"
-          :class="['li', tabIndex === 7 ? 'current' : '']"
-          @click="changeTab(7,'FollowUpPage')"
-        >
-          <span>随访记录</span>
         </li>
       </ul>
     </div>
@@ -225,14 +218,14 @@ export default {
       console.log(data);
     },
     changeTab(index, tab) {
-      console.log(index, tab);
+      // console.log(index, tab);
       this.tabIndex = index;
       this.trialDetailChoose = tab;
     },
     getDetail() {
       var params = sessionStorage.getItem("currentFollowUp");
       recordApi.getFollowUpDetail(params).then(res => {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
             message: res.msg,
