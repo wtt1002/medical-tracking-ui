@@ -410,6 +410,7 @@ export default {
     }
   },
   mounted() {
+    sessionStorage.setItem("currentIndex",0);
     this.getRecords();
     this.getPatientInfo();
   },

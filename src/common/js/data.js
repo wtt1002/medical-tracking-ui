@@ -175,14 +175,14 @@ var patientData = {
             position: "开口",
             LM: "",
             LAD: "",
-            LCX: "45",
+            LCX: "",
             RCA: "",
             OTHER: ""
         }, {
             position: "近段",
             LM: "",
             LAD: "",
-            LCX: "66",
+            LCX: "",
             RCA: "",
             OTHER: ""
         }, {
@@ -190,7 +190,7 @@ var patientData = {
             LM: "",
             LAD: "",
             LCX: "",
-            RCA: "23",
+            RCA: "",
             OTHER: ""
         }, {
             position: "远段",
@@ -253,115 +253,6 @@ var patientData = {
             value: "6",
             label: "肱动脉"
         }],
-    drugPlanItem: [
-        {
-            drugCategoryCode: "0001",
-            drugCategoryName: "抗血小板类",
-            drugAndUseageDtoList:
-                [{
-                    drug: {
-                        drugName: "阿司匹林"
-                    },
-                    followDrugUsage: {
-                        drugUsageId: "",
-                        drugDosage: "1",
-                        drugDosageUnit: "袋",
-                        drugTime: "3",
-                        drugDay: "1",
-                        drugPeriod: "3",
-                        drugPeriodUnit: "周",
-                        drugId: "",
-                        medicalHistoryId: "",
-                        followUpIndex: "",
-                    }
-                }, {
-                    drug: {
-                        drugName: "阿司匹林"
-                    },
-                    followDrugUsage: {
-                        drugUsageId: "",
-                        drugDosage: "1",
-                        drugDosageUnit: "粒",
-                        drugTime: "3",
-                        drugDay: "1",
-                        drugPeriod: "3",
-                        drugPeriodUnit: "周",
-                        drugId: "",
-                        medicalHistoryId: "",
-                        followUpIndex: "",
-                    }
-                }, {
-                    drug: {
-                        drugName: "阿司匹林"
-                    },
-                    followDrugUsage: {
-                        drugUsageId: "",
-                        drugDosage: "1",
-                        drugDosageUnit: "粒",
-                        drugTime: "3",
-                        drugDay: "1",
-                        drugPeriod: "3",
-                        drugPeriodUnit: "周",
-                        drugId: "",
-                        medicalHistoryId: "",
-                        followUpIndex: "",
-                    }
-                },]
-        }, {
-            drugCategoryCode: "0001",
-            drugCategoryName: "他汀类",
-            drugAndUseageDtoList:
-                [{
-                    drug: {
-                        drugName: "阿司匹林33"
-                    },
-                    followDrugUsage: {
-                        drugUsageId: "",
-                        drugDosage: "1",
-                        drugDosageUnit: "粒",
-                        drugTime: "3",
-                        drugDay: "1",
-                        drugPeriod: "3",
-                        drugPeriodUnit: "周",
-                        drugId: "",
-                        medicalHistoryId: "",
-                        followUpIndex: "",
-                    }
-                }, {
-                    drug: {
-                        drugName: "阿司匹林33"
-                    },
-                    followDrugUsage: {
-                        drugUsageId: "",
-                        drugDosage: "1",
-                        drugDosageUnit: "粒",
-                        drugTime: "3",
-                        drugDay: "1",
-                        drugPeriod: "3",
-                        drugPeriodUnit: "周",
-                        drugId: "",
-                        medicalHistoryId: "",
-                        followUpIndex: "",
-                    }
-                }, {
-                    drug: {
-                        drugName: "阿司匹林33"
-                    },
-                    followDrugUsage: {
-                        drugUsageId: "",
-                        drugDosage: "1",
-                        drugDosageUnit: "粒",
-                        drugTime: "3",
-                        drugDay: "1",
-                        drugPeriod: "3",
-                        drugPeriodUnit: "周",
-                        drugId: "",
-                        medicalHistoryId: "",
-                        followUpIndex: "",
-                    }
-                },]
-        }
-    ],
     drugItem: [
         {
           value: "1000",

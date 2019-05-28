@@ -251,55 +251,6 @@ import { patientApi, recordApi } from "../../api/api";
 export default {
   data() {
     return {
-      // bloodExam: Object.assign([], patientData.bloodItem),
-      // liverKidneyExam: Object.assign([], patientData.liverKidneyItem),
-      // bloodLipidExam: Object.assign([], patientData.bloodLipidItem),
-      // coagulationExam: Object.assign([], patientData.coagulationItem),
-      // addRules: {
-      //   admissionNum: [
-      //     { required: true, message: "请输入住院号", trigger: "blur" }
-      //   ],
-      //   intime: [
-      //     { required: true, message: "请选择入院时间", trigger: "blur" }
-      //   ],
-      //   outtime: [
-      //     { required: true, message: "请选择出院时间", trigger: "blur" }
-      //   ],
-      //   height: [{ required: true, message: "请输入身高", trigger: "blur" }],
-      //   weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
-      // },
-      // options: patientData.diagnoseOptions,
-      // tableData: [
-      //   {
-      //     date: "2016-05-02",
-      //     name: "王小虎",
-      //     address: "上海市普陀区金沙江路 1518 弄"
-      //   },
-      //   {
-      //     date: "2016-05-04",
-      //     name: "王小虎",
-      //     address: "上海市普陀区金沙江路 1517 弄"
-      //   },
-      //   {
-      //     date: "2016-05-01",
-      //     name: "王小虎",
-      //     address: "上海市普陀区金沙江路 1519 弄"
-      //   },
-      //   {
-      //     date: "2016-05-03",
-      //     name: "王小虎",
-      //     address: "上海市普陀区金沙江路 1516 弄"
-      //   }
-      // ],
-      // timeUI1: "",
-      // timeUI2: "",
-      // timeUI3: "",
-      // timeUI4: "",
-      // value1: "",
-      // form: {
-      //   user: "",
-      //   region: ""
-      // },
       addLoading: false,
       assessment: {
         assessmentId: "",
@@ -344,7 +295,7 @@ export default {
       this.addLoading = true;
       //NProgress.start();
       let params = { ...this.assessment };
-      console.log(JSON.stringify(params));
+      // console.log(JSON.stringify(params));
 
       if (this.assessment.assessmentId == "") {
         params.medicalHistoryId = sessionStorage.getItem(
@@ -358,7 +309,7 @@ export default {
     },
     save: function(params) {
       recordApi.addAssessment(params).then(res => {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
         this.addLoading = false;
         //NProgress.done();
         if (res.code != "0000") {
@@ -378,7 +329,7 @@ export default {
     update: function(params) {
       recordApi.updateAssessment(params).then(res => {
         this.addLoading = false;
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
         if (res.code != "0000") {
           this.$message({
             message: res.Msg,
@@ -396,7 +347,7 @@ export default {
       recordApi
         .getAssessment(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
-          console.log(JSON.stringify(res));
+          // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,

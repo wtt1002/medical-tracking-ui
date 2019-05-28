@@ -25,10 +25,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button
-        style="margin-top:20px; background-color:#EEE"
-        @click.native.prevent="saveOrUpdatePci"
-      >保存fff</el-button>
+      <el-button type="primary" style="margin-top:20px;" @click.native.prevent="saveOrUpdatePci">保存</el-button>
     </div>
     <div>
       <div style="color:#409EFF; font-weight:bold; font-size:16px">血管入路并发症</div>
@@ -39,7 +36,7 @@
           </el-checkbox-group>
         </el-form-item>
       </el-form>
-      <el-button style="margin-top:-10px;background-color:#EEE" @click="saveOrUpdateVas">保存</el-button>
+      <el-button type="primary" style="margin-top:-10px" @click="saveOrUpdateVas">保存</el-button>
     </div>
     <div class="block" style="margin-top:30px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">评分</div>
@@ -114,7 +111,7 @@
           <el-table-column prop="desc" label="说明" show-overflow-tooltip width="350px"></el-table-column>
         </el-table>
       </div>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdateScore">保存</el-button>
+      <el-button type="primary" style="margin-top:5px" @click="saveOrUpdateScore">保存</el-button>
     </div>
   </div>
 </template>
@@ -188,11 +185,6 @@ export default {
     changeEdit() {
       this.datpEdit = !this.datpEdit;
     },
-    changeOtherFactor(value) {
-      // alert(value)
-      // this.form.riskOtherFactor = value;
-      // alert(this.form.riskOtherFactorUI);
-    },
     calcDapt() {
       var dapt = 0;
       this.multipleSelection.forEach(function(ele) {
@@ -231,7 +223,7 @@ export default {
           }
           this.form.medicalHistoryId = res.data;
           this.$message({
-            message: "添加成功",
+            message: "新增成功",
             type: "success"
           });
         });
@@ -265,7 +257,7 @@ export default {
       //保存
       if (this.vasProblem.vascularAccessProblemId == "") {
         recordApi.addVasProblem(this.vasProblem).then(res => {
-          console.log(JSON.stringify(res));
+          // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -276,17 +268,31 @@ export default {
           this.vasProblem.vascularAccessProblemId =
             res.data.vascularAccessProblemId;
           this.$message({
-            message: "更新成功",
+            message: "新增成功",
             type: "success"
           });
         });
       } else {
         //更新
         recordApi.updateVasProblem(this.vasProblem).then(res => {
-          console.log(JSON.stringify(res));
+          // console.log(JSON.stringify(res));
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
+          this.$message({
+            message: "更新成功",
+            type: "success"
+          });
         });
       }
     },
+    /**
+     * 评分
+     */
     saveOrUpdateScore: function() {
       this.score.daptDetail = JSON.stringify(this.multipleSelection);
       this.score.medicalHistoryId = sessionStorage.getItem(
@@ -294,7 +300,7 @@ export default {
       );
       if (this.score.scoreId == "") {
         recordApi.addScore(this.score).then(res => {
-          console.log(JSON.stringify(res));
+          // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
               message: res.Msg,
@@ -304,35 +310,27 @@ export default {
           }
           this.score.scoreId = res.data.scoreId;
           this.$message({
-            message: "更新成功",
+            message: "新增成功",
             type: "success"
           });
         });
       } else {
-        console.log("更新");
-        recordApi.updateScore(this.score).then(res=>{
-          console.log(JSON.stringify(res));
-        })
-      }
-    },
-    save: function(params) {
-      recordApi.addMedicalHistory(params).then(res => {
-        console.log(JSON.stringify(res));
-        this.addLoading = false;
-        //NProgress.done();
-        if (res.code != "0000") {
+        // console.log("更新");
+        recordApi.updateScore(this.score).then(res => {
+          // console.log(JSON.stringify(res));
+          if (res.code != "0000") {
+            this.$message({
+              message: res.Msg,
+              type: "warning"
+            });
+            return;
+          }
           this.$message({
-            message: res.Msg,
-            type: "warning"
+            message: "更新成功",
+            type: "success"
           });
-          return;
-        }
-        this.form.medicalHistoryId = res.data;
-        this.$message({
-          message: "提交成功",
-          type: "success"
         });
-      });
+      }
     },
 
     getDetail: function() {
@@ -361,19 +359,11 @@ export default {
             );
           }
           //渲染得分
-          this.score = {...this.score, ...res.data.score};
+          this.score = { ...this.score, ...res.data.score };
           this.multipleSelection = JSON.parse(this.score.daptDetail);
-          console.log(JSON.stringify(this.multipleSelection))
+          console.log(JSON.stringify(this.multipleSelection));
         });
-    },
-
-    saveTime: function() {
-      console.log(this.timeUI1);
-      console.log(util.formatDate.format(this.timeUI1, "yyyy-MM-dd"));
     }
-    // saveOrUpdatePci: function() {
-    //   // var params =
-    // }
   },
   mounted() {
     this.getDetail();
