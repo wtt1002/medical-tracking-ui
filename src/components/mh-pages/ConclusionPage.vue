@@ -346,7 +346,7 @@ export default {
             return;
           }
           //渲染pci术后检查
-          this.pciExam = res.data.dischargeExamItemDtos;
+          this.pciExam = {...this.pciExam, ...res.data.dischargeExamItemDtos};
           this.timeUI1 = util.formatDate.parse(res.data.examTime, "yyyy-MM-dd");
           //渲染血管入路并发症
           if (res.data.vascularAccessProblem !== null) {
@@ -361,7 +361,7 @@ export default {
           //渲染得分
           this.score = { ...this.score, ...res.data.score };
           this.multipleSelection = JSON.parse(this.score.daptDetail);
-          console.log(JSON.stringify(this.multipleSelection));
+          // console.log(JSON.stringify(this.multipleSelection));
         });
     }
   },
