@@ -56,6 +56,12 @@ const recordApi = {
     updateExam: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/update`, params).then(res => res.data); },
     //更新辅助检查
     addExam: (params) => { return axios.post(`/apis${base}/medicalHistory/exam/addone`, params).then(res => res.data); },
+    //获取医学图像检查
+    getInspectionConclusion: (params) => { console.log(params); return axios.get(`/apis${base}/inspection/get?medicalHistoryId=` + params.medicalHistoryId + "&examIndex=" + params.examIndex).then(res => res.data); },
+    //更新医学图像检查
+    updateInspectionConclusion: (params) => { return axios.post(`/apis${base}/inspection/update`, params).then(res => res.data); },
+    //更新医学图像检查
+    addInspectionConclusion: (params) => { return axios.post(`/apis${base}/inspection/add`, params).then(res => res.data); },
     //获取入院评估
     getAssessment: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/assessment?medicalHistoryId=` + params).then(res => res.data); },
     //新增入院评估
@@ -97,13 +103,13 @@ const recordApi = {
     //更新pci术后检查
 
     //新增血管入路并发症
-    addVasProblem:(params) => { return axios.post(`/apis${base}/dischargeSummary/addVas`, params).then(res => res.data); },
+    addVasProblem: (params) => { return axios.post(`/apis${base}/dischargeSummary/addVas`, params).then(res => res.data); },
     //更新血管入路并发症
-    updateVasProblem:(params) => { return axios.post(`/apis${base}/dischargeSummary/updateVas`, params).then(res => res.data); },
+    updateVasProblem: (params) => { return axios.post(`/apis${base}/dischargeSummary/updateVas`, params).then(res => res.data); },
     //新增评分
-    addScore:(params) => { return axios.post(`/apis${base}/dischargeSummary/addScore`, params).then(res => res.data); },
+    addScore: (params) => { return axios.post(`/apis${base}/dischargeSummary/addScore`, params).then(res => res.data); },
     //更新评分
-    updateScore:(params) => { return axios.post(`/apis${base}/dischargeSummary/updateScore`, params).then(res => res.data); },
+    updateScore: (params) => { return axios.post(`/apis${base}/dischargeSummary/updateScore`, params).then(res => res.data); },
     //获取随访记录列表
     getFollowUp: (params) => { console.log(params); return axios.get(`/apis${base}/followUp/getFollowUp?medicalHistoryId=` + params.medicalHistoryId + "&page=" + params.page + "&count=" + params.count).then(res => res.data); },
     //新增随访记录
