@@ -124,6 +124,98 @@
       </el-table>
       <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('4000')">保存</el-button>
     </div>
+
+    <div class="block" style="margin-top:10px; margin-bottom:30px; width:600px">
+      <div style="color:#409EFF; font-weight:bold; font-size:16px">医学图像检查</div>
+      <!-- <span class="demonstration">检查日期</span> -->
+      <el-form>
+        <el-form-item style="margin:10px 0">
+          <label style="color:#78BEFF; font-weight:bold; font-size:16px">心电图检查</label>
+        </el-form-item>
+        <div style>
+          <el-form-item style="margin-top:-10px">
+            <label style>心电图检查时间：</label>
+            <el-date-picker v-model="timeUI5" type="date" placeholder="选择日期" size="small"></el-date-picker>
+          </el-form-item>
+          <el-form-item style="margin-top:-10px">
+            <el-col style="width:100px;min-width:100px">
+              <label>心电图结论：</label>
+            </el-col>
+            <el-col style="width:480px">
+              <el-input
+                type="textarea"
+                :rows="1"
+                placeholder="请输入内容"
+                v-model="conclusion1.inspectionConclusion.examConclusion"
+                autosize
+              ></el-input>
+            </el-col>
+          </el-form-item>
+          <el-form-item>
+            <el-button
+              style="margin-top:-10px; background-color:#EEE"
+              @click="saveOrUpdateCon(conclusion1,timeUI5,'9')"
+            >保存</el-button>
+          </el-form-item>
+        </div>
+
+        <el-form-item style="margin:10px 0">
+          <label style="color:#78BEFF; font-weight:bold; font-size:16px">心脏超声</label>
+        </el-form-item>
+        <el-form-item style="margin-top:-10px">
+          <label style>心脏超声检查时间：</label>
+          <el-date-picker v-model="timeUI6" type="date" placeholder="选择日期" size="small"></el-date-picker>
+        </el-form-item>
+        <el-form-item style="margin-top:-10px">
+          <el-col style="width:100px;min-width:100px">
+            <label>心脏超声结论：</label>
+          </el-col>
+          <el-col style="width:480px">
+            <el-input
+              type="textarea"
+              :rows="1"
+              placeholder="请输入内容"
+              v-model="conclusion2.inspectionConclusion.examConclusion"
+              autosize
+            ></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            style="margin-top:-10px; background-color:#EEE"
+            @click="saveOrUpdateCon(conclusion2,timeUI6,'11')"
+          >保存</el-button>
+        </el-form-item>
+
+        <el-form-item style="margin:10px 0">
+          <label style="color:#78BEFF; font-weight:bold; font-size:16px">心电核磁</label>
+        </el-form-item>
+        <el-form-item style="margin-top:-10px">
+          <label style>心电核磁检查时间：</label>
+          <el-date-picker v-model="timeUI7" type="date" placeholder="选择日期" size="small"></el-date-picker>
+        </el-form-item>
+        <el-form-item style="margin-top:-10px">
+          <el-col style="width:100px;min-width:100px">
+            <label>心电核磁结论：</label>
+          </el-col>
+          <el-col style="width:480px">
+            <el-input
+              type="textarea"
+              :rows="1"
+              placeholder="请输入内容"
+              v-model="conclusion3.inspectionConclusion.examConclusion"
+              autosize
+            ></el-input>
+          </el-col>
+        </el-form-item>
+        <el-form-item>
+          <el-button
+            style="margin-top:-10px; background-color:#EEE"
+            @click="saveOrUpdateCon(conclusion3,timeUI7,'12')"
+          >保存</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
@@ -150,7 +242,43 @@ export default {
       timeUI2: new Date(),
       timeUI3: new Date(),
       timeUI4: new Date(),
-      value1: ""
+      timeUI5: new Date(),
+      timeUI6: new Date(),
+      timeUI7: new Date(),
+      value1: "",
+      conclusion1: {
+        inspectionConclusion: {
+          inspectionConclusionId: "",
+          medicalHistoryId: "",
+          examCategory: "",
+          examConclusion: "",
+          examIndex: "",
+          examTime: null
+        },
+        time: ""
+      },
+      conclusion2: {
+        inspectionConclusion: {
+          inspectionConclusionId: "",
+          medicalHistoryId: "",
+          examCategory: "",
+          examConclusion: "",
+          examIndex: "",
+          examTime: null
+        },
+        time: ""
+      },
+      conclusion3: {
+        inspectionConclusion: {
+          inspectionConclusionId: "",
+          medicalHistoryId: "",
+          examCategory: "",
+          examConclusion: "",
+          examIndex: "",
+          examTime: null
+        },
+        time: ""
+      }
     };
   },
   methods: {
@@ -325,6 +453,112 @@ export default {
         });
       });
     },
+    saveOrUpdateCon: function(insConclusion, timeUI, category) {
+      var params = insConclusion;
+      params.time = util.formatDate.format(timeUI, "yyyy-MM-dd");
+      params.inspectionConclusion.examTime = null;
+      params.inspectionConclusion.examCategory = category;
+      params.inspectionConclusion.medicalHistoryId = sessionStorage.getItem(
+        "currentMedicalHistory"
+      );
+      params.inspectionConclusion.examIndex = 0;
+      if (sessionStorage.getItem("currentIndex")) {
+        params.inspectionConclusion.examIndex = sessionStorage.getItem(
+          "currentIndex"
+        );
+      }
+      // console.log(JSON.stringify(params));
+
+      if (params.inspectionConclusion.inspectionConclusionId == "") {
+        this.saveCon(params);
+      } else {
+        this.updateCon(params);
+      }
+    },
+    saveCon: function(params) {
+      recordApi.addInspectionConclusion(params).then(res => {
+        // console.log(JSON.stringify(res));
+        if (res.code !== "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        params.inspectionConclusion.inspectionConclusionId =
+          res.data.inspectionConclusion.inspectionConclusionId;
+        this.$message({
+          message: "新增成功",
+          type: "success"
+        });
+      });
+    },
+    updateCon: function(params) {
+      recordApi.updateInspectionConclusion(params).then(res => {
+        // console.log(JSON.stringify(res));
+        if (res.code !== "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        this.$message({
+          message: "更新成功",
+          type: "success"
+        });
+      });
+    },
+    getInspectionConclusion: function() {
+      var params = {
+        medicalHistoryId: sessionStorage.getItem("currentMedicalHistory"),
+        examIndex: 0
+      };
+      if (sessionStorage.getItem("currentIndex")) {
+        params.examIndex = sessionStorage.getItem("currentIndex");
+      }
+      recordApi.getInspectionConclusion(params).then(res => {
+        // console.log(JSON.stringify(res));
+        if (res.code !== "0000") {
+          this.$message({
+            message: res.Msg,
+            type: "warning"
+          });
+          return;
+        }
+        //数据
+        if (res.data == null || res.data.length == 0) {
+          return;
+        }
+        res.data.forEach(ele => {
+          switch (ele.inspectionConclusion.examCategory) {
+            case "9":
+              this.conclusion1 = {
+                ...this.conclusion1,
+                ...ele
+              };
+              this.timeUI5 = util.formatDate.parse(ele.time, "yyyy-MM-dd");
+              break;
+            case "11":
+              this.conclusion2 = {
+                ...this.conclusion2,
+                ...ele
+              };
+              this.timeUI6 = util.formatDate.parse(ele.time, "yyyy-MM-dd");
+              break;
+            case "12":
+              this.conclusion3 = {
+                ...this.conclusion3,
+                ...ele
+              };
+              this.timeUI7 = util.formatDate.parse(ele.time, "yyyy-MM-dd");
+              break;
+            default:
+              break;
+          }
+        });
+      });
+    },
     /**
      * 数据渲染
      */
@@ -350,6 +584,7 @@ export default {
     this.coagulationExam = lodash.cloneDeep(patientData.coagulationItem);
 
     this.getDetail();
+    this.getInspectionConclusion();
   }
 };
 </script>
