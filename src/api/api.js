@@ -48,8 +48,10 @@ const recordApi = {
     getRecordsListPage: (params) => { return axios.post(`/apis${base}/medicalHistory/records`, params).then(res => res.data); },
     //新增病历
     addMedicalHistory: (params) => { return axios.post(`/apis${base}/medicalHistory/add`, params).then(res => res.data); },
-    //更新病历
+    //获取病历
     getMedicalHistory: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/detail?medicalHistoryId=` + params).then(res => res.data); },
+    //更新病历
+    updateMedicalHistory:(params) => { return axios.post(`/apis${base}/medicalHistory/update`, params).then(res => res.data); },
     //获取辅助检查
     getExam: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/exam/get?medicalHistoryId=` + params.medicalHistoryId + "&examIndex=" + params.examIndex).then(res => res.data); },
     //更新辅助检查
