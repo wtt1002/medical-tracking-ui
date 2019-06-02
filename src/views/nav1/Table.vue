@@ -25,7 +25,7 @@
     >
       <el-table-column type="selection" width="40"></el-table-column>
       <el-table-column type="index" width="55"></el-table-column>
-      <el-table-column label="" width="80">
+      <el-table-column label width="80">
         <template scope="scope">
           <el-button type="primary" size="small" @click="patientCase(scope.$index, scope.row)">查看</el-button>
         </template>
@@ -39,7 +39,7 @@
 			</el-table-column>
 			<el-table-column prop="outTime" label="最新出院时间" width="100" :formatter="formatSex" sortable>
       </el-table-column>-->
-      <el-table-column prop="mainDiagnose" label="最新诊断" sortable></el-table-column>
+      <el-table-column prop="mainDiagnoseUI" label="最新诊断" sortable></el-table-column>
       <el-table-column prop="patient.numId" label="身份证号" sortable></el-table-column>
       <el-table-column prop="patient.mobilePhone" label="手机" sortable></el-table-column>
       <!-- <el-table-column prop="patient.emergePeople" label="紧急联系人" width="180" sortable>
@@ -168,7 +168,6 @@
         <el-button type="primary" @click.native="editSubmit" :loading="editLoading">提交</el-button>
       </div>
     </el-dialog>
-
   </section>
 </template>
 
@@ -215,7 +214,7 @@ export default {
         education: "",
         income: "",
         address: ""
-      },
+      }
     };
   },
   methods: {
@@ -251,9 +250,24 @@ export default {
         this.total =
           res.data && res.data[0] && res.data[0].total ? res.data[0].total : 0;
         this.patients = res.data;
+        for (let index = 0; index < res.data.length; index++) {
+          this.patients[index].mainDiagnoseUI = this.assembleDiagnose(
+            JSON.parse(res.data[index].mainDiagnose)
+          );
+        }
         this.listLoading = false;
         //NProgress.done();
       });
+    },
+    assembleDiagnose(arr) {
+      var diagnose = "";
+      if (arr !== null && arr.length > 0) {
+        arr.forEach(element => {
+          diagnose += element;
+          diagnose += " ";
+        });
+      }
+      return diagnose;
     },
     //删除
     handleDel: function(index, row) {
@@ -296,9 +310,9 @@ export default {
       });
     },
     //patientCase
-    patientCase:function(index, row){
-      sessionStorage.setItem("currentPatient",row.patient.patientId);
-      this.$router.push({ path: "/records"});
+    patientCase: function(index, row) {
+      sessionStorage.setItem("currentPatient", row.patient.patientId);
+      this.$router.push({ path: "/records" });
     },
     //显示新增界面
     handleAdd: function() {
@@ -345,12 +359,6 @@ export default {
     },
     //批量删除
     batchRemove: function() {
-      // console.log(JSON.stringify(this.sels))
-      // var ids = this.sels.map(item => item.patient.patientId).toString();
-      // console.log(JSON.stringify(ids))
-      // ids = [4,13];
-      // console.log(JSON.stringify(ids))
-      console.log("9999999");
       var ids = [];
       this.sels.forEach(item => {
         ids.push(item.patient.patientId.toString());

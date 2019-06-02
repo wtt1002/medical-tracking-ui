@@ -85,7 +85,7 @@
           </template>
         </el-form-item>
       </el-form>
-      <el-button style="background-color:#EEE" @click="saveBody">保存</el-button>
+      <el-button type="primary" @click="saveBody">保存</el-button>
     </div>
 
     <div style="margin-top:10px; margin-bottom:30px">
@@ -117,7 +117,7 @@
       <div style="width:550px; margin-top:10px; margin-bottom:10px">
         <el-input v-model="noninvasiveConclusion.examConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
-      <el-button style="background-color:#EEE" @click="saveOrUpdate(1)">保存</el-button>
+      <el-button type="primary" @click="saveOrUpdate(1)">保存</el-button>
     </div>
     <div style="margin-top:10px; margin-bottom:30px">
       <div style="color:#409EFF; font-weight:bold; font-size:16px">运动心肺功能检测</div>
@@ -149,7 +149,7 @@
         <!-- <label>运动心肺功能检测结论：</label> -->
         <el-input v-model="cardiopulmonaryConclusion.examConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
-      <el-button style="background-color:#EEE" @click="saveOrUpdate(2)">保存</el-button>
+      <el-button type="primary" @click="saveOrUpdate(2)">保存</el-button>
     </div>
 
     <div style="margin-top:10px; margin-bottom:30px">
@@ -182,7 +182,7 @@
         <!-- <label>运动心肺功能检测结论：</label> -->
         <el-input v-model="walkConclusion.examConclusion" placeholder="请输入结论" style="margin-top:5px"></el-input>
       </div>
-      <el-button style="background-color:#EEE" @click="saveOrUpdate(3)">保存</el-button>
+      <el-button type="primary" @click="saveOrUpdate(3)">保存</el-button>
     </div>
   </div>
 </template>

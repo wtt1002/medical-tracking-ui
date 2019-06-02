@@ -312,7 +312,7 @@ export default {
         res.data.forEach(element => {
           var temp = element;
           var diagnoes = JSON.parse(element.mainDiagnose);
-          temp.mainDiagnose = diagnoes ? diagnoes.toString() : "";
+          temp.mainDiagnose = diagnoes ? this.assembleDiagnose(diagnoes) : "";
           var risk = JSON.parse(element.riskFactor);
           temp.riskFactor = risk.riskBriefFactorUI.toString();
           this.total = element.total;
@@ -321,21 +321,18 @@ export default {
         // this.records = res.data;
         // console.log(JSON.stringify(this.records));
       });
-      //   patientApi.getPatientListPage(para).then(res => {
-      //     if (res.code != "0000") {
-      //       this.$message({
-      //         message: "删除失败",
-      //         type: "warning"
-      //       });
-      //       return;
-      //     }
-      //     this.total =
-      //       res.data && res.data[0] && res.data[0].total ? res.data[0].total : 0;
-      //     this.patients = res.data;
-      //     this.listLoading = false;
-      //     //NProgress.done();
-      //   });
     },
+    assembleDiagnose(arr) {
+      var diagnose = "";
+      if (arr !== null && arr.length > 0) {
+        arr.forEach(element => {
+          diagnose += element;
+          diagnose += " ";
+        });
+      }
+      return diagnose;
+    },
+
     /**
      * 获取患者详情
      */

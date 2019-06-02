@@ -24,7 +24,6 @@
         expand-trigger="hover"
         :options="options"
         v-model="form.diagnoseUI"
-        @change="handleChange"
         size="medium"
       ></el-cascader>
     </el-form-item>
@@ -60,15 +59,15 @@
       <label>bpm</label>
     </el-form-item>
     <el-form-item label="身高" prop="height">
-      <el-input v-model="form.height" style="width:50px"></el-input>
+      <el-input v-model.number="form.height" style="width:50px" @change="handleChange"></el-input>
       <label>cm</label>
     </el-form-item>
     <el-form-item label="体重" prop="weight">
-      <el-input v-model="form.weight" style="width:50px"></el-input>
+      <el-input v-model.number="form.weight" style="width:50px" @change="handleChange"></el-input>
       <label>Kg</label>
     </el-form-item>
     <el-form-item label="BMI">
-      <el-input v-model="form.bmi" style="width:50px"></el-input>
+      <el-input v-model="form.bmi" style="width:50px" readonly="true"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">保存</el-button>
@@ -85,7 +84,7 @@ export default {
     return {
       form: {
         medicalHistoryId: "",
-        patientId:"",
+        patientId: "",
         admissionNum: "",
         inTimeUI: "",
         outTimeUI: "",
@@ -118,8 +117,14 @@ export default {
         outtime: [
           { required: true, message: "请选择出院时间", trigger: "blur" }
         ],
-        height: [{ required: true, message: "请输入身高", trigger: "blur" }],
-        weight: [{ required: true, message: "请输入体重", trigger: "blur" }]
+        height: [
+          { required: true, message: "请输入身高", trigger: "blur" },
+          { type: "number", message: "必须是数字", trigger: "blur" }
+        ],
+        weight: [
+          { required: true, message: "请输入体重", trigger: "blur" },
+          { type: "number", message: "必须是数字", trigger: "blur" }
+        ]
       },
       options: patientData.diagnoseOptions
     };
@@ -129,8 +134,12 @@ export default {
       console.log("submit!");
     },
     handleChange(value) {
-      // console.log(value);
-      // alert(value);
+      if (parseFloat(this.form.height) && parseFloat(this.form.weight)) {
+        var height = parseFloat(this.form.height) / 100;
+        var weight = parseFloat(this.form.weight);
+        var temp = weight / (height * height);
+        this.form.bmi = Math.round(temp * 100) / 100;
+      }
     },
     changeOtherFactor(value) {
       // alert(value)
@@ -207,27 +216,35 @@ export default {
               type: "warning"
             });
             return;
-          }     
-          this.form = {...this.form,...res.data.medicalHistory};
-          this.form.inTimeUI = util.formatDate.parse(res.data.inTimeStr,"yyyy-MM-dd");
-          this.form.outTimeUI = util.formatDate.parse(res.data.outTimeStr, "yyyy-MM-dd");
-          this.form.diagnoseUI = JSON.parse(res.data.medicalHistory.mainDiagnose);
+          }
+          this.form = { ...this.form, ...res.data.medicalHistory };
+          this.form.inTimeUI = util.formatDate.parse(
+            res.data.inTimeStr,
+            "yyyy-MM-dd"
+          );
+          this.form.outTimeUI = util.formatDate.parse(
+            res.data.outTimeStr,
+            "yyyy-MM-dd"
+          );
+          this.form.diagnoseUI = JSON.parse(
+            res.data.medicalHistory.mainDiagnose
+          );
           var risk = JSON.parse(res.data.medicalHistory.riskFactor);
           this.form.riskBriefFactorUI = risk.riskBriefFactorUI;
           this.form.riskOtherFactorUI = risk.riskOtherFactorUI;
-          if(risk.riskOtherFactorUI != ""){
+          if (risk.riskOtherFactorUI != "") {
             this.isOtherFactor = ["其它"];
           }
           var drugs = JSON.parse(res.data.medicalHistory.preDrugs);
-          this.form.preDrugsUI=drugs.preDrugsUI;
+          this.form.preDrugsUI = drugs.preDrugsUI;
           this.form.preOtherDrugUI = drugs.preOtherDrugUI;
-          if(drugs.preOtherDrugUI != ""){
-            this.isOtherDrug = ["其它"]
+          if (drugs.preOtherDrugUI != "") {
+            this.isOtherDrug = ["其它"];
           }
         });
     }
   },
-  mounted(){
+  mounted() {
     this.getDetail();
   }
 };

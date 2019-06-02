@@ -1,7 +1,7 @@
 <template>
   <div style="margin-left:80px">
     <div class="block" style="margin-top:10px; margin-bottom:30px">
-      <div style="color:#409EFF; font-weight:bold; font-size:16px; margin-bottom:20px">出院带药</div>
+      <div style="color:#409EFF; font-weight:bold; font-size:16px; margin-bottom:20px">药物处方</div>
       <div v-if="drugPlanItem.length == 0">暂时未开具处方</div>
       <div v-for="(drugUnit,idx) in drugPlanItem">
         <div style="margin:20px 0">
