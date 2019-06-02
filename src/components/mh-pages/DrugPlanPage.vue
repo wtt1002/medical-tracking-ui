@@ -321,7 +321,7 @@ export default {
               return;
             }
             this.$message({
-              message: "添加成功",
+              message: "新增成功",
               type: "success"
             });
             //刷新数据
@@ -347,7 +347,7 @@ export default {
               return;
             }
             this.$message({
-              message: "修改成功",
+              message: "更新成功",
               type: "success"
             });
             //刷新数据

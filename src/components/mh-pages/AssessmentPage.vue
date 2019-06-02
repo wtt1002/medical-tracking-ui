@@ -321,7 +321,7 @@ export default {
         }
         this.assessment.medicalHistoryId = res.data;
         this.$message({
-          message: "保存成功",
+          message: "新增成功",
           type: "success"
         });
       });

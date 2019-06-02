@@ -165,7 +165,7 @@ export default {
         }
         this.diseaseHistory.followSickHistoryId = res.data.followSickHistoryId;
         this.$message({
-          message: "保存成功",
+          message: "新增成功",
           type: "success"
         });
       });

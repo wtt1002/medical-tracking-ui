@@ -262,7 +262,7 @@ export default {
             return;
           }
           this.$message({
-            message: "保存成功",
+            message: "新增成功",
             type: "success"
           });
         });
@@ -347,7 +347,7 @@ export default {
 
         })
         this.$message({
-          message: "提交成功",
+          message: "新增成功",
           type: "success"
         });
       });
