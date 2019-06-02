@@ -53,8 +53,7 @@
 			<section class="content-container">
 				<div class="grid-content bg-purple-light">
 					<el-col :span="24" class="breadcrumb-container">
-						<!-- <strong class="title" style="margin-top:20px; margin-bottom:20px">{{$route.name}}</strong> -->
-						<h3 style="color:#666; margin-top:-5px; margin-bottom:-5px">{{$route.name}}</h3>
+						<strong class="title">{{$route.name}}</strong>
 						<el-breadcrumb separator="/" class="breadcrumb-inner">
 							<el-breadcrumb-item v-for="item in $route.matched" :key="item.path">
 								{{ item.name }}
@@ -113,31 +112,25 @@
 					sessionStorage.removeItem('user');
 					_this.$router.push('/login');
 				}).catch(() => {
-
 				});
-
-
 			},
-			//折叠导航栏
+			//折叠导航栏 暂时注释，使用出错
 			collapse:function(){
-				this.collapsed=!this.collapsed;
+				// this.collapsed=!this.collapsed;
 			},
 			showMenu(i,status){
 				this.$refs.menuCollapsed.getElementsByClassName('submenu-hook-'+i)[0].style.display=status?'block':'none';
 			}
 		},
 		mounted() {
-			var loginUser = JSON.parse(sessionStorage.getItem('user'));
-			console.log(loginUser);
-			let number2 = loginUser.docName?loginUser.docName:'用户'
-			// console.log(number2)
-			if (loginUser) {
-				this.sysUserName = number2;
+			var user = sessionStorage.getItem('user');
+			if (user) {
+				user = JSON.parse(user);
+				this.sysUserName = user.docName || '';
 				this.sysUserAvatar = "https://raw.githubusercontent.com/taylorchen709/markdown-images/master/vueadmin/user.png" || '';
 			}
 		}
 	}
-
 </script>
 
 <style scoped lang="scss">
@@ -230,7 +223,6 @@
 						height:auto;
 						display:none;
 					}
-
 				}
 			}
 			.menu-collapsed{

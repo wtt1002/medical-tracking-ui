@@ -29,7 +29,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('1000')">保存</el-button>
+      <el-button
+        type="primary"
+        style="margin-top:5px"
+        @click="saveOrUpdate('1000')"
+      >保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -60,7 +64,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('2000')">保存</el-button>
+      <el-button
+        type="primary"
+        style="margin-top:5px"
+        @click="saveOrUpdate('2000')"
+      >保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -91,7 +99,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('3000')">保存</el-button>
+      <el-button
+        type="primary"
+        style="margin-top:5px"
+        @click="saveOrUpdate('3000')"
+      >保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -122,7 +134,11 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate('4000')">保存</el-button>
+      <el-button
+        type="primary"
+        style="margin-top:5px"
+        @click="saveOrUpdate('4000')"
+      >保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px; width:600px">
@@ -153,7 +169,8 @@
           </el-form-item>
           <el-form-item>
             <el-button
-              style="margin-top:-10px; background-color:#EEE"
+              type="primary"
+              style="margin-top:-10px"
               @click="saveOrUpdateCon(conclusion1,timeUI5,'9')"
             >保存</el-button>
           </el-form-item>
@@ -182,7 +199,8 @@
         </el-form-item>
         <el-form-item>
           <el-button
-            style="margin-top:-10px; background-color:#EEE"
+            type="primary"
+            style="margin-top:-10px"
             @click="saveOrUpdateCon(conclusion2,timeUI6,'11')"
           >保存</el-button>
         </el-form-item>
@@ -210,7 +228,8 @@
         </el-form-item>
         <el-form-item>
           <el-button
-            style="margin-top:-10px; background-color:#EEE"
+           type="primary"
+            style="margin-top:-10px"
             @click="saveOrUpdateCon(conclusion3,timeUI7,'12')"
           >保存</el-button>
         </el-form-item>

@@ -236,7 +236,7 @@
         >{{item.label}}</el-checkbox>
       </el-checkbox-group>
     </div>
-    <el-button style="margin-top:5px; background-color:#EEE" @click="saveOrUpdate">保存</el-button>
+    <el-button type="primary" @click="saveOrUpdate">保存</el-button>
   </div>
 </template>
 
