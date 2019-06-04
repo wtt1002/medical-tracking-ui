@@ -200,7 +200,7 @@ export default {
         console.log(JSON.stringify(res));
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "信息获取失败",
             type: "warning"
           });
           return;
@@ -310,13 +310,13 @@ export default {
         this.addFormVisible = false;
         if (res.code !== "0000") {
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
           return;
         }
         this.$message({
-          message: "添加成功",
+          message: "新增成功",
           type: "success"
         });
         this.getDetail(1);

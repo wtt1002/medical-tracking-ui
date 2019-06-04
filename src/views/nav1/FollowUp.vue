@@ -228,7 +228,7 @@ export default {
         // console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
-            message: res.msg,
+            message: "数据获取失败",
             type: "warning"
           });
           return;
@@ -258,7 +258,7 @@ export default {
         this.editLoading = false;
         if (res.code !== "0000") {
           this.$message({
-            message: "res.msg",
+            message: "更新失败",
             type: "warning"
           });
           return;

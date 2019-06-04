@@ -196,13 +196,13 @@ export default {
               //NProgress.done();
               if (res.code != "0000") {
                 this.$message({
-                  message: res.Msg,
+                  message: "新增失败",
                   type: "success"
                 });
                 return;
               }
               this.$message({
-                message: "提交成功",
+                message: "新增成功",
                 type: "success"
               });
               this.$refs["addForm"].resetFields();

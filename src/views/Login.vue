@@ -69,7 +69,7 @@ export default {
             this.logining = false;
             if (res.code != "0000") {
               this.$message({
-                message: res.msg,
+                message: "用户名或密码错误",
                 type: "error"
               });
             } else {

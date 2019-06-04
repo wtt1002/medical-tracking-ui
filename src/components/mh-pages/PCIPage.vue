@@ -357,7 +357,7 @@ export default {
         if (res.code != "0000") {
           console.log(JSON.stringify(res.Msg));
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
           return;
@@ -381,7 +381,7 @@ export default {
           );
         }
         this.$message({
-          message: "更新成功",
+          message: "新增成功",
           type: "success"
         });
       });
@@ -392,7 +392,7 @@ export default {
       recordApi.updatePci(params).then(res => {
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "更新失败",
             type: "warning"
           });
           return;
@@ -427,7 +427,7 @@ export default {
         .then(res => {
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "信息获取失败",
               type: "warning"
             });
             return;

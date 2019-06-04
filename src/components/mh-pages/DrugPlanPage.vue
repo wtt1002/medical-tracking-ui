@@ -231,22 +231,24 @@ export default {
      * 删除药品用法用量
      */
     deleteRow(index, rows) {
-      this.$confirm("确认删除吗？", "提示", {}).then(() => {
-        recordApi.deleteDrugUsage(rows.followDrugUsage).then(res => {
-          if (res.code !== "0000") {
+      this.$confirm("确认删除吗？", "提示", {})
+        .then(() => {
+          recordApi.deleteDrugUsage(rows.followDrugUsage).then(res => {
+            if (res.code !== "0000") {
+              this.$message({
+                message: "删除失败",
+                type: "warning"
+              });
+              return;
+            }
             this.$message({
-              message: res.Msg,
-              type: "warning"
+              message: "删除成功",
+              type: "success"
             });
-            return;
-          }
-          this.$message({
-            message: "删除成功",
-            type: "success"
+            this.getDetail();
           });
-          this.getDetail();
-        });
-      }).catch(() => {});;
+        })
+        .catch(() => {});
     },
     /**
      * 显示编辑界面
@@ -268,22 +270,20 @@ export default {
      */
     getDetail: function() {
       var params = {
-        medicalHistoryId:sessionStorage.getItem("currentMedicalHistory"),
-        followUpIndexId:0
-      }
-      recordApi
-        .getDrugUsage(params)
-        .then(res => {
-          // console.log(JSON.stringify(res));
-          if (res.code !== "0000") {
-            this.$message({
-              message: res.Msg,
-              type: "warning"
-            });
-            return;
-          }
-          this.drugPlanItem = res.data;
-        });
+        medicalHistoryId: sessionStorage.getItem("currentMedicalHistory"),
+        followUpIndexId: 0
+      };
+      recordApi.getDrugUsage(params).then(res => {
+        // console.log(JSON.stringify(res));
+        if (res.code !== "0000") {
+          this.$message({
+            message: "信息获取失败",
+            type: "warning"
+          });
+          return;
+        }
+        this.drugPlanItem = res.data;
+      });
     },
     /**
      * 新增药品用法用量
@@ -315,7 +315,7 @@ export default {
             this.addFormVisible = false;
             if (res.code !== "0000") {
               this.$message({
-                message: res.Msg,
+                message: "新增失败",
                 type: "warning"
               });
               return;
@@ -341,7 +341,7 @@ export default {
             this.editFormVisible = false;
             if (res.code != "0000") {
               this.$message({
-                message: res.Msg,
+                message: "更新失败",
                 type: "warning"
               });
               return;
