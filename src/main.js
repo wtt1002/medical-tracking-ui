@@ -1,7 +1,19 @@
 import App from './App'
+import 'element-ui/lib/theme-default/index.css'
 import store from './vuex/store'
 import routes from './routes'
+import 'font-awesome/css/font-awesome.min.css'
+import axios from 'axios'
+import Vuex from 'vuex'
 
+import Vue from 'vue'
+import ElementUI from 'element-ui'
+import VueRouter from 'vue-router'
+Vue.use(ElementUI)
+Vue.use(VueRouter)
+Vue.use(Vuex)
+
+// import ajax from
 // 设置axios请求的token
 // axios.defaults.headers.common['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'
 //设置请求头

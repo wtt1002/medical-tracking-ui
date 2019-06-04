@@ -67,7 +67,7 @@
       <label>Kg</label>
     </el-form-item>
     <el-form-item label="BMI">
-      <el-input v-model="form.bmi" style="width:50px" readonly="true"></el-input>
+      <el-input v-model="form.bmi" style="width:50px" :readonly="true"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">保存</el-button>

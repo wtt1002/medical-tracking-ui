@@ -28,6 +28,12 @@ export const addUser = params => { return axios.get(`${base}/user/add`, { params
 
 const userApi = {
     requestLogin: (params) => { console.log(params); return axios.post(`/apis${base}/user/login`, params).then(res => res.data); },
+    getDoctorListPage: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/list`, params).then(res => res.data); },
+    getHospital: (params) => { console.log(params); return axios.get(`/apis${base}/doctor/getHospital`).then(res => res.data); },
+    getDepartment: (params) => { console.log(params); return axios.get(`/apis${base}/doctor/getDepartment?hospitalId=`+params).then(res => res.data); },
+    addDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/add`, params).then(res => res.data); },
+    updateDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/update`, params).then(res => res.data); },
+    deleteDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/delete`, params).then(res => res.data); },
 };
 const patientApi = {
     //分页查询患者

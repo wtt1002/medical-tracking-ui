@@ -49,16 +49,17 @@ let routes = [
 
         ]
     },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '随访管理',
-    //     iconCls: 'fa fa-id-card-o',
-    //     children: [
-    //         { path: '/page4', component: Page4, name: '页面4' },
-    //         { path: '/page5', component: Page5, name: '页面5' }
-    //     ]
-    // },
+    {
+        path: '/',
+        component: Home,
+        name: '随访管理',
+        iconCls: 'fa fa-id-card-o',
+        children: [
+            { path: '/page4', component: Page4, name: '页面4' },
+            { path: '/page5', component: Page5, name: '页面5' }
+        ],
+        hidden:sessionStorage.getItem("isRoot") == null?true:false
+    },
     // {
     //     path: '/',
     //     component: Home,

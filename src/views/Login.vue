@@ -64,16 +64,21 @@ export default {
             username: this.ruleForm2.account,
             password: this.ruleForm2.checkPass
           };
-          userApi.requestLogin(loginParams).then(data => {
+          userApi.requestLogin(loginParams).then(res => {
+            // console.log(JSON.stringify(res))
             this.logining = false;
-            if (data.code != "0000") {
+            if (res.code != "0000") {
               this.$message({
-                message: data.msg,
+                message: res.msg,
                 type: "error"
               });
             } else {
-              sessionStorage.setItem("user", JSON.stringify(data.data));
+              sessionStorage.setItem("user", JSON.stringify(res.data));
               sessionStorage.setItem("code", "123456");
+              if(res.data.account.createUser == "wtt"){
+                sessionStorage.setItem("isRoot","wtt");
+                console.log(sessionStorage.getItem("isRoot"))
+              }
               this.$router.push({ path: "/table" });
             }
           });
