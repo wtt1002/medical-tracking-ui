@@ -1,27 +1,19 @@
-import babelpolyfill from 'babel-polyfill'
-import Vue from 'vue'
 import App from './App'
-import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
-//import './assets/theme/theme-green/index.css'
-import VueRouter from 'vue-router'
 import store from './vuex/store'
-import Vuex from 'vuex'
-//import NProgress from 'nprogress'
-//import 'nprogress/nprogress.css'
 import routes from './routes'
-// import Mock from './mock'
-// Mock.bootstrap();
 import 'font-awesome/css/font-awesome.min.css'
 import axios from 'axios'
-// import ajax from
+import Vuex from 'vuex'
 
+import Vue from 'vue'
+import ElementUI from 'element-ui'
+import VueRouter from 'vue-router'
 Vue.use(ElementUI)
 Vue.use(VueRouter)
 Vue.use(Vuex)
 
-
-
+// import ajax from
 // 设置axios请求的token
 // axios.defaults.headers.common['token'] = 'f4c902c9ae5a2a9d8f84868ad064e706'
 //设置请求头

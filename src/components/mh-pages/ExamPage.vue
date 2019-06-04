@@ -29,11 +29,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button
-        type="primary"
-        style="margin-top:5px"
-        @click="saveOrUpdate('1000')"
-      >保存</el-button>
+      <el-button type="primary" style="margin-top:5px" @click="saveOrUpdate('1000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -64,11 +60,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button
-        type="primary"
-        style="margin-top:5px"
-        @click="saveOrUpdate('2000')"
-      >保存</el-button>
+      <el-button type="primary" style="margin-top:5px" @click="saveOrUpdate('2000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -99,11 +91,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button
-        type="primary"
-        style="margin-top:5px"
-        @click="saveOrUpdate('3000')"
-      >保存</el-button>
+      <el-button type="primary" style="margin-top:5px" @click="saveOrUpdate('3000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px">
@@ -134,11 +122,7 @@
           </template>
         </el-table-column>
       </el-table>
-      <el-button
-        type="primary"
-        style="margin-top:5px"
-        @click="saveOrUpdate('4000')"
-      >保存</el-button>
+      <el-button type="primary" style="margin-top:5px" @click="saveOrUpdate('4000')">保存</el-button>
     </div>
 
     <div class="block" style="margin-top:10px; margin-bottom:30px; width:600px">
@@ -228,7 +212,7 @@
         </el-form-item>
         <el-form-item>
           <el-button
-           type="primary"
+            type="primary"
             style="margin-top:-10px"
             @click="saveOrUpdateCon(conclusion3,timeUI7,'12')"
           >保存</el-button>
@@ -366,7 +350,7 @@ export default {
         //NProgress.done();
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
 
@@ -404,7 +388,7 @@ export default {
         //NProgress.done();
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "更新失败",
             type: "warning"
           });
           return;
@@ -431,7 +415,7 @@ export default {
         // console.log(JSON.stringify(res));
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "信息获取失败",
             type: "warning"
           });
           return;
@@ -499,7 +483,7 @@ export default {
         // console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
           return;
@@ -517,7 +501,7 @@ export default {
         // console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
-            message: res.Msg,
+            message: "更新失败",
             type: "warning"
           });
           return;
@@ -540,7 +524,7 @@ export default {
         // console.log(JSON.stringify(res));
         if (res.code !== "0000") {
           this.$message({
-            message: res.Msg,
+            message: "信息获取失败",
             type: "warning"
           });
           return;

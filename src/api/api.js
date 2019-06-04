@@ -28,6 +28,12 @@ export const addUser = params => { return axios.get(`${base}/user/add`, { params
 
 const userApi = {
     requestLogin: (params) => { console.log(params); return axios.post(`/apis${base}/user/login`, params).then(res => res.data); },
+    getDoctorListPage: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/list`, params).then(res => res.data); },
+    getHospital: (params) => { console.log(params); return axios.get(`/apis${base}/doctor/getHospital`).then(res => res.data); },
+    getDepartment: (params) => { console.log(params); return axios.get(`/apis${base}/doctor/getDepartment?hospitalId=`+params).then(res => res.data); },
+    addDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/add`, params).then(res => res.data); },
+    updateDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/update`, params).then(res => res.data); },
+    deleteDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/delete`, params).then(res => res.data); },
 };
 const patientApi = {
     //分页查询患者
@@ -48,8 +54,10 @@ const recordApi = {
     getRecordsListPage: (params) => { return axios.post(`/apis${base}/medicalHistory/records`, params).then(res => res.data); },
     //新增病历
     addMedicalHistory: (params) => { return axios.post(`/apis${base}/medicalHistory/add`, params).then(res => res.data); },
-    //更新病历
+    //获取病历
     getMedicalHistory: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/detail?medicalHistoryId=` + params).then(res => res.data); },
+    //更新病历
+    updateMedicalHistory:(params) => { return axios.post(`/apis${base}/medicalHistory/update`, params).then(res => res.data); },
     //获取辅助检查
     getExam: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/exam/get?medicalHistoryId=` + params.medicalHistoryId + "&examIndex=" + params.examIndex).then(res => res.data); },
     //更新辅助检查

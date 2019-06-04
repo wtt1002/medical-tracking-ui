@@ -114,7 +114,7 @@
         <el-checkbox label="其它">
           <el-input placeholder="其它" size="small"></el-input>
         </el-checkbox>
-      </el-checkbox-group> -->
+      </el-checkbox-group>-->
     </div>
     <div style="margin:15px 0">
       <label style="font-weight:bold">术中用药：</label>
@@ -343,10 +343,10 @@ export default {
         };
         console.log(JSON.stringify(params));
         if (this.pci.pciId == "") {
-          console.log("新增");
+          // console.log("新增");
           this.save(params);
         } else {
-          console.log("更新");
+          // console.log("更新");
           this.update(params);
         }
       });
@@ -357,7 +357,7 @@ export default {
         if (res.code != "0000") {
           console.log(JSON.stringify(res.Msg));
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
           return;
@@ -380,6 +380,10 @@ export default {
             "yyyy-MM-dd"
           );
         }
+        this.$message({
+          message: "新增成功",
+          type: "success"
+        });
       });
     },
     update(params) {
@@ -388,7 +392,7 @@ export default {
       recordApi.updatePci(params).then(res => {
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "更新失败",
             type: "warning"
           });
           return;
@@ -411,6 +415,10 @@ export default {
             "yyyy-MM-dd"
           );
         }
+        this.$message({
+          message: "更新成功",
+          type: "success"
+        });
       });
     },
     getDetail: function() {
@@ -419,7 +427,7 @@ export default {
         .then(res => {
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "信息获取失败",
               type: "warning"
             });
             return;

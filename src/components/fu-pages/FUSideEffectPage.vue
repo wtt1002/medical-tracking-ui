@@ -109,7 +109,7 @@ export default {
         //NProgress.done();
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
           return;
@@ -128,7 +128,7 @@ export default {
         //NProgress.done();
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "更新失败",
             type: "warning"
           });
           return;
@@ -146,7 +146,7 @@ export default {
           // console.log(JSON.stringify(res));
           if (res.code !== "0000") {
             this.$message({
-              message: res.Msg,
+              message: "信息获取失败",
               type: "Warning"
             });
             return;

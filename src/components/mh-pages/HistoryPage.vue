@@ -67,7 +67,7 @@
       <label>Kg</label>
     </el-form-item>
     <el-form-item label="BMI">
-      <el-input v-model="form.bmi" style="width:50px" readonly="true"></el-input>
+      <el-input v-model="form.bmi" style="width:50px" :readonly="true"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">保存</el-button>
@@ -117,14 +117,14 @@ export default {
         outtime: [
           { required: true, message: "请选择出院时间", trigger: "blur" }
         ],
-        height: [
-          { required: true, message: "请输入身高", trigger: "blur" },
-          { type: "number", message: "必须是数字", trigger: "blur" }
-        ],
-        weight: [
-          { required: true, message: "请输入体重", trigger: "blur" },
-          { type: "number", message: "必须是数字", trigger: "blur" }
-        ]
+        // height: [
+        //   { required: true, message: "请输入身高", trigger: "blur" },
+        //   { type: "number", message: "必须是数字", trigger: "blur" }
+        // ],
+        // weight: [
+        //   { required: true, message: "请输入体重", trigger: "blur" },
+        //   { type: "number", message: "必须是数字", trigger: "blur" }
+        // ]
       },
       options: patientData.diagnoseOptions
     };
@@ -175,12 +175,15 @@ export default {
                 "yyyy-MM-dd"
               )
             };
-            console.log(JSON.stringify(params));
+            
 
             if (this.form.medicalHistoryId == "") {
               this.save(params);
             } else {
-              // this.update();
+              params.medicalHistory.inTime = null;
+              params.medicalHistory.outTime = null;
+              // console.log(JSON.stringify(params));
+              this.update(params);
             }
           });
         }
@@ -188,31 +191,48 @@ export default {
     },
     save: function(params) {
       recordApi.addMedicalHistory(params).then(res => {
-        console.log(JSON.stringify(res));
+        // console.log(JSON.stringify(res));
         this.addLoading = false;
         //NProgress.done();
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
           return;
         }
         this.form.medicalHistoryId = res.data;
         this.$message({
-          message: "提交成功",
+          message: "新增成功",
           type: "success"
         });
       });
     },
-
+    update: function(params) {
+      recordApi.updateMedicalHistory(params).then(res => {
+        // console.log(JSON.stringify(res));
+        this.addLoading = false;
+        //NProgress.done();
+        if (res.code != "0000") {
+          this.$message({
+            message: "更新失败",
+            type: "warning"
+          });
+          return;
+        }
+        this.$message({
+          message: "更新成功",
+          type: "success"
+        });
+      });
+    },
     getDetail: function() {
       recordApi
         .getMedicalHistory(sessionStorage.getItem("currentMedicalHistory"))
         .then(res => {
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "信息获取失败",
               type: "warning"
             });
             return;

@@ -216,12 +216,12 @@ export default {
           //NProgress.done();
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "新增失败",
               type: "warning"
             });
             return;
           }
-          this.form.medicalHistoryId = res.data;
+          // this.pciExam = res.data;
           this.$message({
             message: "新增成功",
             type: "success"
@@ -232,7 +232,7 @@ export default {
         recordApi.updateExam(params).then(res => {
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "更新失败",
               type: "warning"
             });
             return;
@@ -260,7 +260,7 @@ export default {
           // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "新增失败",
               type: "warning"
             });
             return;
@@ -278,7 +278,7 @@ export default {
           // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "更新失败",
               type: "warning"
             });
             return;
@@ -303,7 +303,7 @@ export default {
           // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "新增失败",
               type: "warning"
             });
             return;
@@ -320,7 +320,7 @@ export default {
           // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "更新失败",
               type: "warning"
             });
             return;
@@ -340,13 +340,15 @@ export default {
           // console.log(JSON.stringify(res));
           if (res.code != "0000") {
             this.$message({
-              message: res.Msg,
+              message: "信息获取失败",
               type: "warning"
             });
             return;
           }
           //渲染pci术后检查
-          this.pciExam = {...this.pciExam, ...res.data.dischargeExamItemDtos};
+          if (res.data.dischargeExamItemDtos !== null) {
+            this.assembleData(res.data.dischargeExamItemDtos,this.pciExam)
+          }
           this.timeUI1 = util.formatDate.parse(res.data.examTime, "yyyy-MM-dd");
           //渲染血管入路并发症
           if (res.data.vascularAccessProblem !== null) {
@@ -363,6 +365,22 @@ export default {
           this.multipleSelection = JSON.parse(this.score.daptDetail);
           // console.log(JSON.stringify(this.multipleSelection));
         });
+    },
+       /**
+     * 数据渲染
+     */
+    assembleData(source, target) {
+      for (var t = 0; t < target.length; t++) {
+        for (var s = 0; s < source.length; s++) {
+          if (target[t].examItemCode == source[s].examItemCode) {
+            target[t].examValueId = source[s].examValueId;
+            target[t].medicalHistoryId = source[s].medicalHistoryId;
+            target[t].examValue = source[s].examValue;
+            target[t].examIndex = source[s].examIndex;
+            break;
+          }
+        }
+      }
     }
   },
   mounted() {

@@ -183,7 +183,7 @@ export default {
         //NProgress.done();
         if (res.code != "0000") {
           this.$message({
-            message: res.Msg,
+            message: "新增失败",
             type: "warning"
           });
           return;

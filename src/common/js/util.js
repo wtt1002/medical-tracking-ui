@@ -36,7 +36,7 @@ export default {
             });
         },
         parse: function (dateString, pattern) {
-            if(dateString == "")return null;
+            if(dateString == "" || dateString == null)return null;
             var matchs1 = pattern.match(SIGN_REGEXP);
             var matchs2 = dateString.match(/(\d)+/g);
             if (matchs1.length && matchs2.length && matchs1.length == matchs2.length) {
