@@ -74,11 +74,6 @@ export default {
               });
             } else {
               sessionStorage.setItem("user", JSON.stringify(res.data));
-              sessionStorage.setItem("code", "123456");
-              if(res.data.account.createUser == "wtt"){
-                sessionStorage.setItem("isRoot","wtt");
-                console.log(sessionStorage.getItem("isRoot"))
-              }
               this.$router.push({ path: "/table" });
             }
           });

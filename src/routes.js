@@ -5,8 +5,8 @@ import Main from './views/Main.vue'
 import Table from './views/nav1/Table.vue'
 import Form from './views/nav1/Form.vue'
 import user from './views/nav1/user.vue'
-import Page4 from './views/nav2/Page4.vue'
-import Page5 from './views/nav2/Page5.vue'
+import Page4 from './views/nav2/DoctorManage.vue'
+import Page5 from './views/nav2/AccountManage.vue'
 import Page6 from './views/nav3/Page6.vue'
 import echarts from './views/charts/echarts.vue'
 import AddPatient from './views/nav1/AddPatient.vue'
@@ -29,7 +29,6 @@ let routes = [
         name: '',
         hidden: true
     },
-    //{ path: '/main', component: Main },
     {
         path: '/',
         component: Home,
@@ -39,12 +38,12 @@ let routes = [
             { path: '/main', component: Main, name: '主页', hidden: true },
             { path: '/table', component: Table, name: '患者列表' },
             { path: '/addPatient', component: AddPatient, name: '添加患者' },
-            { path: '/form', component: Form, name: 'Form',hidden:true },
-            { path: '/user', component: user, name: '列表',hidden:true },
+            { path: '/form', component: Form, name: 'Form', hidden: true },
+            { path: '/user', component: user, name: '列表', hidden: true },
             { path: '/records', component: Records, name: '病例列表', hidden: true },
-            { path: '/mhistory', component: MedicalHistory, name: '病历详情',hidden:true},
+            { path: '/mhistory', component: MedicalHistory, name: '病历详情', hidden: true },
             { path: '/addHistory', component: AddHistoryPage, name: '病例列表', hidden: true },
-            { path: '/follow', component: FollowUp, name: '随访详情', hidden:true},
+            { path: '/follow', component: FollowUp, name: '随访详情', hidden: true },
             // { path: '/history', component:HistoryPage, name:'病历'}
 
         ]
@@ -52,33 +51,13 @@ let routes = [
     {
         path: '/',
         component: Home,
-        name: '随访管理',
+        name: '医生管理',
         iconCls: 'fa fa-id-card-o',
         children: [
-            { path: '/page4', component: Page4, name: '页面4' },
-            { path: '/page5', component: Page5, name: '页面5' }
+            { path: '/page4', component: Page4, name: '医生管理' },
+            { path: '/page5', component: Page5, name: '账号管理' }
         ],
-        hidden:sessionStorage.getItem("isRoot") == null?true:false
     },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: '',
-    //     iconCls: 'fa fa-address-card',
-    //     leaf: true,//只有一个节点
-    //     children: [
-    //         { path: '/page6', component: Page6, name: '导航三' }
-    //     ]
-    // },
-    // {
-    //     path: '/',
-    //     component: Home,
-    //     name: 'Charts',
-    //     iconCls: 'fa fa-bar-chart',
-    //     children: [
-    //         { path: '/echarts', component: echarts, name: 'echarts' }
-    //     ]
-    // },
     {
         path: '*',
         hidden: true,
@@ -86,4 +65,7 @@ let routes = [
     }
 ];
 
-export default routes;
+// export default ;
+export {
+    routes,
+}

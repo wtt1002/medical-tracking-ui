@@ -27,13 +27,30 @@ export const editUser = params => { return axios.get(`${base}/user/edit`, { para
 export const addUser = params => { return axios.get(`${base}/user/add`, { params: params }); };
 
 const userApi = {
+    //登录
     requestLogin: (params) => { console.log(params); return axios.post(`/apis${base}/user/login`, params).then(res => res.data); },
+    //获取医生列表
     getDoctorListPage: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/list`, params).then(res => res.data); },
+    //获取医院
     getHospital: (params) => { console.log(params); return axios.get(`/apis${base}/doctor/getHospital`).then(res => res.data); },
-    getDepartment: (params) => { console.log(params); return axios.get(`/apis${base}/doctor/getDepartment?hospitalId=`+params).then(res => res.data); },
+    //获取科室
+    getDepartment: (params) => { console.log(params); return axios.get(`/apis${base}/doctor/getDepartment?hospitalId=` + params).then(res => res.data); },
+    //添加医生
     addDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/add`, params).then(res => res.data); },
+    //更新医生信息
     updateDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/update`, params).then(res => res.data); },
-    deleteDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/delete`, params).then(res => res.data); },
+    //删除医生
+    deleteDoctor: (params) => { console.log(params); return axios.post(`/apis${base}/doctor/delete?doctorId=` + params).then(res => res.data); },
+    //获取医生列表
+    getAccountListPage: (params) => { console.log(params); return axios.post(`/apis${base}/user/list`, params).then(res => res.data); },
+    //添加医生
+    addAccount: (params) => { console.log(params); return axios.post(`/apis${base}/user/add`, params).then(res => res.data); },
+    //更新医生信息
+    updateAccount: (params) => { console.log(params); return axios.post(`/apis${base}/user/update`, params).then(res => res.data); },
+    //删除医生
+    deleteAccount: (params) => { console.log(params); return axios.post(`/apis${base}/user/delete?accountId=` + params).then(res => res.data); },
+    //获取所有医生
+    getDoctors:(params) => { console.log(params); return axios.get(`/apis${base}/doctor/getDoctors`).then(res => res.data); },
 };
 const patientApi = {
     //分页查询患者
@@ -57,7 +74,7 @@ const recordApi = {
     //获取病历
     getMedicalHistory: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/detail?medicalHistoryId=` + params).then(res => res.data); },
     //更新病历
-    updateMedicalHistory:(params) => { return axios.post(`/apis${base}/medicalHistory/update`, params).then(res => res.data); },
+    updateMedicalHistory: (params) => { return axios.post(`/apis${base}/medicalHistory/update`, params).then(res => res.data); },
     //获取辅助检查
     getExam: (params) => { console.log(params); return axios.get(`/apis${base}/medicalHistory/exam/get?medicalHistoryId=` + params.medicalHistoryId + "&examIndex=" + params.examIndex).then(res => res.data); },
     //更新辅助检查
