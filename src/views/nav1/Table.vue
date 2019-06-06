@@ -21,34 +21,34 @@
       highlight-current-row
       v-loading="listLoading"
       @selection-change="selsChange"
-      style="width: 100%;"
+      style=""
     >
-      <el-table-column type="selection" width="40"></el-table-column>
-      <el-table-column type="index" width="55"></el-table-column>
-      <el-table-column label width="80">
+      <el-table-column type="selection" width="40" fixed></el-table-column>
+      <!-- <el-table-column type="index" width="55"></el-table-column> -->
+      <el-table-column label width="80" fixed="left">
         <template scope="scope">
           <el-button type="primary" size="small" @click="patientCase(scope.$index, scope.row)">查看</el-button>
         </template>
       </el-table-column>
-      <el-table-column prop="patient.name" label="姓名" sortable></el-table-column>
-      <el-table-column prop="patient.gender" label="性别" :formatter="formatSex" sortable></el-table-column>
-      <el-table-column prop="birthday" label="出生日期" sortable></el-table-column>
-      <el-table-column prop="patient.age" label="年龄" sortable></el-table-column>
-      <el-table-column prop="patient.sickAge" label="发病年龄" sortable></el-table-column>
+      <el-table-column prop="patient.name" label="姓名" sortable style="min-width:150px"></el-table-column>
+      <el-table-column prop="patient.gender" label="性别" :formatter="formatSex" sortable style="min-width:150px"></el-table-column>
+      <el-table-column prop="birthday" label="出生日期" sortable style="min-width:150px"></el-table-column>
+      <el-table-column prop="patient.age" label="年龄" sortable style="min-width:150px"></el-table-column>
+      <el-table-column prop="patient.sickAge" label="发病年龄" sortable style="min-width:150px"></el-table-column>
       <!-- <el-table-column prop="inTime" label="最新入院时间" width="100" :formatter="formatSex" sortable>
 			</el-table-column>
 			<el-table-column prop="outTime" label="最新出院时间" width="100" :formatter="formatSex" sortable>
       </el-table-column>-->
-      <el-table-column prop="mainDiagnoseUI" label="最新诊断" sortable></el-table-column>
-      <el-table-column prop="patient.numId" label="身份证号" sortable></el-table-column>
-      <el-table-column prop="patient.mobilePhone" label="手机" sortable></el-table-column>
+      <el-table-column prop="mainDiagnoseUI" label="最新诊断" sortable style="min-width:150px"></el-table-column>
+      <el-table-column prop="patient.numId" label="身份证号" sortable style="min-width:150px"></el-table-column>
+      <el-table-column prop="patient.mobilePhone" label="手机" sortable style="min-width:150px"></el-table-column>
       <!-- <el-table-column prop="patient.emergePeople" label="紧急联系人" width="180" sortable>
       </el-table-column>-->
-      <el-table-column prop="patient.emergePhone" label="紧急联系人" sortable></el-table-column>
-      <el-table-column prop="patient.address" label="地址" sortable></el-table-column>
+      <el-table-column prop="patient.emergePhone" label="紧急联系人" sortable style="min-width:150px"></el-table-column>
+      <el-table-column prop="patient.address" label="地址" sortable style="min-width:150px"></el-table-column>
       <!-- <el-table-column prop="addr" label="地址" min-width="180" sortable>
       </el-table-column>-->
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="150" fixed="right">
         <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>
@@ -240,9 +240,10 @@ export default {
       this.listLoading = true;
       //NProgress.start();
       patientApi.getPatientListPage(para).then(res => {
+        this.listLoading = false;
         if (res.code != "0000") {
           this.$message({
-            message: "删除失败",
+            message: "患者信息获取失败,请刷新",
             type: "warning"
           });
           return;
@@ -255,7 +256,6 @@ export default {
             JSON.parse(res.data[index].mainDiagnose)
           );
         }
-        this.listLoading = false;
         //NProgress.done();
       });
     },

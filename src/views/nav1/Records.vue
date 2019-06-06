@@ -34,7 +34,7 @@
               :disabled="true"
             ></el-date-picker>
           </el-form-item>
-          <el-form-item label="省份证号" prop="numId">
+          <el-form-item label="身份证号" prop="numId">
             <el-input v-model="editForm.numId" auto-complete="off" :readonly="true"></el-input>
           </el-form-item>
           <el-form-item label="手机号" prop="mobilePhone">

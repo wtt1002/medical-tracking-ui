@@ -21,21 +21,21 @@
       highlight-current-row
       v-loading="listLoading"
       @selection-change="selsChange"
-      style="width: 100%;"
+      style="width:100%"
     >
       <!-- <el-table-column type="selection" width="40"></el-table-column> -->
-      <el-table-column type="index" width="55"></el-table-column>
-      <el-table-column prop="doctor.doctorName" label="姓名" sortable></el-table-column>
+      <!-- <el-table-column type="index" width="55"></el-table-column> -->
+      <el-table-column prop="doctor.doctorName" label="姓名" sortablefixed="left"></el-table-column>
       <el-table-column prop="doctor.gender" label="性别" :formatter="formatSex" sortable></el-table-column>
       <el-table-column prop="doctor.doctorMajor" label="医生专长" sortable></el-table-column>
       <el-table-column prop="hospital.hosName" label="所属医院" sortable></el-table-column>
-      <el-table-column prop="department.deptName" label="所属科室" sortable></el-table-column>
+      <el-table-column prop="department.deptName" label="所属科室" sortable min-width="150px"></el-table-column>
       <el-table-column prop="doctor.doctorNum" label="医生编号" sortable></el-table-column>
       <el-table-column prop="doctor.qcNum" label="资格证书" sortable></el-table-column>
       <el-table-column prop="qcDateStr" label="资证时间" sortable></el-table-column>
       <el-table-column prop="doctor.opqcNum" label="从业资格" sortable></el-table-column>
       <el-table-column prop="opqcDateStr" label="从证时间" sortable></el-table-column>
-      <el-table-column label="操作" width="150">
+      <el-table-column label="操作" width="150" fixed="right">
         <template scope="scope">
           <el-button size="small" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button type="danger" size="small" @click="handleDel(scope.$index, scope.row)">删除</el-button>

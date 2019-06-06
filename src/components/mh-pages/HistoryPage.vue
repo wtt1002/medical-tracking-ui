@@ -49,25 +49,25 @@
     </el-form-item>
     <el-form-item label="体格检查" style="font-size:20px"></el-form-item>
     <el-form-item label="血压">
-      <el-input v-model="form.bloodPressureH" style="width:50px"></el-input>
+      <el-input v-model="form.bloodPressureH" style="width:80px"></el-input>
       <label style="margin-left:5px;margin-right:5px">/</label>
-      <el-input v-model="form.bloodPressureL" style="width:50px"></el-input>
+      <el-input v-model="form.bloodPressureL" style="width:80px"></el-input>
       <label>mmHg</label>
     </el-form-item>
     <el-form-item label="心率">
-      <el-input v-model="form.heartRate" style="width:50px"></el-input>
+      <el-input v-model="form.heartRate" style="width:80px"></el-input>
       <label>bpm</label>
     </el-form-item>
     <el-form-item label="身高" prop="height">
-      <el-input v-model.number="form.height" style="width:50px" @change="handleChange"></el-input>
+      <el-input v-model.number="form.height" style="width:80px" @change="handleChange"></el-input>
       <label>cm</label>
     </el-form-item>
     <el-form-item label="体重" prop="weight">
-      <el-input v-model.number="form.weight" style="width:50px" @change="handleChange"></el-input>
+      <el-input v-model.number="form.weight" style="width:80px" @change="handleChange"></el-input>
       <label>Kg</label>
     </el-form-item>
     <el-form-item label="BMI">
-      <el-input v-model="form.bmi" style="width:50px" :readonly="true"></el-input>
+      <el-input v-model="form.bmi" style="width:80px" :readonly="true"></el-input>
     </el-form-item>
     <el-form-item>
       <el-button type="primary" @click="saveOrUpdate" :loading="addLoading">保存</el-button>
@@ -139,6 +139,8 @@ export default {
         var weight = parseFloat(this.form.weight);
         var temp = weight / (height * height);
         this.form.bmi = Math.round(temp * 100) / 100;
+      }else{
+        this.form.bmi = 0;
       }
     },
     changeOtherFactor(value) {
