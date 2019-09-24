@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-let base = '/ssm';
+let base = '/ssm_mt';
 
 // export const checkLogin = params => { return axios.get(`127.0.0.1:8089/user/login`)};
 
